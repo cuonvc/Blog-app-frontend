@@ -1,0 +1,86 @@
+/* header content */
+#app-header {
+    box-shadow: 4px 4px 20px rgb(0 0 0 / 10%);
+}
+
+.header-navbar {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar_element {
+    font-size: 1.4rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar-logo {
+
+}
+
+.navbar-logo_link {
+    
+}
+
+.navbar-logo_link > img {
+    width: 80px;
+}
+
+.navbar-about {
+    padding: 0 20px;
+
+}
+
+.about_link {
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+.about_link:hover {
+    color: var(--primary-color);
+}
+
+.navbar-search {
+    width: 400px;
+    margin: 0 auto;
+    border-radius: 20px;
+    border: 1px solid var(--primary-color);
+}
+
+.navbar-search_type {
+    outline: none;
+    border: none;
+    padding: 0 10px;
+    height: 34px;
+    font-size: 1.5rem;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.search_icon {
+    padding-right: 10px;
+    color: var(--text-color);
+}
+
+.navbar-signup {
+
+}
+
+.navbar-signin {
+    
+}
+
+.sign_btn {
+    background-color: var(--primary-color);
+    padding: 10px;
+    margin: 0 10px;
+    border-radius: 4px;
+    color: #fff;
+}
+
+.sign_btn:hover {
+    background-color: var(--primary-color-low);
+    cursor: default;
+}
