@@ -10,3 +10,14 @@ window.onscroll = function() {
     }
     prePosition = currentPosition;
 }
+
+//click search navbar
+var searchBtn = document.querySelector(".navbar-search");
+searchBtn.onclick = function() {
+    var nodes = document.querySelectorAll(".navbar_element");
+    var trigger = document.querySelector(".navbar-search_type");
+    console.log(nodes);
+    nodes[0].classList.add("hidden-element");
+    nodes[2].classList.add("hidden-element");
+    trigger.style.display = "block";
+}

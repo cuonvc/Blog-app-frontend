@@ -9,10 +9,15 @@
 
 /* Mobile to PC low */
 @media(max-width: 1023px) {
+    .header-navbar {
+        height: 80px;
+        justify-content: center;
+    }
     .navbar-search {
         margin: 0 auto;
         width: auto;
         border: none;
+        align-items: center;
     }
     
     .navbar-search_type {
@@ -20,7 +25,12 @@
     }
     
     .search_icon {
+        padding: 0;
         color: var(--text-color);
+    }
+
+    .hidden-element {
+        display: none;
     }
 }
 
@@ -32,6 +42,15 @@
 /* Tablet to PC low */
 @media(min-width: 740px) and (max-width: 1023px) {
 
+}
+
+/* Mobile */
+@media(max-width: 500px) {
+
+    .navbar-signup,
+    .navbar-about {
+        display: none;
+    }
 }
 
 
