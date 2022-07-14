@@ -30,14 +30,15 @@
     padding: 16px 0;
     font-size: 4rem;
     line-height: 1.6;
-    /* font-weight: 900; */
-    text-shadow: 2px 2px 3px #999;
-    color: rgb(85, 161, 180);
+    white-space: pre-line;
+    text-shadow: 2px 2px 3px var(--primary-color);
+    color: rgb(255, 255, 255);
 }
 
 .slider_description {
     font-size: 1.6rem;
     line-height: 1.4;
+    font-style: italic;
     color: var(--text-color);
     font-weight: 500;
     text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.651);

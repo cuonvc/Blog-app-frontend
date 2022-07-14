@@ -47,7 +47,42 @@
 
 /* Tablet to PC low */
 @media(min-width: 740px) and (max-width: 1023px) {
+    .slider-item_content {
+        top: 50px;
+    }
 
+    .slider_slogan {
+        font-size: 3rem;
+    }
+}
+
+/* Big mobile */
+@media(min-width:501px) and (max-width: 739px) {
+    .slider-item_content {
+        top: 30px;
+    }
+    
+    .slider_slogan {
+        font-size: 2rem;
+    }
+}
+
+/* Mobile to big Mobile */
+@media(max-width: 739px) {
+    .slider-item_content {
+        max-width: 80%;
+    }
+
+    .slider-item_image {
+        background-size: cover;
+        height: 400px;
+    }
+
+    .slider_slogan {
+        white-space: normal;
+    }
+
+    
 }
 
 /* Mobile */
@@ -76,6 +111,16 @@
 
     .sign_btn {
         margin: 0;
+    }
+
+    .slider-item_content {
+        top: 60px;
+    }
+
+    .slider_slogan {
+        font-size: 2.2rem;
+        background-color: transparent;
+        padding: 0;
     }
 
     
