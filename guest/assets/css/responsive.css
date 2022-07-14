@@ -1,0 +1,39 @@
+/* PC */
+@media(min-width: 1024px) {
+
+}
+
+@media(min-width: 1024) and (max-width: 1220px) {
+
+}
+
+/* Mobile to PC low */
+@media(max-width: 1023px) {
+    .navbar-search {
+        margin: 0 auto;
+        width: auto;
+        border: none;
+    }
+    
+    .navbar-search_type {
+        display: none;
+    }
+    
+    .search_icon {
+        color: var(--text-color);
+    }
+}
+
+/* Tablet to PC */
+@media(min-width: 740px) {
+
+}
+
+/* Tablet to PC low */
+@media(min-width: 740px) and (max-width: 1023px) {
+
+}
+
+
+
+

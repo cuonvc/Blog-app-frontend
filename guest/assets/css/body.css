@@ -12,15 +12,16 @@
 .slider-item_image {
     background-repeat: no-repeat;
     background-size: contain;
-    background-position: center;
+    background-position: top;
     padding-top: 57%;
+    position: relative;
 }
 
 .slider-item_content {
     position: absolute;
     top: 100px;
     left: 30px;
-    max-width: 500px;
+    max-width: 40%;
 }
 
 .slider_slogan {
