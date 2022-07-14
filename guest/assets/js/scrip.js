@@ -20,4 +20,5 @@ searchBtn.onclick = function() {
     nodes[0].classList.add("hidden-element");
     nodes[2].classList.add("hidden-element");
     trigger.style.display = "block";
+    searchBtn.style.margin = "auto";
 }

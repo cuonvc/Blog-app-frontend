@@ -13,6 +13,7 @@
         height: 80px;
         justify-content: center;
     }
+
     .navbar-search {
         margin: 0 auto;
         width: auto;
@@ -27,6 +28,11 @@
     .search_icon {
         padding: 0;
         color: var(--text-color);
+    }
+
+    .search_icon:hover {
+        font-size: 1.6rem;
+        color: var(--primary-color-low);
     }
 
     .hidden-element {
@@ -46,11 +52,25 @@
 
 /* Mobile */
 @media(max-width: 500px) {
+    .header-navbar {
+        justify-content: flex-start;
+    }
+
+    .navbar_element:nth-child(2),
+    .navbar_element:nth-child(3) {
+        margin-left: auto;
+    }
 
     .navbar-signup,
     .navbar-about {
         display: none;
     }
+
+    .sign_btn {
+        margin: 0;
+    }
+
+    
 }
 
 
