@@ -82,6 +82,10 @@
         white-space: normal;
     }
 
+    /* body */
+    .content-title {
+        margin-top: 40px;
+    }
     
 }
 
