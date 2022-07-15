@@ -90,7 +90,7 @@
 
 .content-post_image {
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
     background-position: center;
     padding-top: 56%;
     border-top-left-radius: 8px;
@@ -152,7 +152,11 @@
 
 .content-post_auth > img {
     width: 24px;
+    height: 24px;
     border-radius: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 .content-post_auth > span {
