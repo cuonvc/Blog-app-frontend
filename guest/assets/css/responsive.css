@@ -54,6 +54,10 @@
     .slider_slogan {
         font-size: 3rem;
     }
+
+    .post-pin_title {
+        padding: 6px 0;
+    }
 }
 
 /* Big mobile */
@@ -64,6 +68,10 @@
     
     .slider_slogan {
         font-size: 2rem;
+    }
+
+    .post-pin_description > p {
+        -webkit-line-clamp: 1;
     }
 }
 
@@ -94,6 +102,20 @@
 
     .content-post_new:hover {
         transform: none;
+    }
+
+    .post-pin_title {
+        padding: 6px 0;
+        margin-bottom: auto;
+    }
+
+    .post-pin_link {
+        font-size: 1.6rem;
+    }
+
+    .post-pin_auth > img {
+        width: 24px;
+        height: 24px;
     }
     
 }
@@ -136,6 +158,17 @@
         padding: 0;
     }
 
+    .post-pin_categories {
+        font-size: 1rem;
+    }
+
+    .post-pin_description {
+        display: none;
+    }
+
+    .post-pin_image {
+        padding-top: 100%;
+    }
     
 }
 
