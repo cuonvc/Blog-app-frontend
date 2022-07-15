@@ -86,6 +86,15 @@
     .content-title {
         margin-top: 40px;
     }
+
+    .content-post {
+        transform: none;
+        transition: none;
+    }
+
+    .content-post:hover {
+        transform: none;
+    }
     
 }
 
