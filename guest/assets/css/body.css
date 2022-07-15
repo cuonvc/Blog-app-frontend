@@ -62,21 +62,9 @@
     color: #fff;
 }
 
-.app-content {
-
-}
-
-.content-posts_news {
-
-}
-
 .content-title {
     font-size: 1.4rem;
     padding: 10px 0;
-}
-
-.content-posts {
-    
 }
 
 .content-post_new {
@@ -99,10 +87,6 @@
 
 .content-post_new:hover {
     transform: scale(1.04, 1.04);
-}
-
-.content-post_text {
-    
 }
 
 .content-post_categories {
@@ -194,10 +178,6 @@
 
 .content-posts_pin {
     margin-bottom: 90px;
-}
-
-.posts_pin {
-    
 }
 
 .content-post_pin {
@@ -297,6 +277,6 @@
     font-weight: 600;
 }
 
-.post-pin_time {
-
+.post-pin_auth > span:hover {
+    color: var(--primary-color);
 }
