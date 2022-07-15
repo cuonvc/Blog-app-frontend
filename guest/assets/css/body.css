@@ -175,3 +175,17 @@
 .content-post_time {
     color: #999;
 }
+
+.content-continute {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.content-continute_text {
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+.content-continute_signin {
+    color: var(--primary-color);
+}
