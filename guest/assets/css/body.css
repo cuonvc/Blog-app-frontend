@@ -166,6 +166,8 @@
 
 .content-post_auth > span {
     padding-left: 10px;
+    color: var(--text-color);
+    font-weight: 600;
 }
 
 .content-post_auth > span:hover {
@@ -191,51 +193,107 @@
 }
 
 .content-posts_pin {
+    margin-bottom: 90px;
+}
 
+.posts_pin {
+    
 }
 
 .content-post_pin {
-
+    width: 100%;
+    justify-content: flex-start;
+    margin: 10px 0;
 }
 
 .post-pin_link {
-
+    height: 200px;
+    width: 300px;
 }
 
 .post-pin_image {
-
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    padding-top: 75%;
+    border-radius: 4px;
 }
 
 .post-pin_text {
-
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .post-pin_categories {
-
+    font-size: 1.2rem;
+    margin-top: 2px;
 }
 
 .post-pin_category {
-
+    text-decoration: none;
+    color: var(--text-color);
+    padding: 2px 4px;
+    margin-right: 4px;
+    border-radius: 2px;
+    background-color: rgba(218, 218, 218, 0.603);
 }
 
 .post-pin_title {
-
+    padding: 12px 0;
 }
 
 .post-pin_link {
-
+    text-decoration: none;
+    font-size: 2rem;
+    line-height: 1.5;
+    color: var(--text-color);
+    font-weight: 600;
 }
 
 .post-pin_description {
+    font-size: 1.2rem;
+    color: #999;
+    margin-bottom: auto;
+}
 
+.post-pin_link > p,
+.post-pin_description > p {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .post-pin_info {
-
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #999;
+    font-size: 1.2rem;
 }
 
 .post-pin_auth {
+    display: flex;
+    align-items: center;
+    margin-right: 20px ;
+    text-decoration: none;
+    color: #999;
+}
 
+.post-pin_auth > img {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-right: 6px;
+}
+
+.post-pin_auth > span {
+    color: var(--text-color);
+    font-weight: 600;
 }
 
 .post-pin_time {
