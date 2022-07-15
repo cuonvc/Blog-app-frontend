@@ -87,12 +87,12 @@
         margin-top: 40px;
     }
 
-    .content-post {
+    .content-post_new {
         transform: none;
         transition: none;
     }
 
-    .content-post:hover {
+    .content-post_new:hover {
         transform: none;
     }
     

@@ -79,7 +79,7 @@
     
 }
 
-.content-post {
+.content-post_new {
     margin: 12px 0;
     position: relative;
     display: block;
@@ -97,7 +97,7 @@
     border-top-right-radius: 8px;
 }
 
-.content-post:hover {
+.content-post_new:hover {
     transform: scale(1.04, 1.04);
 }
 
@@ -188,4 +188,56 @@
 
 .content-continute_signin {
     color: var(--primary-color);
+}
+
+.content-posts_pin {
+
+}
+
+.content-post_pin {
+
+}
+
+.post-pin_link {
+
+}
+
+.post-pin_image {
+
+}
+
+.post-pin_text {
+
+}
+
+.post-pin_categories {
+
+}
+
+.post-pin_category {
+
+}
+
+.post-pin_title {
+
+}
+
+.post-pin_link {
+
+}
+
+.post-pin_description {
+
+}
+
+.post-pin_info {
+
+}
+
+.post-pin_auth {
+
+}
+
+.post-pin_time {
+
 }
