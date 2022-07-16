@@ -104,6 +104,16 @@
         transform: none;
     }
 
+    .content-post_title {
+        padding-bottom: 10px;
+    }
+
+    .content-post_description {
+        display: block;
+        padding-bottom: 10px;
+        font-size: 1.2rem;
+    }
+
     .post-pin_title {
         padding: 6px 0;
         margin-bottom: auto;
