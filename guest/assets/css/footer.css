@@ -13,20 +13,8 @@
     justify-content: space-between;
 }
 
-.footer-logo {
-
-}
-
-.footer-logo_link {
-
-}
-
 .footer-logo_link > img {
     width: 100px;
-}
-
-.footer-rules {
-    
 }
 
 .footer-rules > a {
@@ -55,16 +43,8 @@
     line-height: 1.6;
 }
 
-.footer-contact {
-
-}
-
 .footer-contact_list {
     list-style: none;
-}
-
-.footer-contact_item {
-
 }
 
 .footer-contact_link {
@@ -83,10 +63,6 @@
 
 .footer-contact_link:hover {
     color: var(--primary-color-low);
-}
-
-.footer-copyright {
-
 }
 
 .footer-copyright > p {
