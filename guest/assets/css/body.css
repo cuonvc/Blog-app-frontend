@@ -60,6 +60,7 @@
 .slider-signin:hover {
     background-color: var(--primary-color);
     color: #fff;
+    cursor: pointer;
 }
 
 .content-title {
