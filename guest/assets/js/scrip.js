@@ -22,3 +22,12 @@ searchBtn.onclick = function() {
     trigger.style.display = "block";
     searchBtn.style.margin = "auto";
 }
+
+// scroll the page to hidden, show to the top btn
+
+// click btn to the top
+var toTop = document.querySelector(".to-top_btn");
+toTop.onclick = function() {
+    console.log("hi");
+    document.documentElement.scrollTop = 0;
+}
