@@ -28,3 +28,148 @@
     font-size: 2.4rem;
     color: #fff;
 }
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+}
+
+.modal-content_register,
+.modal-content_login {
+    width: 60%;
+    height: 500px;
+    background-color: #fff;
+    margin-top: 90px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.modal_close {
+    position: absolute;
+    right: 0px;
+    top: 0;
+}
+
+.modal_close > i {
+    font-size: 2rem;
+    padding: 10px 16px;
+    border-top-right-radius: 10px;
+}
+
+.modal_close > i:hover {
+    background-color: rgb(248, 45, 45);
+    cursor: pointer;
+    color: #fff;
+}
+
+.modal-content_header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.modal-content_logo {
+
+}
+
+.modal-content_logo > img {
+    width: 100px;
+}
+
+.modal-content_title {
+    margin-left: 20px;
+}
+
+.modal-content_body {
+    text-align: center;
+    /* margin-top: 30px; */
+}
+
+.modal-content_type {
+    padding: 10px 0;
+}
+
+.modal-content_type > span {
+    font-size: 1.2rem;
+    font-weight: 600;
+
+}
+
+.modal-content_input {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 60%;
+}
+
+.modal-content_input__name {
+    display: flex;
+    justify-content: space-between;
+}
+
+.content_input__name,
+.modal-content_input > input {
+    margin: 8px;
+    padding-left: 14px;
+    padding-right: 20px;
+    font-size: 1.4rem;
+    height: 40px;
+    outline: var(--primary-color-low);
+    border-radius: 20px;
+    border: 1px solid rgb(212, 212, 212);
+    background-color: rgb(240, 240, 240);
+}
+
+.content_submit__btn {
+    background-color: var(--primary-color);
+    margin: 20px 8px 8px;
+    padding: 8px 0;
+    border-radius: 20px;
+    font-size: 1.4rem;
+    color: #fff;
+    font-weight: 600;
+}
+
+.content_submit__btn:hover {
+    cursor: pointer;
+    background-color: #34c7d2;
+}
+
+.modal-content-to_login,
+.modal-content-to_regiser {
+    font-size: 1.2rem;
+    padding: 8px 0;
+}
+
+.modal-content-to_login > p > span,
+.modal-content-to_regiser > p > span {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.modal-content-to_regiser > p > span:hover {
+    cursor: pointer;
+    color: #0b8b94;
+}
+
+.modal-content_forget__pass {
+
+}
+
+.modal-content_forget__pass span:hover {
+    cursor: pointer;
+    color: #0b8b94;
+}
+
+.modal-content_forget__pass > span {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
