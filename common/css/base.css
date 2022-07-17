@@ -40,9 +40,7 @@
     display: flex;
     justify-content: center;
 }
-.modal-content_register,
-.modal-content_login,
-.modal-content_forget-pass {
+.modal-content {
     width: 60%;
     height: 500px;
     background-color: #fff;
@@ -202,5 +200,38 @@
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+
+/* Responsive for base */
+
+@media(min-width: 740px) and (max-width: 1023px) {
+    
+    .modal-content_input,
+    .modal-content {
+        width: 80%;
+    }
+}
+
+@media(max-width: 739px) {
+
+    .content_input__name,
+    .modal-content_input,
+    .modal-content {
+        width: 96%;
+    }
+
+    .modal-content_input__name {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .modal-content {
+        height: 540px;
+    }
+
+    .modal-content_logo > img {
+        width: 60px;
     }
 }
