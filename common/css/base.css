@@ -40,9 +40,9 @@
     display: flex;
     justify-content: center;
 }
-
 .modal-content_register,
-.modal-content_login {
+.modal-content_login,
+.modal-content_forget-pass {
     width: 60%;
     height: 500px;
     background-color: #fff;
@@ -51,10 +51,22 @@
     position: relative;
 }
 
+.modal_back {
+    position: absolute;
+    left: 0px;
+    top: 0;
+}
+
 .modal_close {
     position: absolute;
     right: 0px;
     top: 0;
+}
+
+.modal_back > i {
+    font-size: 2rem;
+    padding: 10px 16px;
+    border-top-left-radius: 10px;
 }
 
 .modal_close > i {
@@ -63,6 +75,7 @@
     border-top-right-radius: 10px;
 }
 
+.modal_back > i:hover,
 .modal_close > i:hover {
     background-color: rgb(248, 45, 45);
     cursor: pointer;
@@ -149,13 +162,14 @@
     padding: 8px 0;
 }
 
-.modal-content-to_login > p > span,
-.modal-content-to_regiser > p > span {
+.modal_to-login,
+.modal_to-register {
     color: var(--primary-color);
     font-weight: 600;
 }
 
-.modal-content-to_regiser > p > span:hover {
+.modal_to-login:hover,
+.modal_to-register:hover {
     cursor: pointer;
     color: #0b8b94;
 }

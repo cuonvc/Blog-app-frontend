@@ -402,9 +402,9 @@
     </div>
 
     <div class="modal">
-        <div class="modal-content_login" style="display: block;">
+        <div class="modal-content_login">
             <div class="modal_close">
-                <i class="fa-solid fa-xmark"></i>
+                <i class="modal_close_submit fa-solid fa-xmark"></i>
             </div>
             <div class="modal-content_header">
                 <div class="modal-content_logo">
@@ -425,17 +425,20 @@
                 </div>
                 <div class="modal-content-to_regiser">
                     <p>Bạn chưa có tài khoản?
-                        <span>Đăng ký</span>
+                        <span class="modal_to-register">Đăng ký</span>
                     </p>
                 </div>
                 <div class="modal-content_forget__pass">
-                    <span>Quên mật khẩu?</span>
+                    <span class="forget_pass__submit">Quên mật khẩu?</span>
                 </div>
             </div>
         </div>
         <div class="modal-content_register" style="display: none;">
             <div class="modal_close">
-                <i class="fa-solid fa-xmark"></i>
+                <i class="model_close_submit fa-solid fa-xmark"></i>
+            </div>
+            <div class="modal_back">
+                <i class="modal_back_submit fa-solid fa-angle-left"></i>
             </div>
             <div class="modal-content_header">
                 <div class="modal-content_logo">
@@ -461,13 +464,39 @@
                 </div>
                 <div class="modal-content-to_login">
                     <p>Bạn đã có tài khoản?
-                        <span>Đăng nhập</span>
+                        <span class="modal_to-login">Đăng nhập</span>
                     </p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-content_forget-pass" style="display: none;">
+            <div class="modal_close">
+                <i class="modal_close_submit fa-solid fa-xmark"></i>
+            </div>
+            <div class="modal_back">
+                <i class="modal_back_submit fa-solid fa-angle-left"></i>
+            </div>
+            <div class="modal-content_header">
+                <div class="modal-content_logo">
+                    <img src="../common/image/logo.png" alt="logo">
+                </div>
+                <div class="modal-content_title">
+                    <h1>Quên mật khẩu</h1>
+                </div>
+            </div>
+            <div class="modal-content_body">
+                <div class="modal-content_type">
+                    <span>Nhập email tài khoản cần lấy lại mật khẩu</span>
+                </div>
+                <div class="modal-content_input">
+                    <input class="content_input__email" type="email" placeholder="Địa chỉ email">
+                    <span class="content_submit__btn">Lấy lại mật khẩu</span>
                 </div>
             </div>
         </div>
     </div>
 
     <script src="../common/js/scrip.js"></script>
+    <script src="./assets/js/main.js"></script>
 </body>
 </html>
