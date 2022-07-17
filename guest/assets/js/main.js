@@ -11,6 +11,7 @@ var backToForm = document.querySelectorAll(".modal_back_submit");
 var formsClose = document.querySelectorAll(".modal_close_submit");
 var loginBtnNav = document.querySelector(".navbar-signin_btn");
 var loginBtnEndPage = document.querySelector(".content-continute_signin");
+var registerBtnNav = document.querySelector(".navbar-signup_btn");
 
 toRegister.onclick = function() {
     login.style.display = "none";
@@ -56,4 +57,11 @@ loginBtnEndPage.onclick = function() {
     register.style.display = "none";
     forgetPass.style.display = "none";
     login.style.display = "block";
+}
+
+registerBtnNav.onclick = function() {
+    modalForm.style.display = "flex";
+    login.style.display = "none";
+    forgetPass.style.display = "none";
+    register.style.display = "block";
 }
