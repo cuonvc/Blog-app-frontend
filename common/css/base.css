@@ -40,11 +40,18 @@
     display: flex;
     justify-content: center;
 }
-.modal-content {
+
+.js-modal_container {
     width: 60%;
     height: 500px;
-    background-color: #fff;
     margin-top: 90px;
+    border-radius: 10px;
+}
+
+.modal-content {
+    width: 100%;
+    height: 500px;
+    background-color: #fff;
     border-radius: 10px;
     position: relative;
     animation: modalFadeIn ease 0.5s;
@@ -89,7 +96,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
 }
 
 .modal-content_logo {
@@ -209,7 +215,7 @@
 @media(min-width: 740px) and (max-width: 1023px) {
     
     .modal-content_input,
-    .modal-content {
+    .js-modal_container {
         width: 80%;
     }
 }
@@ -218,7 +224,7 @@
 
     .content_input__name,
     .modal-content_input,
-    .modal-content {
+    .js-modal_container {
         width: 96%;
     }
 
@@ -227,6 +233,7 @@
         flex-wrap: wrap;
     }
 
+    .js-modal_container,
     .modal-content {
         height: 540px;
     }
