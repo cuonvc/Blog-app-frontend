@@ -1,7 +1,8 @@
-//scroll header
 var prePosition = window.pageYOffset;
+var toTop = document.querySelector(".to-top_btn");
 
 window.onscroll = function() {
+    //display navbar
     var currentPosition = window.pageYOffset;
     if(prePosition > currentPosition) {
         document.getElementById("app-header").style.top = "0";
@@ -9,6 +10,19 @@ window.onscroll = function() {
         document.getElementById("app-header").style.top = "-80px";
     }
     prePosition = currentPosition;
+
+    //display to the top button
+    if(document.documentElement.scrollTop > 300) {
+        toTop.style.display = "block";
+    } else {
+        toTop.style.display = "none";
+    }
+}
+
+// click btn to the top
+toTop.onclick = function() {
+    console.log("hi");
+    document.documentElement.scrollTop = 0;
 }
 
 //click search navbar
@@ -23,18 +37,3 @@ searchBtn.onclick = function() {
     searchBtn.style.margin = "auto";
 }
 
-// click btn to the top
-var toTop = document.querySelector(".to-top_btn");
-toTop.onclick = function() {
-    console.log("hi");
-    document.documentElement.scrollTop = 0;
-}
-
-// scroll the page to hidden, show to the top btn
-window.onscroll = function() {
-    if(document.documentElement.scrollTop > 300) {
-        toTop.style.display = "block";
-    } else {
-        toTop.style.display = "none";
-    }
-}
