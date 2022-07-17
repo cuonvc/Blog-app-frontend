@@ -193,6 +193,11 @@
     color: var(--primary-color);
 }
 
+.content-continute_signin:hover {
+    cursor: pointer;
+    
+}
+
 .content-posts_pin {
     margin-bottom: 90px;
 }

@@ -46,8 +46,14 @@ for(i = 0; i < formsClose.length; i++) {
 
 loginBtnNav.onclick = function() {
     modalForm.style.display = "flex";
+    register.style.display = "none";
+    forgetPass.style.display = "none";
+    login.style.display = "block";
 }
 
 loginBtnEndPage.onclick = function() {
     modalForm.style.display = "flex";
+    register.style.display = "none";
+    forgetPass.style.display = "none";
+    login.style.display = "block";
 }
