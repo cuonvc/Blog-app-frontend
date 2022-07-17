@@ -23,11 +23,18 @@ searchBtn.onclick = function() {
     searchBtn.style.margin = "auto";
 }
 
-// scroll the page to hidden, show to the top btn
-
 // click btn to the top
 var toTop = document.querySelector(".to-top_btn");
 toTop.onclick = function() {
     console.log("hi");
     document.documentElement.scrollTop = 0;
+}
+
+// scroll the page to hidden, show to the top btn
+window.onscroll = function() {
+    if(document.documentElement.scrollTop > 300) {
+        toTop.style.display = "block";
+    } else {
+        toTop.style.display = "none";
+    }
 }
