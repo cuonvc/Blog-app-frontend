@@ -1,6 +1,7 @@
 // form login and register event
 
 var modalForm = document.querySelector(".modal");
+var modalFormContents = document.querySelectorAll(".modal-content");
 var toRegister = document.querySelector(".modal_to-register");
 var toLogin = document.querySelector(".modal_to-login");
 var toForgetPass = document.querySelector(".forget_pass__submit");
@@ -64,4 +65,16 @@ registerBtnNav.onclick = function() {
     login.style.display = "none";
     forgetPass.style.display = "none";
     register.style.display = "block";
+}
+
+
+//hidden form when click outside form
+modalForm.onclick = function() {
+    this.style.display = "none";
+}
+
+for(const i = 0; i < modalFormContents.length; i++) {
+    modalFormContents[i].addEventListener("click", function(event) {
+        event.stopPropagation();
+    })
 }
