@@ -72,7 +72,7 @@
     border-bottom-left-radius: 20px;
 }
 
-.search_icon {
+.navbar-search > i {
     padding-right: 10px;
     color: var(--text-color);
 }

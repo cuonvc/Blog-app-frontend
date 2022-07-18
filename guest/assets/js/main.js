@@ -1,4 +1,4 @@
-// form login and register event
+// form login and register event   (only the guest page)
 
 var modalForm = document.querySelector(".modal");
 var modalFormContainer = document.querySelector(".js-modal_container");

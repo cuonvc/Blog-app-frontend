@@ -25,19 +25,17 @@
         display: none;
     }
     
-    .search_icon {
+    .navbar-search > i {
         padding: 0;
         color: var(--text-color);
     }
 
-    .search_icon:hover {
+    .navbar-search > i:hover {
         font-size: 1.6rem;
         color: var(--primary-color-low);
     }
 
-    .hidden-element {
-        display: none;
-    }
+    
 }
 
 /* Tablet to PC */
@@ -158,11 +156,11 @@
         display: none;
     }
 
-    .search_icon {
+    .navbar-search > i {
         font-size: 2rem;
     }
 
-    .search_icon:hover {
+    .navbar-search > i:hover {
         font-size: 2.4rem;
     }
 

@@ -4,6 +4,10 @@
     --text-color: rgb(41, 41, 41);
 }
 
+.hidden-element {
+    display: none;
+}
+
 #to-top {
 
 }
