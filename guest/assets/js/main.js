@@ -92,21 +92,4 @@ loginBtnEndPage.onclick = function() {
     login.style.display = "block";
 }
 
-// registerBtnNav.onclick = function() {
-//     modalForm.style.display = "flex";
-//     login.style.display = "none";
-//     forgetPass.style.display = "none";
-//     register.style.display = "block";
-// }
-
-
-// //hidden form when click outside form
-// modalFormContainer.onclick = function(event) {
-//     event.stopPropagation();
-// }
-
-// modalForm.onclick = function() {
-//     modalForm.style.display = "none";
-// }
-
 
