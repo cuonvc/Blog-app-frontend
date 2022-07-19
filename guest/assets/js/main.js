@@ -15,6 +15,13 @@ var loginBtnEndPage = document.querySelector(".content-continute_signin");
 var registerBtnSlider = document.querySelector(".slider-signin");
 var registerBtnNav = document.querySelector(".navbar-signup_btn");
 
+registerBtnNav.onclick = function() {
+    modalForm.style.display = "flex";
+    login.style.display = "none";
+    forgetPass.style.display = "none";
+    register.style.display = "block";
+}
+
 toRegister.onclick = function() {
     login.style.display = "none";
     forgetPass.style.display = "none";
@@ -54,6 +61,15 @@ loginBtnNav.onclick = function() {
     login.style.display = "block";
 }
 
+//hidden form when click outside form
+modalFormContainer.onclick = function(event) {
+    event.stopPropagation();
+}
+
+modalForm.onclick = function() {
+    modalForm.style.display = "none";
+}
+
 registerBtnSlider.onclick = function() {
     modalForm.style.display = "flex";
     register.style.display = "block";
@@ -68,21 +84,21 @@ loginBtnEndPage.onclick = function() {
     login.style.display = "block";
 }
 
-registerBtnNav.onclick = function() {
-    modalForm.style.display = "flex";
-    login.style.display = "none";
-    forgetPass.style.display = "none";
-    register.style.display = "block";
-}
+// registerBtnNav.onclick = function() {
+//     modalForm.style.display = "flex";
+//     login.style.display = "none";
+//     forgetPass.style.display = "none";
+//     register.style.display = "block";
+// }
 
 
-//hidden form when click outside form
-modalFormContainer.onclick = function(event) {
-    event.stopPropagation();
-}
+// //hidden form when click outside form
+// modalFormContainer.onclick = function(event) {
+//     event.stopPropagation();
+// }
 
-modalForm.onclick = function() {
-    modalForm.style.display = "none";
-}
+// modalForm.onclick = function() {
+//     modalForm.style.display = "none";
+// }
 
 
