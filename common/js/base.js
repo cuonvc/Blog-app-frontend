@@ -87,3 +87,10 @@ if(window.innerWidth < 1024
         listE[i].classList.remove("m_navbar_element");
     }
 }
+
+
+// remove white space default in textarea tag
+var textForms = document.getElementsByTagName("textarea");
+for (var i = 0; i < textForms.length; i++) {
+    textForms[i].innerText = "";
+}

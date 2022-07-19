@@ -8,6 +8,15 @@
     display: none !important;
 }
 
+textarea {
+    resize: none;
+    column-count: unset;
+    overflow: hidden;
+    white-space: pre-line;
+    font-size: 1.4rem;
+    font-family: 'Be Vietnam Pro', sans-serif;
+}
+
 #to-top {
 
 }
