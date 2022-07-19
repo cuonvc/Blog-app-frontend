@@ -26,6 +26,8 @@ toTop.onclick = function() {
 }
 
 
+// Search on mobile
+
 if(window.innerWidth < 1024 
         || document.documentElement.clientWidth < 1024 
         || document.body.clientWidth < 1024) {

@@ -303,3 +303,36 @@
 .post-pin_auth > span:hover {
     color: var(--primary-color);
 }
+
+
+.modal-content-to_login,
+.modal-content-to_regiser {
+    font-size: 1.2rem;
+    padding: 8px 0;
+}
+
+.modal_to-login,
+.modal_to-register {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.modal_to-login:hover,
+.modal_to-register:hover {
+    cursor: pointer;
+    color: #0b8b94;
+}
+
+.modal-content_forget__pass {
+
+}
+
+.modal-content_forget__pass span:hover {
+    cursor: pointer;
+    color: #0b8b94;
+}
+
+.modal-content_forget__pass > span {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
