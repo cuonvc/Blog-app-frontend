@@ -2,71 +2,66 @@
 
 var modalForm = document.querySelector(".modal");
 var modalFormContainer = document.querySelector(".js-modal_container");
-var toRegister = document.querySelector(".modal_to-register");
-var toLogin = document.querySelector(".modal_to-login");
-var toForgetPass = document.querySelector(".forget_pass__submit");
-var register = document.querySelector(".modal-content_register");
-var login = document.querySelector(".modal-content_login");
-var forgetPass = document.querySelector(".modal-content_forget-pass");
+
+var toLoginBtns = document.querySelectorAll(".sign_in-btn");
+var toRegisterBtns = document.querySelectorAll(".sign_up-btn");
+var toForgetPassBtns = document.querySelectorAll(".forget_pass-btn");
+
+var registerForm = document.querySelector(".modal-content_register");
+var loginForm = document.querySelector(".modal-content_login");
+var forgetPassForm = document.querySelector(".modal-content_forget-pass");
 var backToForm = document.querySelectorAll(".modal_back_submit");
 var formsClose = document.querySelectorAll(".modal_close_submit");
-var loginBtnNav = document.querySelector(".navbar-signin_btn");
-var loginBtnEndPage = document.querySelector(".content-continute_signin");
-var loginBtnComment = document.querySelector(".comment-form-submit-btn");
-var registerBtnSlider = document.querySelector(".slider-signin");
-var registerBtnNav = document.querySelector(".navbar-signup_btn");
 
-registerBtnNav.onclick = function() {
-    modalForm.style.display = "flex";
-    login.style.display = "none";
-    forgetPass.style.display = "none";
-    register.style.display = "block";
-}
 
-toRegister.onclick = function() {
-    login.style.display = "none";
-    forgetPass.style.display = "none";
-    register.style.display = "block";
-}
+loopEventClick(toLoginBtns, loginBtn);
+loopEventClick(toRegisterBtns, registerBtn);
+loopEventClick(toForgetPassBtns, forgetPassBtn);
 
-toLogin.onclick = function() {
-    register.style.display = "none";
-    forgetPass.style.display = "none";
-    login.style.display = "block";
-}
-
-toForgetPass.onclick = function() {
-    login.style.display = "none";
-    register.style.display = "none";
-    forgetPass.style.display = "block";
-}
-
-for (i = 0; i < backToForm.length; i++) {
-    backToForm[i].onclick = function() {
-        register.style.display = "none";
-        forgetPass.style.display = "none";
-        login.style.display = "block";
+// check một lượt các btn cùng class xem cái nào đang thực hiện click
+function loopEventClick(arrayBtn, btnFunction) {
+    for(var i = 0; i < arrayBtn.length; i++) {
+        arrayBtn[i].addEventListener("click", btnFunction);
     }
 }
 
+function loginBtn() {
+    // when click to loginBtn:
+    modalForm.style.display = "flex";
+    registerForm.style.display = "none";
+    forgetPassForm.style.display = "none";
+    loginForm.style.display = "block";
+}
+
+function registerBtn() {
+    // when click to registerBtn:
+    modalForm.style.display = "flex";
+    loginForm.style.display = "none";
+    forgetPassForm.style.display = "none";
+    registerForm.style.display = "block";
+}
+
+function forgetPassBtn() {
+    // when click to forgetPassBtn:
+    loginForm.style.display = "none";
+    registerForm.style.display = "none";
+    forgetPassForm.style.display = "block";
+}
+
+// back to login form
+for (i = 0; i < backToForm.length; i++) {
+    backToForm[i].onclick = function() {
+        registerForm.style.display = "none";
+        forgetPassForm.style.display = "none";
+        loginForm.style.display = "block";
+    }
+}
+
+// close form login, register or forgetpass
 for(i = 0; i < formsClose.length; i++) {
     formsClose[i].onclick = function() {
         modalForm.style.display = "none";
     }
-}
-
-loginBtnNav.onclick = function() {
-    modalForm.style.display = "flex";
-    register.style.display = "none";
-    forgetPass.style.display = "none";
-    login.style.display = "block";
-}
-
-loginBtnComment.onclick = function() {
-    modalForm.style.display = "flex";
-    register.style.display = "none";
-    forgetPass.style.display = "none";
-    login.style.display = "block";
 }
 
 //hidden form when click outside form
@@ -78,18 +73,58 @@ modalForm.onclick = function() {
     modalForm.style.display = "none";
 }
 
-registerBtnSlider.onclick = function() {
-    modalForm.style.display = "flex";
-    register.style.display = "block";
-    forgetPass.style.display = "none";
-    login.style.display = "none";
-}
+// registerBtnNav.onclick = function() {
+//     modalForm.style.display = "flex";
+//     loginForm.style.display = "none";
+//     forgetPassForm.style.display = "none";
+//     registerForm.style.display = "block";
+// }
 
-loginBtnEndPage.onclick = function() {
-    modalForm.style.display = "flex";
-    register.style.display = "none";
-    forgetPass.style.display = "none";
-    login.style.display = "block";
-}
+// registerBtnSlider.onclick = function() {
+//     modalForm.style.display = "flex";
+//     registerForm.style.display = "block";
+//     forgetPassForm.style.display = "none";
+//     loginForm.style.display = "none";
+// }
+
+// loginBtnEndPage.onclick = function() {
+//     modalForm.style.display = "flex";
+//     registerForm.style.display = "none";
+//     forgetPassForm.style.display = "none";
+//     loginForm.style.display = "block";
+// }
+
+// toRegister.onclick = function() {
+//     loginForm.style.display = "none";
+//     forgetPassForm.style.display = "none";
+//     registerForm.style.display = "block";
+// }
+
+// toLogin.onclick = function() {
+//     registerForm.style.display = "none";
+//     forgetPassForm.style.display = "none";
+//     loginForm.style.display = "block";
+// }
+
+// toForgetPass.onclick = function() {
+//     loginForm.style.display = "none";
+//     registerForm.style.display = "none";
+//     forgetPassForm.style.display = "block";
+// }
+
+// loginBtnNav.onclick = function() {
+//     modalForm.style.display = "flex";
+//     registerForm.style.display = "none";
+//     forgetPassForm.style.display = "none";
+//     loginForm.style.display = "block";
+// }
+
+// loginBtnComment.onclick = function() {
+//     modalForm.style.display = "flex";
+//     registerForm.style.display = "none";
+//     forgetPassForm.style.display = "none";
+//     loginForm.style.display = "block";
+// }
+
 
 
