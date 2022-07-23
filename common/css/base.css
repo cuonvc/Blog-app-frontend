@@ -182,6 +182,35 @@ textarea {
     background-color: #34c7d2;
 }
 
+/* paging */
+.pagination {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination-item {
+
+}
+
+.page-link {
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 1.4rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 4px;
+}
+
+.active {
+    color: #fff;
+    background-color: var(--primary-color-low);
+}
+
+.page-link:hover {
+    background-color: #e2e2e2;
+}
+
 
 @keyframes modalFadeIn{
     from {
