@@ -190,14 +190,15 @@
 
 .navbar-logout {
     align-items: center;
+    margin: 0 auto;
+}
+
+.navbar-logout {
+    cursor: pointer;
 }
 
 .navbar-logo_btn {
     color: #f74848;
-}
-
-.navbar-logo_btn:hover {
-    color: red;
 }
 
 @keyframes fadeBox {
