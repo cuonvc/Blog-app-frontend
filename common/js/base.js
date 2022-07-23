@@ -182,29 +182,12 @@ if(window.innerWidth < 1024
     }
 
 
-} else {
-
-    // remove các class m_ để PC size không bị ảnh hưởng bởi click event trên mobile
-    for(var i = 0; i < navSearchs.length; i++) {
-        navSearchs[i].classList.remove("m_navbar-search");
-    }
-
-    for(var i = 0; i < navBacks.length; i++) {
-        navBacks[i].classList.remove("m_navbar_back-icon");
-    }
-
-    for (var i = 0; i < navSeachTypes.length; i++) {
-        navSeachTypes[i].classList.remove("m_navbar-search_type");
-    }
-
-    for(var i = 0; i < nodesE.length; i++) {
-        nodesE[i].classList.remove("m_navbar_element");
-    }
 }
 
 
 // remove white space default in textarea tag
 var textForms = document.getElementsByTagName("textarea");
+console.log(textForms);
 for (var i = 0; i < textForms.length; i++) {
     textForms[i].innerText = "";
 }
