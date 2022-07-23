@@ -71,6 +71,10 @@
         margin-right: auto;
     }
 
+    .navbar_element:nth-child(3) {
+        margin-left: 16px;
+    }
+
     /* body */
     .content-title {
         margin-top: 40px;
@@ -132,8 +136,7 @@
         justify-content: flex-start;
     }
 
-    .navbar_element:nth-child(2),
-    .navbar_element:nth-child(3) {
+    .navbar_element:nth-child(2) {
         margin-left: auto;
     }
 
