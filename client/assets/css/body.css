@@ -1,6 +1,22 @@
 #app-body {
-    margin-top: 120px;
+    margin-top: 80px;
 }
+
+.category_heading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+}
+
+.category_title {
+    margin: 40px 0;
+    padding: 20px 30px;
+    font-size: 3rem;
+    background-color: #caffff;
+    position: relative;
+}
+
 
 #body-post {
     padding-top: 50px;
@@ -343,21 +359,25 @@
     
 }
 
+.content-posts_by-category,
 .content-posts_pin {
     margin-bottom: 90px;
 }
 
+.content-post_by-category,
 .content-post_pin {
     width: 100%;
     justify-content: flex-start;
     margin: 10px 0;
 }
 
+.post_by-category_link,
 .post-pin_link {
     height: 200px;
     width: 300px;
 }
 
+.post_by-category_image,
 .post-pin_image {
     background-repeat: no-repeat;
     background-size: cover;
@@ -366,6 +386,7 @@
     border-radius: 4px;
 }
 
+.post_by-category_text,
 .post-pin_text {
     display: flex;
     flex-direction: column;
@@ -373,11 +394,13 @@
     padding-left: 16px;
 }
 
+.post_categories,
 .post-pin_categories {
     font-size: 1.2rem;
     margin-top: 2px;
 }
 
+.post_category,
 .post-pin_category {
     text-decoration: none;
     color: var(--text-color);
@@ -387,10 +410,12 @@
     background-color: rgba(218, 218, 218, 0.603);
 }
 
+.post_by-category_title,
 .post-pin_title {
     padding: 12px 0;
 }
 
+.post_by-category_link,
 .post-pin_link {
     text-decoration: none;
     font-size: 2rem;
@@ -399,13 +424,16 @@
     font-weight: 600;
 }
 
+.post_by-category_description,
 .post-pin_description {
     font-size: 1.2rem;
     color: #999;
     margin-bottom: auto;
 }
 
+.post_by-category_link > p,
 .post-pin_link > p,
+.post_by-category_description > p,
 .post-pin_description > p {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -413,6 +441,7 @@
     overflow: hidden;
 }
 
+.post_by-category_info,
 .post-pin_info {
     display: flex;
     justify-content: space-between;
@@ -421,6 +450,7 @@
     font-size: 1.2rem;
 }
 
+.post_by-category_auth,
 .post-pin_auth {
     display: flex;
     align-items: center;
@@ -429,6 +459,7 @@
     color: #999;
 }
 
+.post_by-category_auth > img,
 .post-pin_auth > img {
     width: 34px;
     height: 34px;
@@ -439,11 +470,13 @@
     margin-right: 6px;
 }
 
+.post_by-category_auth > span,
 .post-pin_auth > span {
     color: var(--text-color);
     font-weight: 600;
 }
 
+.post_by-category_auth > span:hover,
 .post-pin_auth > span:hover {
     color: var(--primary-color);
 }
