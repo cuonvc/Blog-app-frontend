@@ -2,6 +2,41 @@
     margin-top: 80px;
 }
 
+.body-heading {
+    
+}
+
+.body-heading_type {
+    width: 100%;
+    outline: none;
+    border: none;
+    font-size: 3.6rem;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.body-heading_type[contenteditable="true"]:empty:before {
+    content: attr(placeholder);
+    color: #c7c7c7;
+    cursor: text;
+}
+
+.body-content {
+    margin: 40px 0;
+}
+
+.body-content_editor {
+    outline: none;
+    border: none;
+    width: 100%;
+    font-size: 1.6rem;
+    line-height: 1.8;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    content: attr(placeholder);
+}
+
 .category_heading {
     display: flex;
     justify-content: center;
