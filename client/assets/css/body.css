@@ -13,6 +13,7 @@
     font-size: 3.6rem;
     font-weight: 600;
     line-height: 1.5;
+    color: var(--text-color);
 }
 
 .body-heading_type[contenteditable="true"]:empty:before {
@@ -31,10 +32,21 @@
     width: 100%;
     font-size: 1.6rem;
     line-height: 1.8;
+    font-weight: 400;
+    color: var(--text-color);
     border: none !important;
     outline: none !important;
     box-shadow: none !important;
     content: attr(placeholder);
+    
+}
+
+.body-content_editor > a {
+    color: var(--primary-color-low);
+}
+
+.body-content_editor::placeholder {
+    color: #c7c7c7;
 }
 
 .category_heading {

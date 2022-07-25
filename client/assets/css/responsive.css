@@ -76,6 +76,10 @@
     }
 
     /* body */
+    .body-heading_type {
+        font-size: 3.2rem;
+    }
+
     .content-title {
         margin-top: 40px;
     }

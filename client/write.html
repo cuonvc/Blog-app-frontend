@@ -70,16 +70,17 @@
         </div>
 
         <div id="app-body">
-            <div id="body-post">
-                <div class="body-heading">
-                    <h1 class="body-heading_type" spellcheck="false" contentEditable=true placeholder="Tiêu đề bài viết"></h1>
-                </div>
-                <div class="body-content">
-                    <textarea name="" 
-                        oninput="this.style.height = '28px'; this.style.height = this.scrollHeight +'px'" 
-                        placeholder="Nội dung bài viết" 
-                        class="body-content_editor" id="editor">
-                    </textarea>
+            <div class="col">
+                <div id="body-post">
+                    <div class="body-heading">
+                        <h1 class="body-heading_type" spellcheck="false" contentEditable=true placeholder="Tiêu đề bài viết"></h1>
+                    </div>
+                    <div class="body-content">
+                        <div class="body-content_editor" id="editor"
+                        oninput="this.style.height = '28px'; this.style.height = this.scrollHeight +'px'">
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -139,7 +140,10 @@
     <script src="../ckeditor/build/ckeditor.js"></script>
     <script>
         BalloonEditor
-        .create(document.querySelector("#editor"))
+        .create(document.querySelector("#editor"), {
+            placeholder: 'Nhập nội dung bài viết'
+        })
+        
         .catch(error => {
             console.error(error)
         });
