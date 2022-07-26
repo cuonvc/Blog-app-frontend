@@ -33,6 +33,7 @@
     font-size: 1.6rem;
     line-height: 1.8;
     font-weight: 400;
+    padding: 0 !important;
     color: var(--text-color);
     border: none !important;
     outline: none !important;
@@ -48,6 +49,109 @@
 .body-content_editor::placeholder {
     color: #c7c7c7;
 }
+
+.body-content_thumbnail {
+    
+}
+
+.body-option {
+    justify-content: flex-end;
+}
+
+.body-option_btn {
+    padding: 10px;
+    font-size: 1.4rem;
+    color: #fff;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: var(--primary-color-low);
+}
+
+.body-option_btn:hover {
+    background-color: var(--primary-color);
+}
+
+.modal-option_description {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+    padding-top: 60px;
+    width: 70%;
+}
+
+.option-categories_title,
+.modal-description_title {
+    font-size: 1.4rem;
+    padding: 10px 0;
+    font-weight: 500;
+    color: var(--primary-color-low);
+}
+
+.modal-description_type {
+    padding: 10px;
+    width: 100%;
+    overflow: auto;
+    border: 1px solid #d4d4d4;
+    border-radius: 4px;
+    outline: none;
+}
+
+.modal-option_categories {
+    margin: 30px auto;
+    width: 70%;
+}
+
+.option-categories_list {
+    
+}
+
+.option-categories_list > ul {
+    list-style: none;
+}
+
+.option-categories_list > ul > li {
+    padding: 10px 16px;
+    font-size: 1.4rem;
+    color: var(--text-color);
+    margin: 10px 20px 10px 0;
+    border-radius: 4px;
+    border: 1px solid #e7e7e7;
+    cursor: pointer;
+    background-color: #fff;
+}
+
+.modal-content_btns {
+    width: 70%;
+    margin: 20px auto;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.modal-content_btn {
+
+}
+
+.content-cancel_btn {
+    border: 1px solid #e0e0e0;
+    color: var(--text-color);
+}
+
+.content-confirm_btn {
+    color: #fff;
+    background-color: var(--primary-color);
+}
+
+
+.content_btn {
+    padding: 8px 14px;
+    font-size: 1.2rem;
+    margin-left: 24px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
 
 .category_heading {
     display: flex;

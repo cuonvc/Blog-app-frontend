@@ -77,11 +77,15 @@
                     </div>
                     <div class="body-content">
                         <div class="body-content_editor" id="editor"
-                        oninput="this.style.height = '28px'; this.style.height = this.scrollHeight +'px'">
-
+                            oninput="this.style.height = '28px'; this.style.height = this.scrollHeight +'px'">
+                            <!-- <img class="body-content_thumbnail" src="https://www.w3schools.com/css/img_lights.jpg" alt="ảnh thumbnail"> -->
                         </div>
                     </div>
+                    <div class="body-option row no-gutters">
+                        <span class="body-option_btn">Tiếp theo</span>
+                    </div>
                 </div>
+                
             </div>
         </div>
 
@@ -128,6 +132,52 @@
                     <div class="footer-copyright">
                         <h3>&copy; Copyright 2022</h3>
                         <p>Bản quyền thuộc về Cuong Nguyen</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-option" style="display: flex;">
+        <div class="js-modal_container">
+            <div class="modal-content">
+                <div class="row no-gutters">
+                    <div class="modal-option_description">
+                        <div class="modal-description_title">
+                            <span>Mô tả ngắn</span>
+                        </div>
+                        <textarea rows="3" name="" class="modal-description_type row no-gutters" spellcheck="false" placeholder="Mô tả ngắn về bài viết của bạn." >
+                                    
+                        </textarea>
+                    </div>
+                </div>
+                <div class="modal-option_categories">
+                    <span class="option-categories_title">Chọn thể loại</span>
+                    <div class="option-categories_list">
+                        <ul class="row no-gutters">
+                            <li>Thể thao</li>
+                            <li>Giải trí</li>
+                            <li>Chuyện</li>
+                            <li>Sách</li>
+                            <li>Công nghệ</li>
+                            <li>Game</li>
+                            <li>Review</li>
+                            <li>Du lịch</li>
+                        </ul>
+                    </div>
+                    <span class="option-categories_title">Thể loại được chọn</span>
+                    <div class="option-categories_list">
+                        <ul class="row no-gutters">
+                            <li></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-content_btns">
+                    <div class="modal-content_btn">
+                        <span class="content-cancel_btn content_btn">Hủy</span>
+                    </div>
+                    <div class="modal-content_btn">
+                        <span class="content-confirm_btn content_btn">Ok</span>
                     </div>
                 </div>
             </div>
