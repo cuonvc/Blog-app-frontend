@@ -3,7 +3,8 @@
 
 }
 
-@media(min-width: 1024) and (max-width: 1220px) {
+/* Ipad pro */
+@media(min-width: 1024) and (max-width: 1240px) {
 
 }
 
@@ -35,7 +36,9 @@
         color: var(--primary-color-low);
     }
 
-    
+    .body-profile_detail {
+        top: -80px;
+    }
 }
 
 /* Tablet to PC */
