@@ -120,6 +120,15 @@
         height: 24px;
     }
 
+    .modal-option_description {
+        padding-top: 20px;
+    }
+
+    .option-categories_list > ul > li {
+        padding: 6px 8px;
+        margin: 8px 20px 8px 0 ;
+    }
+
     /* footer */
     .footer-body {
         flex-direction: column;
