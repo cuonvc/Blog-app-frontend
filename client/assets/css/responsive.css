@@ -60,6 +60,10 @@
 /* Mobile to big Mobile */
 @media(max-width: 739px) {
 
+    .navbar-user {
+        margin-left: 10px;
+    }
+
     .navbar-user_icon-down,
     .navbar-user_name {
         display: none;

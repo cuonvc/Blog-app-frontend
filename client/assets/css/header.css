@@ -77,6 +77,18 @@
     color: var(--text-color);
 }
 
+.navbar_new-post {
+
+}
+
+.new-post_btn {
+    text-decoration: none;
+    color: var(--text-color);
+    padding: 6px;
+    border-radius: 16px;
+    border: 1px solid var(--primary-color-low);
+}
+
 .navbar-signup_btn,
 .navbar-signin_btn {
     background-color: var(--primary-color);

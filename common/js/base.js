@@ -162,6 +162,7 @@ if(window.innerWidth < 1024
     
         nodesElement[0].classList.add("hidden-element");
         nodesElement[2].classList.add("hidden-element");
+        nodesElement[3].classList.add("hidden-element");
         navSearchType.style.display = "block";
         navSearchform.style.margin = "auto";
         navSearchform.style.width = "100%";
