@@ -177,6 +177,7 @@ if(window.innerWidth < 1024
         navSearchform.style.width = null;
         nodesElement[0].classList.remove("hidden-element");
         nodesElement[2].classList.remove("hidden-element");
+        nodesElement[3].classList.remove("hidden-element");
     
         //ngăn sự kiện nổi bọt (khi click to thằng con thì thằng cha cũng bị dính click event)
         event.stopPropagation();
