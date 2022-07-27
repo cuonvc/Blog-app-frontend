@@ -30,22 +30,14 @@ for (let i = 0; i < categoryAvailableList.length; i++) {
 }
 
 
+var modalOptionBtn = document.querySelector(".body-option_btn");
+var modalCancelBtn = document.querySelector(".content-cancel_btn");
 
+modalOptionBtn.addEventListener("click", function() {
+    document.querySelector("#modal-option").style.display = "flex";
+    
+});
 
-
-
-
-
-// var categorySelectList = document.querySelectorAll(".option-category_select");
-        
-//         let text = categoryAvailableList[i].textContent;
-//         const html = `<li class="option-category_select">${text}</li>`
-        
-//         var doc = new DOMParser().parseFromString(html, "text/xml");
-//         for (let j = 0; j < categorySelectList.length; j++) {
-//             if (categorySelectList[j] !== categoryAvailableList[i]) {
-//                 console.log(categoryAvailableList[i]);
-//                 console.log(categorySelectList[j]);
-//                 ulCategoriesSelect.appendChild(doc.firstChild);
-//             }
-//         }
+modalCancelBtn.addEventListener("click", function() {
+    document.querySelector("#modal-option").style.display = "none";
+});
