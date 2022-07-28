@@ -85,6 +85,11 @@
 
     /* body */
 
+    .setting_gender_select,
+    .setting_input {
+        width: 100%;
+    }
+
     .body-profile_avt {
         --width-avt: 170px;
     }
