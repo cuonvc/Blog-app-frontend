@@ -9,6 +9,27 @@
     padding-top: 36%;
     top: 30px;
     border-radius: 4px;
+    position: relative;
+}
+
+.body_background > input {
+    display: none;
+}
+
+.select-file_background {
+    position: absolute;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 4px;
+    margin: 10px;
+    color: var(--primary-color-low);
+    top: 0;
+    right: 0;
+}
+
+#img-background_file {
+    color: #fff;
+    background-color: red;
 }
 
 .body-profile_detail {
@@ -24,21 +45,41 @@
 }
 
 .body-profile_avt {
-    width: 200px;
-    height: 200px;
+    --width-avt: 200px;
+    width: var(--width-avt);
+    height: var(--width-avt);
     margin: 0 auto;
+    position: relative;
+}
+
+.body-profile_avt > input {
+    display: none;
 }
 
 .profile-avt_link {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: inherit;
     border-radius: 50%;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     text-align: center;
+}
+
+.select-file_avt {
+    position: absolute;
+    bottom: 0;
+    --width-lable: 50px;
+    width: var(--width-lable);
+    /* padding-top: calc(var(--width-avt) - var(--width-lable)) ; */
+    text-align: center;
+    left: 0;
+    text-align: center;
+    margin: 0 calc((var(--width-avt) - var(--width-lable)) / 2);
+    background-color: transparent;
+    color: #ffffffb7;
+    font-size: 1.2rem;
 }
 
 .body-profile_name {

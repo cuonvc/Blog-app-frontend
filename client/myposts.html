@@ -78,13 +78,22 @@
 
         <div id="app-body">
             <div class="grid wide col">
-                <div class="body_background" style="background-image: url(https://images.spiderum.com/sp-cover/83686e10085e11ec8edfd1623c704340.jpeg);">
-                    
+                <div id="image-background_display" class="body_background" style="background-image: url(https://images.spiderum.com/sp-cover/83686e10085e11ec8edfd1623c704340.jpeg);">
+                    <label class="select-file_background" for="img-background_file">
+                        <span>Edit</span>
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </label>
+                    <input type="file" id="img-background_file" name="img" accept="image/png, image/jpg">
                 </div>
                 <div class="body-content row">
                     <div class="body-profile_detail col l-4 m-12">
                         <div class="body-profile_avt">
                             <img class="profile-avt_link" src="https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHx8&w=1000&q=80" alt="">
+                            <label class="select-file_avt" for="img-avt_file">
+                                <span>Edit</span>
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </label>
+                            <input type="file" name="img" id="img-avt_file" accept="image/png, image/jpg">
                         </div>
                         <div class="body-profile_name">
                             <h1 class="profile-name_text">Cường Nguyễn</h1>
