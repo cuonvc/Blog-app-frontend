@@ -37,7 +37,7 @@
     }
 
     .body-profile_detail {
-        top: -80px;
+        top: -50px;
     }
 }
 
@@ -83,6 +83,11 @@
     }
 
     /* body */
+
+    .body-profile_avt {
+        --width-avt: 170px;
+    }
+
     .body-heading_type {
         font-size: 3.2rem;
     }
