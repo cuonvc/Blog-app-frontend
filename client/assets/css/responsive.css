@@ -54,6 +54,7 @@
 /* Big mobile */
 @media(min-width:501px) and (max-width: 739px) {
     
+    .my-post_description,
     .post_by-category_description > p,
     .post-pin_description > p {
         -webkit-line-clamp: 1;
@@ -115,12 +116,14 @@
         font-size: 1.2rem;
     }
 
+    .my-post_title,
     .post_by-category_title,
     .post-pin_title {
         padding: 6px 0;
         margin-bottom: auto;
     }
 
+    .my-post_link,
     .post_by-category_link,
     .post-pin_link {
         font-size: 1.6rem;
@@ -182,11 +185,13 @@
         font-size: 1rem;
     }
 
+    .my-post_description,
     .post_by-category_description,
     .post-pin_description {
         display: none;
     }
 
+    .my-post_image,
     .post_by-category_image,
     .post-pin_image {
         padding-top: 100%;
