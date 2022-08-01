@@ -14,3 +14,7 @@ html {
 #app-content {
     overflow: hidden;
 }
+
+a {
+    color: var(--primary-color);
+}
