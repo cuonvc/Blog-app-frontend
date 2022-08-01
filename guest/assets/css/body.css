@@ -479,6 +479,10 @@
     color: var(--primary-color);
 }
 
+.post-pin_time {
+    font-size: 1rem;
+}
+
 
 .modal-content-to_login,
 .modal-content-to_regiser {
