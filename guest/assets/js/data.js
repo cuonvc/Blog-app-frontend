@@ -1,5 +1,6 @@
 var postsApi = 'http://localhost:8080/api/v1/posts';
-var postByIdApi = 'http://localhost:8080/api/v1/post/20';
+// var postByIdApi = '';
+var postsList = document.querySelectorAll(".post_list");
 
 start();
 
@@ -8,17 +9,31 @@ function start() {
         renderPostsPin(posts);
         renderPostsNew(posts);
     });
+    
+    
+    
+}
+handleClickPost();
 
-    getPostById(function(post) {
-        renderPostById(post);
-    })
+function handleClickPost() {
+    for (var i = 0; i < postsList.length; i++) {
+        postsList[i].addEventListener("click", function(e) {
+            var post = e.target.closest(".post");
+            var idPost = post.getAttribute("id");
+            var postByIdApi = "http://localhost:8080/api/v1/post/" + idPost;
+            
+            getPostById(postByIdApi, function(post) {
+                renderPostById(post);
+            });
+        });
+    }
 }
 
 
 // Content post by ID
 
-function getPostById(callback) {
-    fetch(postByIdApi)
+function getPostById(api, callback) {
+    fetch(api)
         .then(function(response) {
             return response.json();
         })
@@ -26,14 +41,16 @@ function getPostById(callback) {
 }
 
 function renderPostById(postById) {
+        
     const titlePage = document.getElementById("title-post_guest");
     const categoryBox = document.querySelector(".body-post_category-list");
     const titleBox = document.querySelector(".body-post_title");
     const postAuthBox = document.querySelector(".body-post_auth");
     const postContentBox = document.querySelector(".body-post_content");
     const commentListBox = document.querySelector(".comment-list");
-    
-    // console.log(postById);
+
+    console.log(postById);
+    console.log(categoryBox);
 
     titlePage.innerHTML = postById.title;
 
@@ -115,7 +132,7 @@ function renderPostsPin(posts) {
         `
             <div class="row">
                 <div class="post-pin l-9 m-12 s-12 col">
-                    <div class="content-post_pin row">
+                    <div class="content-post_pin row post" id="${post.id}">
                         <a href="#" class="l-4 m-4 s-4">
                             <div class="post-pin_image" style="background-image: url(${post.thumbnails});">
                             </div>
@@ -166,7 +183,7 @@ function renderPostsNew(posts) {
         let html = `
             <div class="col l-3 m-4 s-12">
                 <div class="content-post_new">
-                    <a href="./post.html" class="content-post_link">
+                    <a href="./post.html" class="post-link content-post_link">
                         <div class="content-post_image" style="background-image: url(${post.thumbnails});">
                         </div>
                     </a>
@@ -176,7 +193,7 @@ function renderPostsNew(posts) {
                             <a href="#" class="content-post_category">${firstCategory.name}</a>
                         </div>
                         <div class="content-post_title">
-                            <a href="./post.html" class="content-post_link">${post.title}</a>
+                            <a href="./post.html" class="post-link content-post_link">${post.title}</a>
                         </div>
                         <div class="content-post_description">
                             <p>${post.description}</p>

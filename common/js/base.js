@@ -189,7 +189,7 @@ if(window.innerWidth < 1024
 
 // remove white space default in textarea tag
 var textForms = document.getElementsByTagName("textarea");
-console.log(textForms);
+// console.log(textForms);
 for (var i = 0; i < textForms.length; i++) {
     textForms[i].innerText = "";
 }
