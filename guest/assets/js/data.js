@@ -5,52 +5,52 @@ var postsList = document.querySelectorAll(".post_list");
 start();
 
 function start() {
-    getPosts(function(posts) {
+    getPosts(function (posts) {
         renderPostsPin(posts);
         renderPostsNew(posts);
     });
-    
-    
-    
-}
-handleClickPost();
 
-function handleClickPost() {
-    for (var i = 0; i < postsList.length; i++) {
-        postsList[i].addEventListener("click", function(e) {
-            var post = e.target.closest(".post");
-            var idPost = post.getAttribute("id");
-            var postByIdApi = "http://localhost:8080/api/v1/post/" + idPost;
-            
-            getPostById(postByIdApi, function(post) {
-                renderPostById(post);
-            });
-        });
-    }
+    getPostById(function (post) {
+        renderPostById(post);
+    });
+
+
 }
+// handleClickPost();
+
+// function handleClickPost() {
+//     for (var i = 0; i < postsList.length; i++) {
+//         postsList[i].addEventListener("click", function (e) {
+//             var post = e.target.closest(".post");
+//             var idPost = post.getAttribute("id");
+//             var postByIdApi = "http://localhost:8080/api/v1/post/" + idPost;
+
+//             getPostById(postByIdApi, function(post) {
+//                 renderPostById(post);
+//             });
+//         });
+//     }
+// }
 
 
 // Content post by ID
 
-function getPostById(api, callback) {
-    fetch(api)
-        .then(function(response) {
+function getPostById(callback) {
+    let idPost = localStorage.getItem("postID")
+    fetch("http://localhost:8080/api/v1/post/" + idPost)
+        .then(function (response) {
             return response.json();
         })
         .then(callback);
 }
 
 function renderPostById(postById) {
-        
     const titlePage = document.getElementById("title-post_guest");
     const categoryBox = document.querySelector(".body-post_category-list");
     const titleBox = document.querySelector(".body-post_title");
     const postAuthBox = document.querySelector(".body-post_auth");
     const postContentBox = document.querySelector(".body-post_content");
     const commentListBox = document.querySelector(".comment-list");
-
-    console.log(postById);
-    console.log(categoryBox);
 
     titlePage.innerHTML = postById.title;
 
@@ -79,11 +79,10 @@ function renderPostById(postById) {
 
     let commentList = "";
     var length = postById.comments.length;
-    
+
     for (var i = 0; i < length; i++) {
         var commentCreDate = formatDate(postById.comments[i].createdDate);
         var commentMofDate = formatDate(postById.comments[i].modifiedDate);
-        console.log(postById.comments[i].modifiedDate)
         let commentItem = `
             <div class="comment-item">
                 <div class="comment-item_auth row no-gutters">
@@ -121,6 +120,13 @@ function getPosts(callback) {
         .then(callback);
 }
 
+function saveIdLocalStorage(id) {
+    localStorage.setItem("postID", id);
+    setTimeout(() => {
+        location.href = '/guest/post.html'
+    }, 100);
+}
+
 function renderPostsPin(posts) {
     let htmls = "";
     let arrPosts = posts.content;
@@ -128,12 +134,12 @@ function renderPostsPin(posts) {
     arrPosts.forEach(post => {
         var firstCategory = post.categories[0];
         var finalDate = formatDate(post.createdDate);
-        let html = 
-        `
+        let html =
+            `
             <div class="row">
                 <div class="post-pin l-9 m-12 s-12 col">
                     <div class="content-post_pin row post" id="${post.id}">
-                        <a href="#" class="l-4 m-4 s-4">
+                        <a style="cursor: pointer" onclick="saveIdLocalStorage(${post.id})" class="l-4 m-4 s-4">
                             <div class="post-pin_image" style="background-image: url(${post.thumbnails});">
                             </div>
                         </a>
@@ -165,10 +171,10 @@ function renderPostsPin(posts) {
                 </div>
             </div>
         `;
-        
+
         htmls += html;
     });
-    
+
     let contentBox = document.querySelector(".content-posts_pin");
     contentBox.innerHTML = htmls;
 }
@@ -183,7 +189,7 @@ function renderPostsNew(posts) {
         let html = `
             <div class="col l-3 m-4 s-12">
                 <div class="content-post_new">
-                    <a href="./post.html" class="post-link content-post_link">
+                    <a style="cursor: pointer" onclick="saveIdLocalStorage(${post.id})" class="post-link content-post_link">
                         <div class="content-post_image" style="background-image: url(${post.thumbnails});">
                         </div>
                     </a>
