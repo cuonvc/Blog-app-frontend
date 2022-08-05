@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="./assets/css/body.css">
     <link rel="stylesheet" href="./assets/css/footer.css">
     <link rel="stylesheet" href="./assets/css/responsive.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>Writing</title>
 </head>
 <body>
@@ -88,10 +89,10 @@
                     </div>
                     
                 </div>
-
+                
                 <div class="content-continute">
                     <span class="content-continute_text">
-                        <span class="content-continute_signin sign_in-btn">
+                        <span onclick="toLogin()" class="content-continute_signin sign_in-btn">
                             Đăng nhập
                         </span>
                         để xem thêm nội dung...
@@ -175,7 +176,7 @@
                     <div class="modal-content_input">
                         <input class="content_input__email" type="email" placeholder="Địa chỉ email">
                         <input class="content_input__password" type="password" placeholder="Mật khẩu đăng nhập">
-                        <span class="content_submit__btn">Đăng nhập</span>
+                        <span id="modal-submit_login" class="content_submit__btn">Đăng nhập</span>
                     </div>
                     <div class="modal-content-to_regiser">
                         <p>Bạn chưa có tài khoản?
@@ -254,5 +255,31 @@
     <script src="../common/js/base.js"></script>
     <script src="./assets/js/main.js"></script>
     <script src="./assets/js/data.js"></script>
+    <script>
+        
+        $("#modal-submit_login").click(function(){
+        
+        var name = $('.content_input__email').val();
+        var password = $('.content_input__password').val();
+        var token = ''
+
+        // console.log(name);
+        // console.log(password);
+        fetch('http://localhost:8080/api/v1/auth/login', {method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            
+            body:JSON.stringify({ usernameOrEmail: name , password: password }),
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            console.log(data.accessToken);
+        localStorage.setItem("accessToken", data.accessToken);
+            // window.location.href = "";
+        });
+    });
+    </script>
 </body>
 </html>

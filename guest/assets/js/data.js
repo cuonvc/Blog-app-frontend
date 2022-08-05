@@ -16,6 +16,38 @@ function start() {
 
 
 }
+
+// toLogin();
+
+// function toLogin() {
+//     $("#modal-submit_login").click(function(){
+//         alert("test");
+//         var name = $('#name').val();
+//         var password = $('#password').val();
+//         var token = ''
+//         $.ajax({
+//           type: 'POST',
+//           url: '/authenticate',
+//           data: { name: name , password: password },
+//           success: function(resultData){
+//             var token = resultData.token;
+//             // console.log(token);
+//             $.ajax({
+//               type: 'GET',
+//               url: '/memberinfo',
+//               headers: {"Authorization": token},
+//               success: function(data){
+//                  $(location).attr('href', '/memberinfo')
+//               }
+//             });
+//           }
+//         });
+//     });
+// }
+
+function toRegister() {
+
+}
 // handleClickPost();
 
 // function handleClickPost() {
