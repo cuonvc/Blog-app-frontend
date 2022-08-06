@@ -280,19 +280,8 @@
                 if (token === undefined) {
                     alert("Email hoặc mật khẩu không chính xác!");
                 } else {
-                    function parseJwt(token) {
-                        if (!token) { 
-                            return;
-                        }
-                        const base64Url = token.split('.')[1];
-                        const base64 = base64Url.replace('-', '+').replace('_', '/');
-                        return JSON.parse(window.atob(base64));
-                    }
-
-                    const username = parseJwt(token).sub;
-
                     localStorage.setItem("accessToken", token);
-                    window.location.href = `/client/home.html?u=${username}`;
+                    window.location.href = '/client/home.html';
                 }
             });
         });

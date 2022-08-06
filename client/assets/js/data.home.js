@@ -1,8 +1,19 @@
 // console.log(localStorage.getItem("accessToken"));
 
-var urlString = window.location.href;
-var urlObj = new URL(urlString);
-var username = urlObj.searchParams.get("u");  //get username from param
+function parseJwt(token) {
+    if (!token) { 
+        return;
+    }
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse(window.atob(base64));
+}
+
+const username = parseJwt(localStorage.getItem("accessToken")).sub;  //get username from token
+
+// var urlString = window.location.href;
+// var urlObj = new URL(urlString);
+// var username = urlObj.searchParams.get("u");  //get username from param
 
 renderHeaderInfo();
 renderCategories();
