@@ -201,11 +201,13 @@ textarea {
     font-weight: 500;
     padding: 8px 16px;
     border-radius: 4px;
+    display: block;
 }
 
 .active {
     color: #fff;
     background-color: var(--primary-color-low);
+    border-radius: 4px;
 }
 
 .page-link:hover {

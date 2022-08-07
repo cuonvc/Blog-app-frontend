@@ -18,7 +18,6 @@ const username = parseJwt(localStorage.getItem("accessToken")).sub;  //get usern
 renderHeaderInfo();
 renderCategories();
 renderPostsPin();
-renderPostsNew();
 
 function renderHeaderInfo() {
     fetch(`http://localhost:8080/api/v1/profile/${username}`)
@@ -133,62 +132,6 @@ function renderPostsPin() {
         let contentBox = document.querySelector(".content-posts_pin");
         contentBox.innerHTML = htmls;
     })
-}
-
-function renderPostsNew() {
-    fetch('http://localhost:8080/api/v1/posts?pageNo=0&pageSize=5&sortBy=id&sortDir=desc')
-    .then(function(response) {
-        return response.json();
-    })
-    .then(function(posts) {
-        // let html = "";
-        let htmls = "";
-        let arrPosts = posts.content;
-
-        arrPosts.forEach(post => {
-            var firstCategory = post.categories[0];
-            var finalDate = formatDate(post.createdDate);
-            let html = `
-                <div class="col l-3 m-4 s-12">
-                    <div class="content-post_new">
-                        <a style="cursor: pointer" onclick="saveIdLocalStorage(${post.id})" class="post-link content-post_link">
-                            <div class="content-post_image" style="background-image: url(${post.thumbnails});">
-                            </div>
-                        </a>
-                        
-                        <div class="content-post_text">
-                            <div class="content-post_categories">
-                                <a href="#" class="content-post_category">${firstCategory.name}</a>
-                            </div>
-                            <div class="content-post_title">
-                                <a href="./post.html" class="post-link content-post_link">${post.title}</a>
-                            </div>
-                            <div class="content-post_description">
-                                <p>${post.description}</p>
-                            </div>
-                            <div class="content-post_info">
-                                <a href="#" class="content-post_auth">
-                                    <img src="${post.userProfile.avatarPhoto}" alt="Avartar">
-                                    <span>${post.userProfile.firstName} ${post.userProfile.lastName}</span>
-                                </a>
-                                <div class="content-post_time">
-                                    <i class="fa-solid fa-clock"></i>
-                                    <span>${finalDate}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `
-            htmls += html;
-        });
-
-        document.querySelector(".content-posts").innerHTML = htmls;
-    });
-}
-
-function renderPagingPosts() {
-    
 }
 
 function saveIdLocalStorage(id) {

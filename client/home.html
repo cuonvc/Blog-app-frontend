@@ -16,6 +16,11 @@
     <link rel="stylesheet" href="./assets/css/body.css">
     <link rel="stylesheet" href="./assets/css/footer.css">
     <link rel="stylesheet" href="./assets/css/responsive.css">
+    <script
+    src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.min.js"></script>
 </head>
 <body>
     <div id="app-content">
@@ -83,31 +88,8 @@
                 </div>
 
                 <div class="grid wide">
-                    <ul class="pagination">
-                        <li class="pagination-item">
-                            <a href="#" class="page-link">&laquo;</a>
-                        </li>
-                        <li class="pagination-item">
-                            <a href="#" class="page-link active">1</a>
-                        </li>
-                        <li class="pagination-item">
-                            <a href="#" class="page-link">2</a>
-                        </li>
-                        <li class="pagination-item">
-                            <a href="#" class="page-link">3</a>
-                        </li>
-                        <li class="pagination-item">
-                            <a href="#" class="page-link">4</a>
-                        </li>
-                        <li class="pagination-item">
-                            <a href="#" class="page-link">5</a>
-                        </li>
-                        <li class="pagination-item">
-                            <a href="#" class="page-link">6</a>
-                        </li>
-                        <li class="pagination-item">
-                            <a href="#" class="page-link">&raquo;</a>
-                        </li>
+                    <ul id="pagination" class="pagination">
+                        
                     </ul>
                 </div>
             </div>
@@ -170,5 +152,68 @@
 
     <script src="../common/js/base.js"></script>
     <script src="./assets/js/data.home.js"></script>
+
+    <script>
+        $('#pagination').twbsPagination({
+            totalPages: 100,
+            visiblePages: 5,
+            next: '>',
+            prev: '<',
+            onPageClick: function (event, page) {
+                //fetch content and render here
+                renderPostsNew(page);
+            }
+        });
+
+        function renderPostsNew(pageNo) {
+            fetch(`http://localhost:8080/api/v1/posts?pageNo=${pageNo - 1}&pageSize=5&sortBy=id&sortDir=desc`)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(posts) {
+                let htmls = "";
+                let arrPosts = posts.content;
+                console.log(arrPosts);
+                arrPosts.forEach(post => {
+                    var firstCategory = post.categories[0];
+                    var finalDate = formatDate(post.createdDate);
+                    let html = `
+                        <div class="col l-3 m-4 s-12">
+                            <div class="content-post_new">
+                                <a style="cursor: pointer" onclick="saveIdLocalStorage(${post.id})" class="post-link content-post_link">
+                                    <div class="content-post_image" style="background-image: url(${post.thumbnails});">
+                                    </div>
+                                </a>
+                                
+                                <div class="content-post_text">
+                                    <div class="content-post_categories">
+                                        <a href="#" class="content-post_category">${firstCategory.name}</a>
+                                    </div>
+                                    <div class="content-post_title">
+                                        <a href="./post.html" class="post-link content-post_link">${post.title}</a>
+                                    </div>
+                                    <div class="content-post_description">
+                                        <p>${post.description}</p>
+                                    </div>
+                                    <div class="content-post_info">
+                                        <a href="#" class="content-post_auth">
+                                            <img src="${post.userProfile.avatarPhoto}" alt="Avartar">
+                                            <span>${post.userProfile.firstName} ${post.userProfile.lastName}</span>
+                                        </a>
+                                        <div class="content-post_time">
+                                            <i class="fa-solid fa-clock"></i>
+                                            <span>${finalDate}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                    htmls += html;
+                    document.querySelector(".content-posts").innerHTML = htmls;
+                });
+            })
+        }
+    </script>
 </body>
 </html>
