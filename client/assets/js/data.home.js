@@ -77,7 +77,7 @@ function renderCategories() {
 }
 
 function renderPostsPin() {
-    fetch('http://localhost:8080/api/v1/posts?pageNo=0&pageSize=5')
+    fetch('http://localhost:8080/api/v1/posts?pageNo=0&pageSize=5&sortBy=id&sortDir=desc')
     .then(function(response) {
         return response.json();
     })
@@ -136,12 +136,12 @@ function renderPostsPin() {
 }
 
 function renderPostsNew() {
-    fetch('http://localhost:8080/api/v1/posts?pageNo=0&pageSize=5')
+    fetch('http://localhost:8080/api/v1/posts?pageNo=0&pageSize=5&sortBy=id&sortDir=desc')
     .then(function(response) {
         return response.json();
     })
     .then(function(posts) {
-        console.log(posts);
+        // let html = "";
         let htmls = "";
         let arrPosts = posts.content;
 
@@ -183,11 +183,7 @@ function renderPostsNew() {
             htmls += html;
         });
 
-        var pageNo = 
-
         document.querySelector(".content-posts").innerHTML = htmls;
-
-        document.querySelector(".pagination")
     });
 }
 
@@ -197,9 +193,7 @@ function renderPagingPosts() {
 
 function saveIdLocalStorage(id) {
     localStorage.setItem("postID", id);
-    setTimeout(() => {
-        location.href = `/client/post.html`;
-    }, 100);
+    window.location.href = `/client/post.html?post=${id}`;
 }
 
 function formatDate(dateString) {

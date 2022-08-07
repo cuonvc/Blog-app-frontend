@@ -1,4 +1,4 @@
-var postsApi = 'http://localhost:8080/api/v1/posts';
+var postsApi = 'http://localhost:8080/api/v1/posts?pageNo=0&pageSize=5&sortBy=id&sortDir=desc';
 // var postByIdApi = '';
 var postsList = document.querySelectorAll(".post_list");
 
