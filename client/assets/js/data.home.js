@@ -195,6 +195,13 @@ function renderPagingPosts() {
     
 }
 
+function saveIdLocalStorage(id) {
+    localStorage.setItem("postID", id);
+    setTimeout(() => {
+        location.href = `/client/post.html`;
+    }, 100);
+}
+
 function formatDate(dateString) {
     var dateView = new Date(dateString);
     return dateView.getDate() + " th" + (dateView.getMonth() + 1) + ", " + dateView.getFullYear();
