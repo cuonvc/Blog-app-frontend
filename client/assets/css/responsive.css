@@ -201,5 +201,13 @@
     .post-pin_image {
         padding-top: 100%;
     }
+
+    .page-item:first-child {
+        margin-right: -16px;
+    }
+
+    .page-item:last-child {
+        margin-left: -16px;
+    }
     
 }
