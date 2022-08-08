@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="./assets/css/footer.css">
     <link rel="stylesheet" href="./assets/css/responsive.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <title>Writing</title>
+    <title>Writing - Trang chủ</title>
 </head>
 <body>
     <div id="app-content">
@@ -174,9 +174,9 @@
                         <span>Đăng nhập với Email</span>
                     </div>
                     <div class="modal-content_input">
-                        <input class="content_input__email" type="email" placeholder="Tên đăng nhập hoặc email">
+                        <input class="content_input__email" type="text" placeholder="Tên đăng nhập hoặc email">
                         <input class="content_input__password" type="password" placeholder="Mật khẩu đăng nhập">
-                        <span id="modal-submit_login" class="content_submit__btn">Đăng nhập</span>
+                        <span type="submit" id="modal-submit_login" class="content_submit__btn">Đăng nhập</span>
                     </div>
                     <div class="modal-content-to_regiser">
                         <p>Bạn chưa có tài khoản?
@@ -257,6 +257,12 @@
     <script src="./assets/js/main.js"></script>
     <script src="./assets/js/data.js"></script>
     <script>
+
+        document.querySelector(".content_input__password").addEventListener("keypress", function(event) {
+            if(event.key === "Enter") {
+                $("#modal-submit_login").click();
+            }
+        });
         
         $("#modal-submit_login").click(function(){
         

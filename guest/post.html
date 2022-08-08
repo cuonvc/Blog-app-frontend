@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="./assets/css/body.css">
     <link rel="stylesheet" href="./assets/css/footer.css">
     <link rel="stylesheet" href="./assets/css/responsive.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title id="title-post_guest"></title>
 </head>
 <body>
@@ -160,9 +161,9 @@
                         <span>Đăng nhập với Email</span>
                     </div>
                     <div class="modal-content_input">
-                        <input class="content_input__email" type="email" placeholder="Tên đăng nhập hoặc email">
+                        <input class="content_input__email" type="text" placeholder="Tên đăng nhập hoặc email">
                         <input class="content_input__password" type="password" placeholder="Mật khẩu đăng nhập">
-                        <span class="content_submit__btn">Đăng nhập</span>
+                        <span id="modal-submit_login" class="content_submit__btn">Đăng nhập</span>
                     </div>
                     <div class="modal-content-to_regiser">
                         <p>Bạn chưa có tài khoản?
@@ -242,5 +243,43 @@
     <script src="../common/js/base.js"></script>
     <script src="./assets/js/main.js"></script>
     <script src="./assets/js/data.js"></script>
+
+    <script>
+
+        document.querySelector(".content_input__password").addEventListener("keypress", function(event) {
+            if(event.key === "Enter") {
+                $("#modal-submit_login").click();
+            }
+        });
+
+        $("#modal-submit_login").click(function(){
+        
+            var name = $('.content_input__email').val();
+            var password = $('.content_input__password').val();
+
+            // console.log(name);
+            // console.log(password);
+            fetch('http://localhost:8080/api/v1/auth/login', 
+                {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body:JSON.stringify({ usernameOrEmail: name , password: password }),
+                }
+            )
+            .then(res=>res.json())
+            .then(data=>{
+                var token = data.accessToken;
+                if (token === undefined) {
+                    alert("Email hoặc mật khẩu không chính xác!");
+                } else {
+                    localStorage.setItem("accessToken", token);
+                    window.location.href = '/client/home.html';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
