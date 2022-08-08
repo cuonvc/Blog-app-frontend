@@ -490,6 +490,10 @@
     padding: 8px 0;
 }
 
+.modal-content-to_login {
+    padding: 0;
+}
+
 .modal_to-login,
 .modal_to-register {
     color: var(--primary-color);
