@@ -88,6 +88,8 @@ function renderPostContent() {
 
         document.querySelector(".body-post_box").innerHTML = postContent;
         
+        document.querySelector("#title-post_client").innerHTML = post.title;
+        
         const idUserByPost = post.userProfile.id;
         const item = document.querySelector(".action-post");
         checkAuth(idUserByPost, item);
