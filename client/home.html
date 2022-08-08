@@ -173,7 +173,6 @@
             .then(function(posts) {
                 let htmls = "";
                 let arrPosts = posts.content;
-                console.log(arrPosts);
                 arrPosts.forEach(post => {
                     var firstCategory = post.categories[0];
                     var finalDate = formatDate(post.createdDate);

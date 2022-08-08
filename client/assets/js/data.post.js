@@ -64,20 +64,33 @@ function renderPostContent() {
             <div class="body-post_title">
                 <h1 class="post_title--text">${post.title}</h1>
             </div>
-            <div class="body-post_auth row no-gutters">
-                <div class="body-post_auth-avt">
-                    <a href="#"><img src="${post.userProfile.avatarPhoto}" alt="avt"></a>
+            <div class="row no-gutters" style="justify-content: space-between;">
+                <div class="body-post_auth row no-gutters">
+                    <div class="body-post_auth-avt">
+                        <a href="#"><img src="${post.userProfile.avatarPhoto}" alt="avt"></a>
+                    </div>
+                    <div class="body-post_auth-name">
+                        <a href="#">${post.userProfile.firstName} ${post.userProfile.lastName}</a>
+                        <span>${formatDate(post.createdDate)}</span>
+                    </div>
                 </div>
-                <div class="body-post_auth-name">
-                    <a href="#">${post.userProfile.firstName} ${post.userProfile.lastName}</a>
-                    <span>${formatDate(post.createdDate)}</span>
+                <div class="action action-post" style="display: none;">
+                    <i class="action-icon fa-solid fa-ellipsis-vertical"></i>
+                    <div class="action-box">
+                        <span class="action-item action-delete_post">Xóa bài viết</span>
+                        <span class="action-item action-edit_post">Chỉnh sửa</span>
+                    </div>
                 </div>
             </div>
             <div class="body-post_content">${post.content}</div>
             </div>
         `;
-        
+
         document.querySelector(".body-post_box").innerHTML = postContent;
+        
+        const idUserByPost = post.userProfile.id;
+        const item = document.querySelector(".action-post");
+        checkAuth(idUserByPost, item);
     })
 }
 
@@ -89,18 +102,27 @@ function renderPostComments() {
         for(var i = 0; i < post.comments.length; i++) {
             let commentItem = `
             <div class="comment-item">
-                <div class="comment-item_auth row no-gutters">
-                    <div class="comment-item_avt">
-                        <a href="#">
-                            <img src="${post.comments[i].userProfile.avatarPhoto}" alt="avt">
-                        </a>
+                <div class="row no-gutters" style="justify-content: space-between;">
+                    <div class="comment-item_auth row no-gutters">
+                        <div class="comment-item_avt">
+                            <a href="#">
+                                <img src="${post.comments[i].userProfile.avatarPhoto}" alt="avt">
+                            </a>
+                        </div>
+                        <div class="comment-item_info">
+                            <a href="#">${post.comments[i].userProfile.firstName} ${post.comments[i].userProfile.lastName}</a>
+                            <span class="row no-gutters">
+                                <p class="comment-item_info-create">${formatDate(post.comments[i].createdDate)}</p>
+                                &nbsp;(Chỉnh sửa:&nbsp;<p class="comment-item_info-modify">${formatDate(post.comments[i].modifiedDate)}</p>)
+                            </span>
+                        </div>
                     </div>
-                    <div class="comment-item_info">
-                        <a href="#">${post.comments[i].userProfile.firstName} ${post.comments[i].userProfile.lastName}</a>
-                        <span class="row no-gutters">
-                            <p class="comment-item_info-create">${formatDate(post.comments[i].createdDate)}</p>
-                            &nbsp;(Chỉnh sửa:&nbsp;<p class="comment-item_info-modify">${formatDate(post.comments[i].modifiedDate)}</p>)
-                        </span>
+                    <div id="comment-${post.comments[i].id}" class="action action-comment" style="display: none;">
+                        <i class="action-icon fa-solid fa-ellipsis-vertical"></i>
+                        <div class="action-box">
+                            <span class="action-item action-delete_post">Xóa</span>
+                            <span class="action-item action-edit_post">Chỉnh sửa</span>
+                        </div>
                     </div>
                 </div>
                 <div class="comment-item_content">
@@ -112,10 +134,28 @@ function renderPostComments() {
         }
 
         document.querySelector(".comment-list").innerHTML = commentList;
+
+        const commentArr = post.comments;
+        for (var i = 0; i < commentArr.length; i++) {
+            const item = document.querySelector(`#comment-${commentArr[i].id}`);
+            checkAuth(commentArr[i].userProfile.id, item);
+        }
     })
 }
 
 function formatDate(dateString) {
     var dateView = new Date(dateString);
     return dateView.getDate() + " th" + (dateView.getMonth() + 1) + ", " + dateView.getFullYear();
+}
+
+function checkAuth(idBy, item) {
+    fetch(`http://localhost:8080/api/v1/profile/${username}`)
+    .then(response => {
+        return response.json();
+    })
+    .then(user => {
+        if(user.id === idBy) {
+            item.style.display = "block";
+        }
+    })
 }

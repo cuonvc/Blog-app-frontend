@@ -85,6 +85,11 @@
 
     /* body */
 
+    .action-box {
+        right: 0;
+        left: auto;
+    }
+
     .setting_gender_select,
     .setting_input {
         width: 100%;
