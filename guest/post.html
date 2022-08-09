@@ -18,7 +18,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title id="title-post_guest"></title>
 </head>
-<body>
+<body onload="checkToken()">
     <div id="app-content">
         <div id="app-header">
             <div class="grid wide col">
@@ -282,4 +282,12 @@
         });
     </script>
 </body>
+
+<script>
+    function checkToken() {
+        if(localStorage.getItem("accessToken") !== null) {
+            window.location.href = '/client/home.html';
+        }
+    }
+</script>
 </html>
