@@ -19,6 +19,7 @@ renderHeaderInfo();
 renderCategories();
 renderPostsPin();
 
+
 function renderHeaderInfo() {
     fetch(`http://localhost:8080/api/v1/profile/${username}`)
     .then(function(response) {
@@ -45,13 +46,15 @@ function renderHeaderInfo() {
                 <li class="navbar-user_posts">
                     <a href="#" class="navbar-user_post-link">Bài viết của bạn</a>
                 </li>
-                <li class="navbar-logout logout_btn row no-gutters">
+                <li class="navbar-logout logout_btn-home row no-gutters">
                     <span class="navbar-logo_btn">Đăng xuất</span>
                     <i class="fa-solid fa-right-from-bracket"></i>
                 </li>
             </ul>
         `
         userBox.innerHTML = userContent;
+
+        logoutAccount(document.querySelector(".logout_btn-home"));
     });
 }
 
@@ -142,4 +145,12 @@ function saveIdLocalStorage(id) {
 function formatDate(dateString) {
     var dateView = new Date(dateString);
     return dateView.getDate() + " th" + (dateView.getMonth() + 1) + ", " + dateView.getFullYear();
+}
+
+function logoutAccount(logoutBtn) {
+    console.log(logoutBtn);
+    logoutBtn.addEventListener("click", function() {
+        localStorage.clear();
+        window.location.href = "../guest/index.html";
+    });
 }

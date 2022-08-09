@@ -41,13 +41,14 @@ function renderHeaderInfo() {
                 <li class="navbar-user_posts">
                     <a href="#" class="navbar-user_post-link">Bài viết của bạn</a>
                 </li>
-                <li class="navbar-logout logout_btn row no-gutters">
+                <li class="navbar-logout logout_btn-post row no-gutters">
                     <span class="navbar-logo_btn">Đăng xuất</span>
                     <i class="fa-solid fa-right-from-bracket"></i>
                 </li>
             </ul>
         `
         userBox.innerHTML = userContent;
+        logoutAccount(document.querySelector(".logout_btn-post"));
     });
 }
 
@@ -143,6 +144,14 @@ function renderPostComments() {
             checkAuth(commentArr[i].userProfile.id, item);
         }
     })
+}
+
+function logoutAccount(logoutBtn) {
+    console.log(logoutBtn);
+    logoutBtn.addEventListener("click", function() {
+        localStorage.clear();
+        window.location.href = "../guest/index.html";
+    });
 }
 
 function formatDate(dateString) {
