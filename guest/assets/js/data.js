@@ -17,53 +17,6 @@ function start() {
 
 }
 
-// toLogin();
-
-// function toLogin() {
-//     $("#modal-submit_login").click(function(){
-//         alert("test");
-//         var name = $('#name').val();
-//         var password = $('#password').val();
-//         var token = ''
-//         $.ajax({
-//           type: 'POST',
-//           url: '/authenticate',
-//           data: { name: name , password: password },
-//           success: function(resultData){
-//             var token = resultData.token;
-//             // console.log(token);
-//             $.ajax({
-//               type: 'GET',
-//               url: '/memberinfo',
-//               headers: {"Authorization": token},
-//               success: function(data){
-//                  $(location).attr('href', '/memberinfo')
-//               }
-//             });
-//           }
-//         });
-//     });
-// }
-
-function toRegister() {
-
-}
-// handleClickPost();
-
-// function handleClickPost() {
-//     for (var i = 0; i < postsList.length; i++) {
-//         postsList[i].addEventListener("click", function (e) {
-//             var post = e.target.closest(".post");
-//             var idPost = post.getAttribute("id");
-//             var postByIdApi = "http://localhost:8080/api/v1/post/" + idPost;
-
-//             getPostById(postByIdApi, function(post) {
-//                 renderPostById(post);
-//             });
-//         });
-//     }
-// }
-
 
 // Content post by ID
 
@@ -155,7 +108,7 @@ function getPosts(callback) {
 function saveIdLocalStorage(id) {
     localStorage.setItem("postID", id);
     setTimeout(() => {
-        location.href = '/guest/post.html'
+        location.href = `/guest/post.html?post=${id}`;
     }, 100);
 }
 
@@ -181,7 +134,7 @@ function renderPostsPin(posts) {
                                 <a href="#" class="post-pin_category">${firstCategory.name}</a>
                             </div>
                             <div class="post-pin_title">
-                                <a href="./post.html" class="post-pin_link">
+                                <a style="cursor: pointer" onclick="saveIdLocalStorage(${post.id})" class="post-pin_link">
                                     <p>${post.title}</p>
                                 </a>
                             </div>

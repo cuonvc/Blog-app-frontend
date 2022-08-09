@@ -189,7 +189,7 @@
                                         <a href="#" class="content-post_category">${firstCategory.name}</a>
                                     </div>
                                     <div class="content-post_title">
-                                        <a href="./post.html" class="post-link content-post_link">${post.title}</a>
+                                        <a style="cursor: pointer" onclick="saveIdLocalStorage(${post.id})" class="post-link content-post_link">${post.title}</a>
                                     </div>
                                     <div class="content-post_description">
                                         <p>${post.description}</p>

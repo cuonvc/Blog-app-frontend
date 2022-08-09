@@ -106,7 +106,7 @@ function renderPostsPin() {
                                     <a href="#" class="post-pin_category">${firstCategory.name}</a>
                                 </div>
                                 <div class="post-pin_title">
-                                    <a href="./post.html" class="post-pin_link">
+                                    <a style="cursor: pointer" onclick="saveIdLocalStorage(${post.id})" class="post-pin_link">
                                         <p>${post.title}</p>
                                     </a>
                                 </div>
