@@ -18,7 +18,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>Writing - Trang chủ</title>
 </head>
-<body>
+<body onload="checkToken()">
     <div id="app-content">
         <div id="app-header">
             <div class="grid wide col">
@@ -257,7 +257,8 @@
     <script src="./assets/js/main.js"></script>
     <script src="./assets/js/data.js"></script>
     <script>
-
+        // localStorage.clear();
+        console.log({ ...localStorage });
         document.querySelector(".content_input__password").addEventListener("keypress", function(event) {
             if(event.key === "Enter") {
                 $("#modal-submit_login").click();
@@ -294,4 +295,12 @@
         });
     </script>
 </body>
+<script>
+    function checkToken() {
+        if(localStorage.getItem("accessToken") !== null) {
+            window.location.href = '/client/home.html';
+        }
+    }
+</script>
+
 </html>
