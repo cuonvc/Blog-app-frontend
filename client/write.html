@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="../common/fontawesome/css/all.css">
     <link rel="stylesheet" href="../common/css/base.css">
     <link rel="stylesheet" href="../common/css/grid.css">
@@ -18,6 +21,7 @@
     <link rel="stylesheet" href="./assets/css/responsive.css">
     <title>Viết bài</title>
 </head>
+
 <body>
     <div id="app-content">
         <div id="app-header">
@@ -37,10 +41,10 @@
                         <i class="navbar_back-icon fa-solid fa-arrow-left" style="display: none;"></i>
                         <input class="navbar-search_type" type="search" placeholder="Nhập nội dung tìm kiếm">
                         <i class="search_icon fa-solid fa-magnifying-glass"></i>
-                    </div> 
+                    </div>
                     <div class="navbar_element row no-gutters">
                         <div class="navbar-user">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -51,7 +55,8 @@
             <div class="col">
                 <div id="body-post">
                     <div class="body-heading">
-                        <h1 class="body-heading_type" spellcheck="false" contentEditable=true placeholder="Tiêu đề bài viết"></h1>
+                        <h1 class="body-heading_type" spellcheck="false" contentEditable=true
+                            placeholder="Tiêu đề bài viết"></h1>
                     </div>
                     <div class="body-content">
                         <div class="body-content_editor" id="editor"
@@ -63,7 +68,7 @@
                         <span class="body-option_btn">Tiếp theo</span>
                     </div>
                 </div>
-                
+
             </div>
         </div>
 
@@ -82,7 +87,8 @@
                     </div>
                     <div class="footer-body row no-gutters">
                         <div class="footer-description l-6 m-6">
-                            <p>Một sản phẩm được chuẩn bị cho quá trình thực tập xin việc, không khai thác kinh doanh dưới bất kỳ hình thức nào.</p>
+                            <p>Một sản phẩm được chuẩn bị cho quá trình thực tập xin việc, không khai thác kinh doanh
+                                dưới bất kỳ hình thức nào.</p>
                         </div>
                         <div class="footer-contact l-6 m-6">
                             <ul class="footer-contact_list">
@@ -124,8 +130,9 @@
                         <div class="modal-description_title">
                             <span>Mô tả ngắn</span>
                         </div>
-                        <textarea rows="3" name="" class="modal-description_type row no-gutters" spellcheck="false" placeholder="Mô tả ngắn về bài viết của bạn." >
-                                    
+                        <textarea rows="3" name="" class="modal-description_type row no-gutters" spellcheck="false"
+                            placeholder="Mô tả ngắn về bài viết của bạn.">
+
                         </textarea>
                     </div>
                 </div>
@@ -133,13 +140,13 @@
                     <span class="option-categories_title">Chọn thể loại</span>
                     <div class="option-categories_list">
                         <ul class="row no-gutters option-categories_available">
-                            
+
                         </ul>
                     </div>
                     <span class="option-categories_title">Thể loại được chọn</span>
                     <div class="option-categories_list">
                         <ul class="row no-gutters option-categories_select">
-                            
+
                         </ul>
                     </div>
                 </div>
@@ -157,18 +164,65 @@
 
     <script src="./assets/js/main.js"></script>
     <script src="../common/js/base.js"></script>
-    <script src="./assets/js/data.wirte.js"></script>
+    <script type="module" src="./assets/js/data.wirte.js"></script>
 
     <script src="../ckeditor/build/ckeditor.js"></script>
-    <script>
+
+    <!-- auto upload post image -->
+    <script async>
+        class MyUploadAdapter {
+            constructor(loader) {
+                // The file loader instance to use during the upload.
+                this.loader = loader;
+            }
+
+            // Starts the upload process.
+            upload() {
+                return new Promise(async (resolve, reject) => {
+                    const file = await this.loader.file;
+
+                    try {
+                        var data = new FormData()
+                        data.append('image', file)
+
+                        const image = await fetch('http://localhost:8080/api/v1/post/image', {
+                            method: "POST",
+                            headers: {
+                                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+                            },
+                            body: data
+                        })
+                        .then(response => response.text())
+                        .then(urlImage => {
+                            resolve({ default: urlImage });
+                        })
+
+                    } catch (error) {
+                        console.log('error:',error);
+                        reject(`Không thể tải lên hình ảnh: ${error?.response?.message ?? ''}`);
+                    }
+                });
+            }
+
+            // Aborts the upload process.
+            abort() {
+                // Reject the promise returned from the upload() method.
+
+            }
+        }
+
         BalloonEditor
-        .create(document.querySelector("#editor"), {
-            placeholder: 'Nhập nội dung bài viết'
-        })
-        
-        .catch(error => {
-            console.error(error)
-        });
+            .create(document.querySelector("#editor"), {
+                placeholder: 'Nhập nội dung bài viết'
+            }).then(editor => {
+                // console.log('ckeditor:', editor);
+                editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+                    return new MyUploadAdapter(loader);
+                };
+            })
+
+
     </script>
 </body>
+
 </html>
