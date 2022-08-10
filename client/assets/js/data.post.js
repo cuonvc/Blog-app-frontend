@@ -14,6 +14,8 @@ renderHeaderInfo();
 renderPostContent();
 renderPostComments();
 
+commentToPost();
+
 
 function renderHeaderInfo() {
     fetch(`http://localhost:8080/api/v1/profile/${username}`)
@@ -147,7 +149,6 @@ function renderPostComments() {
 }
 
 function logoutAccount(logoutBtn) {
-    console.log(logoutBtn);
     logoutBtn.addEventListener("click", function() {
         localStorage.clear();
         window.location.href = "../guest/index.html";
@@ -169,4 +170,37 @@ function checkAuth(idBy, item) {
             item.style.display = "block";
         }
     })
+}
+
+function commentToPost() {
+    var submitComment = document.querySelector(".comment-form-submit-btn");
+    submitComment.addEventListener("click", fetchComment);
+}
+
+
+function fetchComment() {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${localStorage.getItem("accessToken")}`);
+    myHeaders.append("Content-Type", "application/json");
+
+    var content = document.querySelector(".comment-form-type").value;
+
+    var raw = JSON.stringify({
+        "content": content
+    });
+
+    var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+    };
+
+    fetch(`http://localhost:8080/api/v1/post/${idPost}/comment`, requestOptions)
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+    //clear old content in textbox after submit
+    document.querySelector(".comment-form-type").value = '';
+
 }
