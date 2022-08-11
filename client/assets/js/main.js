@@ -4,9 +4,11 @@ window.addEventListener("load", function() {
 
     var categoryAvailableList = document.querySelectorAll(".option-category_item");
     
-    const ulCategoriesAvailable = document.querySelector(".option-categories_available");
-    const ulCategoriesSelect = document.querySelector(".option-categories_select");
+    var ulCategoriesAvailable = document.querySelector(".option-categories_available");
+    var ulCategoriesSelect = document.querySelector(".option-categories_select");
 
+    console.log(categoryAvailableList);
+    console.log(categoryAvailableList.length);
     for (let i = 0; i < categoryAvailableList.length; i++) {
         categoryAvailableList[i].addEventListener("click", function() {
             ulCategoriesSelect.appendChild(categoryAvailableList[i]);
@@ -50,8 +52,8 @@ modalCancelBtn.addEventListener("click", function() {
 
 // display file image when click input file
 // link to backend
-const imageInput = document.querySelector("#img-background_file");
-var uploadImage = "";
+// const imageInput = document.querySelector("#img-background_file");
+// var uploadImage = "";
 
 // imageInput.addEventListener("change", () => {
 //     console.log(imageInput.value);
