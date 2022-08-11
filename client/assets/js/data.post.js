@@ -7,7 +7,8 @@ function parseJwt(token) {
     return JSON.parse(window.atob(base64));
 }
 
-const idPost = localStorage.getItem("postID");
+const idUrl = window.location.hash;
+let idPost = idUrl.substring(1);
 const username = parseJwt(localStorage.getItem("accessToken")).sub;  //get username from token
 
 renderHeaderInfo();

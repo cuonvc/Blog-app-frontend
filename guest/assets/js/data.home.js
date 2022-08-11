@@ -10,9 +10,9 @@ function start() {
         renderPostsNew(posts);
     });
 
-    getPostById(function (post) {
-        renderPostById(post);
-    });
+    // getPostById(function (post) {
+    //     renderPostById(post);
+    // });
 
 
 }
@@ -20,79 +20,79 @@ function start() {
 
 // Content post by ID
 
-function getPostById(callback) {
-    let idPost = localStorage.getItem("postID")
-    fetch("http://localhost:8080/api/v1/post/" + idPost)
-        .then(function (response) {
-            return response.json();
-        })
-        .then(callback);
-}
+// function getPostById(callback) {
+//     let idPost = localStorage.getItem("postID")
+//     fetch("http://localhost:8080/api/v1/post/" + idPost)
+//         .then(function (response) {
+//             return response.json();
+//         })
+//         .then(callback);
+// }
 
-function renderPostById(postById) {
-    const titlePage = document.getElementById("title-post_guest");
-    const categoryBox = document.querySelector(".body-post_category-list");
-    const titleBox = document.querySelector(".body-post_title");
-    const postAuthBox = document.querySelector(".body-post_auth");
-    const postContentBox = document.querySelector(".body-post_content");
-    const commentListBox = document.querySelector(".comment-list");
+// function renderPostById(postById) {
+//     const titlePage = document.getElementById("title-post_guest");
+//     const categoryBox = document.querySelector(".body-post_category-list");
+//     const titleBox = document.querySelector(".body-post_title");
+//     const postAuthBox = document.querySelector(".body-post_auth");
+//     const postContentBox = document.querySelector(".body-post_content");
+//     const commentListBox = document.querySelector(".comment-list");
 
-    titlePage.innerHTML = postById.title;
+//     titlePage.innerHTML = postById.title;
 
-    let firstCategory = `<li class="body-post_cateogry-item"><a href="#">${postById.categories[0].name}</a></li>`;
-    categoryBox.innerHTML = firstCategory;
+//     let firstCategory = `<li class="body-post_cateogry-item"><a href="#">${postById.categories[0].name}</a></li>`;
+//     categoryBox.innerHTML = firstCategory;
 
-    let titleHtml = `<h1 class="post_title--text">${postById.title}</h1>`;
-    titleBox.innerHTML = titleHtml;
+//     let titleHtml = `<h1 class="post_title--text">${postById.title}</h1>`;
+//     titleBox.innerHTML = titleHtml;
 
-    var postCreDate = formatDate(postById.createdDate);
-    let postAuthHtml = `
-        <div class="body-post_auth-avt">
-            <a href="#">
-                <img src="${postById.userProfile.avatarPhoto}" alt="avt">
-            </a>
-        </div>
-        <div class="body-post_auth-name">
-            <a href="#">${postById.userProfile.firstName} ${postById.userProfile.lastName}</a>
-            <span>${postCreDate}</span>
-        </div>
-    `;
-    postAuthBox.innerHTML = postAuthHtml;
+//     var postCreDate = formatDate(postById.createdDate);
+//     let postAuthHtml = `
+//         <div class="body-post_auth-avt">
+//             <a href="#">
+//                 <img src="${postById.userProfile.avatarPhoto}" alt="avt">
+//             </a>
+//         </div>
+//         <div class="body-post_auth-name">
+//             <a href="#">${postById.userProfile.firstName} ${postById.userProfile.lastName}</a>
+//             <span>${postCreDate}</span>
+//         </div>
+//     `;
+//     postAuthBox.innerHTML = postAuthHtml;
 
-    let contentHtmls = `${postById.content}`;
-    postContentBox.innerHTML = contentHtmls;
+//     let contentHtmls = `${postById.content}`;
+//     postContentBox.innerHTML = contentHtmls;
 
-    let commentList = "";
-    var length = postById.comments.length;
+//     let commentList = "";
+//     var length = postById.comments.length;
 
-    for (var i = 0; i < length; i++) {
-        var commentCreDate = formatDate(postById.comments[i].createdDate);
-        var commentMofDate = formatDate(postById.comments[i].modifiedDate);
-        let commentItem = `
-            <div class="comment-item">
-                <div class="comment-item_auth row no-gutters">
-                    <div class="comment-item_avt">
-                        <a href="#">
-                            <img src="${postById.comments[i].userProfile.avatarPhoto}" alt="">
-                        </a>
-                    </div>
-                    <div class="comment-item_info">
-                        <a href="#">${postById.comments[i].userProfile.firstName} ${postById.comments[i].userProfile.lastName}</a>
-                        <span class="row no-gutters">
-                            <p class="comment-item_info-create">${commentCreDate}</p>
-                            &nbsp;(Chỉnh sửa:&nbsp;<p class="comment-item_info-modify">${commentMofDate}</p>)
-                        </span>
-                    </div>
-                </div>
-                <div class="comment-item_content">
-                    <p>${postById.comments[i].content}</p>
-                </div>
-            </div>
-        `;
-        commentList += commentItem;
-    }
-    commentListBox.innerHTML = commentList;
-}
+//     for (var i = 0; i < length; i++) {
+//         var commentCreDate = formatDate(postById.comments[i].createdDate);
+//         var commentMofDate = formatDate(postById.comments[i].modifiedDate);
+//         let commentItem = `
+//             <div class="comment-item">
+//                 <div class="comment-item_auth row no-gutters">
+//                     <div class="comment-item_avt">
+//                         <a href="#">
+//                             <img src="${postById.comments[i].userProfile.avatarPhoto}" alt="">
+//                         </a>
+//                     </div>
+//                     <div class="comment-item_info">
+//                         <a href="#">${postById.comments[i].userProfile.firstName} ${postById.comments[i].userProfile.lastName}</a>
+//                         <span class="row no-gutters">
+//                             <p class="comment-item_info-create">${commentCreDate}</p>
+//                             &nbsp;(Chỉnh sửa:&nbsp;<p class="comment-item_info-modify">${commentMofDate}</p>)
+//                         </span>
+//                     </div>
+//                 </div>
+//                 <div class="comment-item_content">
+//                     <p>${postById.comments[i].content}</p>
+//                 </div>
+//             </div>
+//         `;
+//         commentList += commentItem;
+//     }
+//     commentListBox.innerHTML = commentList;
+// }
 
 
 // content list posts
@@ -124,7 +124,7 @@ function renderPostsPin(posts) {
             <div class="row">
                 <div class="post-pin l-9 m-12 s-12 col">
                     <div class="content-post_pin row post" id="${post.id}">
-                        <a style="cursor: pointer" onclick="saveIdLocalStorage(${post.id})" class="l-4 m-4 s-4">
+                        <a style="cursor: pointer" href="./post.html#${post.id}" class="l-4 m-4 s-4">
                             <div class="post-pin_image" style="background-image: url(${post.thumbnails});">
                             </div>
                         </a>
@@ -134,7 +134,7 @@ function renderPostsPin(posts) {
                                 <a href="#" class="post-pin_category">${firstCategory.name}</a>
                             </div>
                             <div class="post-pin_title">
-                                <a style="cursor: pointer" onclick="saveIdLocalStorage(${post.id})" class="post-pin_link">
+                                <a style="cursor: pointer" href="./post.html#${post.id}" class="post-pin_link">
                                     <p>${post.title}</p>
                                 </a>
                             </div>
@@ -174,7 +174,7 @@ function renderPostsNew(posts) {
         let html = `
             <div class="col l-3 m-4 s-12">
                 <div class="content-post_new">
-                    <a style="cursor: pointer" onclick="saveIdLocalStorage(${post.id})" class="post-link content-post_link">
+                    <a style="cursor: pointer" href="./post.html#${post.id}" class="post-link content-post_link">
                         <div class="content-post_image" style="background-image: url(${post.thumbnails});">
                         </div>
                     </a>
@@ -184,7 +184,7 @@ function renderPostsNew(posts) {
                             <a href="#" class="content-post_category">${firstCategory.name}</a>
                         </div>
                         <div class="content-post_title">
-                            <a href="./post.html" class="post-link content-post_link">${post.title}</a>
+                            <a href="./post.html#${post.id}" class="post-link content-post_link">${post.title}</a>
                         </div>
                         <div class="content-post_description">
                             <p>${post.description}</p>

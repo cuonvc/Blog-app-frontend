@@ -96,7 +96,7 @@ function renderPostsPin() {
                 <div class="row">
                     <div class="post-pin l-9 m-12 s-12 col">
                         <div class="content-post_pin row post" id="${post.id}">
-                            <a style="cursor: pointer" onclick="saveIdLocalStorage(${post.id})" class="l-4 m-4 s-4">
+                            <a style="cursor: pointer" href="./post.html#${post.id}" class="l-4 m-4 s-4">
                                 <div class="post-pin_image" style="background-image: url(${post.thumbnails});">
                                 </div>
                             </a>
@@ -106,7 +106,7 @@ function renderPostsPin() {
                                     <a href="#" class="post-pin_category">${firstCategory.name}</a>
                                 </div>
                                 <div class="post-pin_title">
-                                    <a style="cursor: pointer" onclick="saveIdLocalStorage(${post.id})" class="post-pin_link">
+                                    <a style="cursor: pointer" href="./post.html#${post.id}" class="post-pin_link">
                                         <p>${post.title}</p>
                                     </a>
                                 </div>
@@ -135,11 +135,6 @@ function renderPostsPin() {
         let contentBox = document.querySelector(".content-posts_pin");
         contentBox.innerHTML = htmls;
     })
-}
-
-function saveIdLocalStorage(id) {
-    localStorage.setItem("postID", id);
-    window.location.href = `/client/post.html?post=${id}`;
 }
 
 function formatDate(dateString) {

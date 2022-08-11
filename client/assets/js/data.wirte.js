@@ -142,10 +142,7 @@ function createPost() {
                     .then(response => response.text())
                     .then(result => {
                         var idPost = JSON.parse(result).id;
-                        // setTimeout(() => {
-                            // alert("Tạo thành công. Đi tới bài viết?");
-                            window.location.href = `./post.html?post=${idPost}`;
-                        // }, 100);
+                        window.location.href = `./post.html#${idPost}`;
                     })
                     .catch(error => console.log("error", error));
                 });
