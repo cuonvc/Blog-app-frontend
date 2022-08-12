@@ -154,7 +154,7 @@
 
 .select-file_avt {
     position: absolute;
-    bottom: 0;
+    bottom: 4px;
     --width-lable: 50px;
     width: var(--width-lable);
     /* padding-top: calc(var(--width-avt) - var(--width-lable)) ; */
@@ -162,7 +162,8 @@
     left: 0;
     text-align: center;
     margin: 0 calc((var(--width-avt) - var(--width-lable)) / 2);
-    background-color: transparent;
+    background-color: #99999952;
+    border-radius: 10px;
     color: #ffffffb7;
     font-size: 1.2rem;
 }
