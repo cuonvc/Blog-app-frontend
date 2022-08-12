@@ -73,58 +73,22 @@ modalForm.onclick = function() {
     modalForm.style.display = "none";
 }
 
-// registerBtnNav.onclick = function() {
-//     modalForm.style.display = "flex";
-//     loginForm.style.display = "none";
-//     forgetPassForm.style.display = "none";
-//     registerForm.style.display = "block";
-// }
+searchPosts();
 
-// registerBtnSlider.onclick = function() {
-//     modalForm.style.display = "flex";
-//     registerForm.style.display = "block";
-//     forgetPassForm.style.display = "none";
-//     loginForm.style.display = "none";
-// }
-
-// loginBtnEndPage.onclick = function() {
-//     modalForm.style.display = "flex";
-//     registerForm.style.display = "none";
-//     forgetPassForm.style.display = "none";
-//     loginForm.style.display = "block";
-// }
-
-// toRegister.onclick = function() {
-//     loginForm.style.display = "none";
-//     forgetPassForm.style.display = "none";
-//     registerForm.style.display = "block";
-// }
-
-// toLogin.onclick = function() {
-//     registerForm.style.display = "none";
-//     forgetPassForm.style.display = "none";
-//     loginForm.style.display = "block";
-// }
-
-// toForgetPass.onclick = function() {
-//     loginForm.style.display = "none";
-//     registerForm.style.display = "none";
-//     forgetPassForm.style.display = "block";
-// }
-
-// loginBtnNav.onclick = function() {
-//     modalForm.style.display = "flex";
-//     registerForm.style.display = "none";
-//     forgetPassForm.style.display = "none";
-//     loginForm.style.display = "block";
-// }
-
-// loginBtnComment.onclick = function() {
-//     modalForm.style.display = "flex";
-//     registerForm.style.display = "none";
-//     forgetPassForm.style.display = "none";
-//     loginForm.style.display = "block";
-// }
-
+function searchPosts() {
+    var keyword = document.querySelector(".navbar-search_type");
+    var searchSubmit = document.querySelector(".search_icon");
+    keyword.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            searchSubmit.click();
+        }
+    })
+    searchSubmit.addEventListener("click", function() {
+        modalForm.style.display = "flex";
+        registerForm.style.display = "none";
+        forgetPassForm.style.display = "none";
+        loginForm.style.display = "block";
+    })
+}
 
 

@@ -12,6 +12,7 @@ const username = parseJwt(localStorage.getItem("accessToken")).sub;  //get usern
 renderHeaderInfo();
 // renderCategories();
 createPost();
+searchPosts();
 
 function renderHeaderInfo() {
     fetch(`http://localhost:8080/api/v1/profile/${username}`)
@@ -219,4 +220,17 @@ function selectCategories(callback) {
             });
         }
     });
+}
+
+function searchPosts() {
+    var keyword = document.querySelector(".navbar-search_type");
+    var searchSubmit = document.querySelector(".search_icon");
+    keyword.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            searchSubmit.click();
+        }
+    })
+    searchSubmit.addEventListener("click", function() {
+        window.location.href = `./posts-search.html?search=${keyword.value}`;
+    })
 }

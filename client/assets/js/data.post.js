@@ -18,6 +18,8 @@ function start() {
     renderPostComments();
 }
 
+searchPosts();
+
 
 commentToPost();
 
@@ -209,4 +211,17 @@ function fetchComment() {
     document.querySelector(".comment-form-type").value = '';
     location.reload();
 
+}
+
+function searchPosts() {
+    var keyword = document.querySelector(".navbar-search_type");
+    var searchSubmit = document.querySelector(".search_icon");
+    keyword.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            searchSubmit.click();
+        }
+    })
+    searchSubmit.addEventListener("click", function() {
+        window.location.href = `./posts-search.html?search=${keyword.value}`;
+    })
 }

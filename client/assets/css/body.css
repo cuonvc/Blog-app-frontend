@@ -362,6 +362,7 @@
 }
 
 
+.search_heading,
 .category_heading {
     display: flex;
     justify-content: center;
@@ -369,6 +370,7 @@
     padding: 40px 0;
 }
 
+.search_title,
 .category_title {
     margin: 40px 0;
     padding: 20px 30px;
@@ -719,12 +721,14 @@
     
 }
 
+.content-posts_by-search,
 .content_my-posts,
 .content-posts_by-category,
 .content-posts_pin {
     margin-bottom: 90px;
 }
 
+.content-post_by-search,
 .content_my-post,
 .content-post_by-category,
 .content-post_pin {
@@ -740,6 +744,7 @@
     width: 300px;
 }
 
+.post_by-search_image,
 .my-post_image,
 .post_by-category_image,
 .post-pin_image {
@@ -750,6 +755,7 @@
     border-radius: 4px;
 }
 
+.post_by-search_text,
 .my-post_text,
 .post_by-category_text,
 .post-pin_text {
@@ -775,6 +781,7 @@
     background-color: rgba(218, 218, 218, 0.603);
 }
 
+.post_by-search_title,
 .my-post_title,
 .post_by-category_title,
 .post-pin_title {
@@ -782,6 +789,7 @@
 }
 
 .my-post_link,
+.post_by-search_link,
 .post_by-category_link,
 .post-pin_link {
     text-decoration: none;
@@ -792,6 +800,7 @@
 }
 
 .my-post_description,
+.post_by-search_description,
 .post_by-category_description,
 .post-pin_description {
     font-size: 1.2rem;
@@ -812,6 +821,7 @@
 }
 
 .my-post_info,
+.post_by-search_info,
 .post_by-category_info,
 .post-pin_info {
     display: flex;
@@ -822,6 +832,7 @@
 }
 
 .my-post_auth,
+.post_by-search_auth,
 .post_by-category_auth,
 .post-pin_auth {
     display: flex;
@@ -832,6 +843,7 @@
 }
 
 .my-post_auth > img,
+.post_by-search_auth > img,
 .post_by-category_auth > img,
 .post-pin_auth > img {
     width: 34px;
@@ -844,12 +856,14 @@
 }
 
 .my-post_auth > span,
+.post_by-search_auth > span,
 .post_by-category_auth > span,
 .post-pin_auth > span {
     color: var(--text-color);
     font-weight: 600;
 }
 
+.post_by-search_auth > span:hover,
 .my-post_auth > span:hover,
 .post_by-category_auth > span:hover,
 .post-pin_auth > span:hover {
