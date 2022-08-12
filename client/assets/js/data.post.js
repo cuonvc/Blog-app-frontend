@@ -11,9 +11,13 @@ const idUrl = window.location.hash;
 let idPost = idUrl.substring(1);
 const username = parseJwt(localStorage.getItem("accessToken")).sub;  //get username from token
 
-renderHeaderInfo();
-renderPostContent();
-renderPostComments();
+start();
+function start() {
+    renderHeaderInfo();
+    renderPostContent();
+    renderPostComments();
+}
+
 
 commentToPost();
 
@@ -203,5 +207,6 @@ function fetchComment() {
     .catch(error => console.log('error', error));
     //clear old content in textbox after submit
     document.querySelector(".comment-form-type").value = '';
+    location.reload();
 
 }

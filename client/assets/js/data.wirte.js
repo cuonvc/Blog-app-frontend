@@ -107,7 +107,8 @@ function createPost() {
                 let textContent = "";
                 const children = document.querySelector(".body-content_editor").childNodes;
                 children.forEach(element => {
-                    if (String(element.getAttribute("class")) === "image ck-widget ck-widget_selected"
+                    if (String(element.getAttribute("class")) === "image ck-widget"
+                        || String(element.getAttribute("class")) === "image ck-widget ck-widget_selected"
                         || String(element.getAttribute("class")) === "image ck-widget image-style-side ck-widget_selected") {
                         console.log("Test");
                         console.log(element);
