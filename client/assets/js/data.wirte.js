@@ -107,7 +107,18 @@ function createPost() {
                 let textContent = "";
                 const children = document.querySelector(".body-content_editor").childNodes;
                 children.forEach(element => {
-                    textContent += element.outerHTML;
+                    if (String(element.getAttribute("class")) === "image ck-widget ck-widget_selected"
+                        || String(element.getAttribute("class")) === "image ck-widget image-style-side ck-widget_selected") {
+                        console.log("Test");
+                        console.log(element);
+                        var tagImg = element.getElementsByTagName("img")[0];
+                        element.remove();
+                        textContent += tagImg.outerHTML;
+                    } else {
+
+                        textContent += element.outerHTML;
+                    }
+                    console.log(textContent);
                 })
 
 
@@ -125,7 +136,7 @@ function createPost() {
 
                 // console.log(titleContent);
                 // console.log(descriptionContent);
-                // console.log(textContent);
+                console.log(textContent);
 
                 var requestOptions = {
                     method: "POST",
@@ -135,7 +146,7 @@ function createPost() {
                 }
 
 
-                // console.log(`http://localhost:8080/api/v1/category/${arrCategId.toString()}/post`);
+                console.log(`http://localhost:8080/api/v1/category/${arrCategId.toString()}/post`);
                 var submitBtn = document.querySelector(".content-confirm_btn");
                 submitBtn.addEventListener("click", function() {
                     fetch(`http://localhost:8080/api/v1/category/${arrCategId.toString()}/post`, requestOptions)
