@@ -69,7 +69,7 @@ function renderCategories() {
         categories.map(category => {
             let html = `
             <li class="content-category_item">
-                <a href="#" class="content-category_link">${category.name}</a>
+                <a onclick="alertNoti()" href="#" class="content-category_link">${category.name}</a>
             </li>
             `
             htmls += html;
@@ -77,6 +77,10 @@ function renderCategories() {
 
         document.querySelector(".content-category_list").innerHTML = htmls;
     });
+}
+
+function alertNoti() {
+    alert("Làm lâu quá nên nản bỏ chức năng này :D")
 }
 
 function renderPostsPin() {
