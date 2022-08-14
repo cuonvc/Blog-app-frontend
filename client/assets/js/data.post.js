@@ -265,10 +265,14 @@ function removePost() {
 
     removeBtn.addEventListener("click", function() {
         fetch(`http://localhost:8080/api/v1/post/${idPost}`, requestOptions)
-        .then(response => response.text())
+        .then(response => response.json())
         .then(result => {
-            alert("Đã xóa bài viết!");
-            window.location.href = "./home.html";
+            if (result.message === "Access is denied") {
+                alert("Phím xa gà chết!\nBạn không được quyền xóa comment này trừ khi bạn là Admin =))")
+            } else {
+                alert("Đã xóa bài viết!");
+                window.location.href = "./home.html";
+            }
         })
         .catch(error => {
             console.log("error", error);
@@ -352,9 +356,14 @@ function deleteComment(idComment) {
         };
 
         fetch(`http://localhost:8080/api/v1/comment/${idComment}`, requestOptions)
-        .then(response => response.text())
+        .then(response => response.json())
         .then(result => {
-            currentComment.style.display = "none";
+            console.log(result);
+            if (result.message === "Access is denied") {
+                alert("Phím xa gà chết!\nBạn không được quyền xóa comment trừ khi bạn là Admin =))");
+            } else {
+                currentComment.style.display = "none";
+            }
         })
         .catch(error => {
             alert("Đã có lỗi xảy ra!" + "\ncode: " + error);
