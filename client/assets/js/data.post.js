@@ -284,6 +284,7 @@ function clickToActionComment(id, content) {
         actionBtn.addEventListener("click", function() {
             document.querySelector(".action-box_comment-" + id).classList.toggle("show-element");
             modifyComment(id, content);
+            deleteComment(id);
         });
     // });
 }
@@ -330,4 +331,34 @@ function modifyComment(idComment, oldContent) {
         });
     });
 
+}
+
+function deleteComment(idComment) {
+    var removeBtn = document.querySelector(".action-delete_comment-" + idComment);
+    var currentComment = document.querySelector(".comment-item-" + idComment);
+
+    removeBtn.addEventListener("click", function() {
+
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${localStorage.getItem("accessToken")}`);
+        
+        var raw = "";
+
+        var requestOptions = {
+            method: "DELETE",
+            headers: myHeaders,
+            body: raw,
+            redirect: "follow"
+        };
+
+        fetch(`http://localhost:8080/api/v1/comment/${idComment}`, requestOptions)
+        .then(response => response.text())
+        .then(result => {
+            currentComment.style.display = "none";
+        })
+        .catch(error => {
+            alert("Đã có lỗi xảy ra!" + "\ncode: " + error);
+            console.log("error", error)
+        });
+    });
 }
