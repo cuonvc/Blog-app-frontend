@@ -101,7 +101,7 @@ function renderPostContent() {
         const idUserByPost = post.userProfile.id;
         const item = document.querySelector(".action-post");
         checkAuth(idUserByPost, item);
-        clickToAction();
+        clickToActionPost();
     })
     .catch(() => {
         alert("bài viết không tồn tại!");
@@ -116,7 +116,7 @@ function renderPostComments() {
         let commentList = "";
         for(var i = 0; i < post.comments.length; i++) {
             let commentItem = `
-            <div class="comment-item">
+            <div class="comment-item-${post.comments[i].id}">
                 <div class="row no-gutters" style="justify-content: space-between;">
                     <div class="comment-item_auth row no-gutters">
                         <div class="comment-item_avt">
@@ -132,11 +132,11 @@ function renderPostComments() {
                             </span>
                         </div>
                     </div>
-                    <div id="comment-${post.comments[i].id}" class="action action-comment" style="display: none;">
+                    <div id="comment-${post.comments[i].id}" class="action action-comment-${post.comments[i].id}" style="display: none;">
                         <i class="action-icon fa-solid fa-ellipsis-vertical"></i>
-                        <div class="action-box action-box_comment">
-                            <span class="action-item action-delete_post">Xóa</span>
-                            <span class="action-item action-edit_post">Chỉnh sửa</span>
+                        <div class="action-box action-box_comment-${post.comments[i].id}">
+                            <span class="action-item action-delete_comment-${post.comments[i].id}">Xóa</span>
+                            <span class="action-item action-edit_comment-${post.comments[i].id}">Chỉnh sửa</span>
                         </div>
                     </div>
                 </div>
@@ -154,6 +154,7 @@ function renderPostComments() {
         for (var i = 0; i < commentArr.length; i++) {
             const item = document.querySelector(`#comment-${commentArr[i].id}`);
             checkAuth(commentArr[i].userProfile.id, item);
+            clickToActionComment(commentArr[i].id, commentArr[i].content);
         }
     })
 }
@@ -183,7 +184,7 @@ function checkAuth(idBy, item) {
 }
 
 function commentToPost() {
-    var submitComment = document.querySelector(".comment-form-submit-btn");
+    var submitComment = document.querySelector(".comment-submit_new");
     submitComment.addEventListener("click", fetchComment);
 }
 
@@ -229,7 +230,7 @@ function searchPosts() {
     })
 }
 
-function clickToAction() {
+function clickToActionPost() {
     var actionPost = document.querySelector(".action-post");
     actionPost.addEventListener("click", function() {
         document.querySelector(".action-box_post").classList.toggle("show-element");
@@ -274,4 +275,59 @@ function removePost() {
             alert("Đã có lỗi xảy ra !");
         });
     })
+}
+
+function clickToActionComment(id, content) {
+    // console.log(id);
+    var actionBtn = document.querySelector(".action-comment-" + id);
+    // actionBtns.forEach(actionBtn => {
+        actionBtn.addEventListener("click", function() {
+            document.querySelector(".action-box_comment-" + id).classList.toggle("show-element");
+            modifyComment(id, content);
+        });
+    // });
+}
+
+function modifyComment(idComment, oldContent) {
+    var currentComment = document.querySelector(".comment-item-" + idComment);
+    var editBtn = document.querySelector(".action-edit_comment-" + idComment);
+    var textFill = document.querySelector(".comment-form-type");
+    var submitNewComment = document.querySelector(".comment-submit_new");
+    var submitUpdateComment = document.querySelector(".comment-submit_update");
+    editBtn.addEventListener("click", function() {
+        submitNewComment.classList.add("hidden-element");
+        submitUpdateComment.classList.remove("hidden-element");
+        textFill.value = oldContent;
+        textFill.focus();
+        currentComment.style.display = "none";
+
+
+        
+
+        submitUpdateComment.addEventListener("click", function() {
+            var myHeaders = new Headers();
+            myHeaders.append("Authorization", `Bearer ${localStorage.getItem("accessToken")}`);
+            myHeaders.append("Content-type", "application/json");
+
+            var raw = JSON.stringify({
+                "content": document.querySelector(".comment-form-type").value
+            });
+
+            var requestOptions = {
+                method: "PUT",
+                headers: myHeaders,
+                body: raw,
+                redirect: "follow"
+            };
+
+            console.log(raw);
+            fetch(`http://localhost:8080/api/v1/comment/${idComment}`, requestOptions)
+            .then(response => response.text())
+            .then(result => {
+                location.reload();
+            })
+            .catch(error => console.log("error", error));
+        });
+    });
+
 }
