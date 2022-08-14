@@ -19,8 +19,6 @@ function start() {
 }
 
 searchPosts();
-
-
 commentToPost();
 
 
@@ -86,7 +84,7 @@ function renderPostContent() {
                 </div>
                 <div class="action action-post" style="display: none;">
                     <i class="action-icon fa-solid fa-ellipsis-vertical"></i>
-                    <div class="action-box">
+                    <div class="action-box action-box_post">
                         <span class="action-item action-delete_post">Xóa bài viết</span>
                         <span class="action-item action-edit_post">Chỉnh sửa</span>
                     </div>
@@ -103,6 +101,7 @@ function renderPostContent() {
         const idUserByPost = post.userProfile.id;
         const item = document.querySelector(".action-post");
         checkAuth(idUserByPost, item);
+        clickToAction();
     })
 }
 
@@ -131,7 +130,7 @@ function renderPostComments() {
                     </div>
                     <div id="comment-${post.comments[i].id}" class="action action-comment" style="display: none;">
                         <i class="action-icon fa-solid fa-ellipsis-vertical"></i>
-                        <div class="action-box">
+                        <div class="action-box action-box_comment">
                             <span class="action-item action-delete_post">Xóa</span>
                             <span class="action-item action-edit_post">Chỉnh sửa</span>
                         </div>
@@ -224,4 +223,31 @@ function searchPosts() {
     searchSubmit.addEventListener("click", function() {
         window.location.href = `./posts-search.html?search=${keyword.value}`;
     })
+}
+
+function clickToAction() {
+    var actionPost = document.querySelector(".action-post");
+    actionPost.addEventListener("click", function() {
+        document.querySelector(".action-box_post").classList.toggle("show-element");
+        modifyPost();
+    });
+}
+
+function modifyPost() {
+
+    var editBtn = document.querySelector(".action-edit_post");
+    editBtn.addEventListener("click", function() {
+        window.location.href = `./write.html?post=${idPost}`;
+        // getPostData();
+        // var myHeaders = new Headers();
+        // myHeaders.append("Authorization", `Bearer ${localStorage.getItem("accessToken")}`);
+        // myHeaders.append("Content-Type", "application/json");
+
+        // var raw = ({
+            
+        // });
+
+        // fetch(`http://localhost:8080/api/v1/post/${idPost}`)
+    });
+
 }

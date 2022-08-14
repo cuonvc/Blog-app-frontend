@@ -8,6 +8,10 @@
     display: none !important;
 }
 
+.show-element {
+    display: block !important;
+}
+
 .action {
     display: flex;
     align-items: center;
@@ -38,9 +42,9 @@
     display: none;
 }
 
-.action:hover .action-box {
+/* .action:hover .action-box {
     display: block;
-}
+} */
 
 .action-item {
     display: block;

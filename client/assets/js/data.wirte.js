@@ -9,9 +9,20 @@ function parseJwt(token) {
 
 const username = parseJwt(localStorage.getItem("accessToken")).sub;  //get username from token
 
+var urlString = window.location.href;
+var urlObj = new URL(urlString);
+var idPost = urlObj.searchParams.get("post");  //get keyword from param
+
 renderHeaderInfo();
 // renderCategories();
-createPost();
+if (idPost === undefined || idPost === null) {
+    // window.getContentOldPost = false;
+    createPost();
+} else {
+    // window.createPost = false;
+    getContentOldPost(idPost);
+}
+
 searchPosts();
 
 function renderHeaderInfo() {
@@ -107,7 +118,9 @@ function createPost() {
 
                 let textContent = "";
                 const children = document.querySelector(".body-content_editor").childNodes;
+                console.log(children);
                 children.forEach(element => {
+                    console.log(typeof(element));
                     if (String(element.getAttribute("class")) === "image ck-widget"
                         || String(element.getAttribute("class")) === "image ck-widget ck-widget_selected"
                         || String(element.getAttribute("class")) === "image ck-widget image-style-side ck-widget_selected") {
@@ -232,5 +245,116 @@ function searchPosts() {
     })
     searchSubmit.addEventListener("click", function() {
         window.location.href = `./posts-search.html?search=${keyword.value}`;
+    })
+}
+
+
+
+
+function getContentOldPost(id) {
+
+    if (id !== null) {
+        var heading = document.querySelector(".body-heading_type");
+        var body = document.querySelector(".body-content");
+        var description = document.querySelector(".modal-description_type");
+        var categoriesSelect = document.querySelector(".option-categories_select");
+        // console.log(content);
+        fetch(`http://localhost:8080/api/v1/post/${id}`)
+        .then(response => {
+            return response.json();
+        })
+        .then(result => {
+            heading.innerHTML = result.title;
+            body.innerHTML = `
+            <div class="ck-blurred body-content_editor ck ck-content ck-editor__editable ck-rounded-corners ck-editor__editable_inline" id="editor" lang="vi" dir="ltr" role="textbox" aria-label="Trình soạn thảo văn bản, main" data-ck-unsafe-attribute-oninput="this.style.height = '28px'; this.style.height = this.scrollHeight +'px'" contenteditable="true">
+                ${result.content}
+            </div>
+            `;
+            description.innerHTML = result.description;
+    
+            var categoryList = result.categories;
+            let categoriesHtml = "";
+            categoryList.map(category => {
+                let html = `<li class="option-category_item selected">${category.name}</li>`;
+                categoriesHtml += html;
+            })
+            categoriesSelect.innerHTML = categoriesHtml;
+    
+            // selectCategories(function() {
+            //     // var arrCategId = generateCategoriesId(categoriesSelect);
+            // });
+            var continuteBtn = document.querySelector(".body-option_btn");
+            continuteBtn.addEventListener("click", function() {
+                var titleContent = document.querySelector(".body-heading_type").innerText;
+        
+                let descriptionContent = "";
+                var descriptionElement = document.querySelector(".modal-description_type");
+                if (descriptionElement.value !== '') {
+                    descriptionContent = descriptionElement.value;
+                } else {
+                    descriptionContent = document.querySelector(".body-content_editor").childNodes[0].innerText;
+                }
+                console.log(descriptionElement);
+    
+                let textContent = "";
+                const children1 = document.querySelector(".body-content_editor").childNodes;
+                console.log(children1);
+                // children1.forEach(element => {
+                    for (let i = 1; i < children1.length - 1; i++) {
+                        console.log(children1[i]);
+                        if (String(children1[i].getAttribute("class")) === "image ck-widget"
+                            || String(children1[i].getAttribute("class")) === "image ck-widget ck-widget_selected"
+                            || String(children1[i].getAttribute("class")) === "image ck-widget image-style-side ck-widget_selected") {
+                            console.log("Test");
+                            console.log(children1[i]);
+                            var tagImg = children1[i].getElementsByTagName("img")[0];
+                            children1[i].remove();
+                            textContent += tagImg.outerHTML;
+                        } else {
+    
+                            textContent += children1[i].outerHTML;
+                        }
+                        console.log(textContent);
+                    }
+                // })
+    
+                publishOldPost(titleContent, descriptionContent, textContent, id);
+
+            });
+    
+        });
+    }
+
+}
+
+function publishOldPost(title, description, content, id) {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${localStorage.getItem("accessToken")}`);
+    myHeaders.append("Content-Type", "application/json");
+
+    console.log(title);
+    console.log(description);
+    console.log(content);
+
+    var raw = JSON.stringify({
+        "title": title,
+        "description": description,
+        "content": content,
+    });
+
+    var requestOptions = {
+        method: "PUT",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow"
+    };
+
+    document.querySelector(".content-confirm_btn").addEventListener("click", function() {
+        fetch(`http://localhost:8080/api/v1/post/${id}`, requestOptions)
+        .then(response => response.text())
+        .then(result => {
+            window.location.href = `./post.html#${id}`;
+        })
+        .catch(error => console.log('error', error));
     })
 }
