@@ -103,6 +103,10 @@ function renderPostContent() {
         checkAuth(idUserByPost, item);
         clickToAction();
     })
+    .catch(() => {
+        alert("bài viết không tồn tại!");
+        window.location.href = "./home.html";
+    })
 }
 
 function renderPostComments() {
