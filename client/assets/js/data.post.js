@@ -230,6 +230,7 @@ function clickToAction() {
     actionPost.addEventListener("click", function() {
         document.querySelector(".action-box_post").classList.toggle("show-element");
         modifyPost();
+        removePost();
     });
 }
 
@@ -238,16 +239,35 @@ function modifyPost() {
     var editBtn = document.querySelector(".action-edit_post");
     editBtn.addEventListener("click", function() {
         window.location.href = `./write.html?post=${idPost}`;
-        // getPostData();
-        // var myHeaders = new Headers();
-        // myHeaders.append("Authorization", `Bearer ${localStorage.getItem("accessToken")}`);
-        // myHeaders.append("Content-Type", "application/json");
-
-        // var raw = ({
-            
-        // });
-
-        // fetch(`http://localhost:8080/api/v1/post/${idPost}`)
     });
 
+}
+
+function removePost() {
+    var removeBtn = document.querySelector(".action-delete_post");
+
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${localStorage.getItem("accessToken")}`);
+
+    var raw = "";
+
+    var requestOptions = {
+        method: "DELETE",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow"
+    };
+
+    removeBtn.addEventListener("click", function() {
+        fetch(`http://localhost:8080/api/v1/post/${idPost}`, requestOptions)
+        .then(response => response.text())
+        .then(result => {
+            alert("Đã xóa bài viết!");
+            window.location.href = "./home.html";
+        })
+        .catch(error => {
+            console.log("error", error);
+            alert("Đã có lỗi xảy ra !");
+        });
+    })
 }
