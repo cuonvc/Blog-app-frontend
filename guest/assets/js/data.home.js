@@ -10,11 +10,7 @@ function start() {
         renderPostsNew(posts);
     });
 
-    // getPostById(function (post) {
-    //     renderPostById(post);
-    // });
-
-
+    registerAccoutUser();
 }
 
 
@@ -213,4 +209,56 @@ function renderPostsNew(posts) {
 function formatDate(dateString) {
     var dateView = new Date(dateString);
     return dateView.getDate() + " th" + (dateView.getMonth() + 1) + ", " + dateView.getFullYear();
+}
+
+function registerAccoutUser() {
+
+    var signupBtn = document.querySelector("#modal-submit_re");
+    signupBtn.addEventListener("click", function() {
+
+        var lastName = document.querySelector("#input_last-name_re");
+        var firstName = document.querySelector("#input_first-name-re");
+        var username = document.querySelector("#input_username_re");
+        var email = document.querySelector("#input_email_re");
+        var password = document.querySelector("#input_password_re");
+        var rePassword = document.querySelector("#input_re-password_re");
+
+        if (password.value === rePassword.value) {
+            var myHeaders = new Headers();
+            myHeaders.append("Content-type", "application/json");
+    
+            var raw = JSON.stringify({
+                "firstName": firstName.value,
+                "lastName": lastName.value,
+                "username": username.value,
+                "email": email.value,
+                "password": password.value
+            });
+    
+            var requestOptions = {
+                method: "POST",
+                headers: myHeaders,
+                body: raw,
+                redirect: "follow"
+            };
+    
+            fetch("http://localhost:8080/api/v1/auth/user/signup", requestOptions)
+            .then(response => response.text())
+            .then(result => {
+                if (result === "User register successfully!") {
+                    alert("Đăng ký thành công, hãy quay lại đăng nhập!");
+                    document.querySelector(".modal").style.display = "none";
+                } else {
+                    alert("Nhiều case quá nên bạn thấy lỗi ở đâu thì điền lại đó nhé :v\n \n" + result);
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                alert("Không thể tạo tài khoản, vui lòng thử lại!");
+            });
+        } else {
+            alert("Password không trùng khớp!");
+        }
+
+    })
 }

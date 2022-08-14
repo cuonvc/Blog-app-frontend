@@ -180,8 +180,8 @@
                         <span>Đăng nhập với Email</span>
                     </div>
                     <div class="modal-content_input">
-                        <input class="content_input__email" type="text" placeholder="Tên đăng nhập hoặc email">
-                        <input class="content_input__password" type="password" placeholder="Mật khẩu đăng nhập">
+                        <input id="input_email_log" class="content_input__email" type="text" placeholder="Tên đăng nhập hoặc email">
+                        <input id="input_password_log" class="content_input__password" type="password" placeholder="Mật khẩu đăng nhập">
                         <span type="submit" id="modal-submit_login" class="content_submit__btn">Đăng nhập</span>
                     </div>
                     <div class="modal-content-to_regiser">
@@ -215,14 +215,14 @@
                     </div>
                     <div class="modal-content_input">
                         <div class="modal-content_input__name">
-                            <input class="content_input__name" type="text" placeholder="Họ">
-                            <input class="content_input__name" type="text" placeholder="Tên">
+                            <input id="input_last-name_re" class="content_input__name" type="text" placeholder="Họ">
+                            <input id="input_first-name-re" class="content_input__name" type="text" placeholder="Tên">
                         </div>
-                        <input class="content_input__username" type="text" placeholder="Tên đăng nhập">
-                        <input class="content_input__email" type="email" placeholder="Địa chỉ email">
-                        <input class="content_input__password" type="password" placeholder="Nhập mật khẩu">
-                        <input class="content_input__password" type="password" placeholder="Nhập lại mật khẩu">
-                        <span class="content_submit__btn">Tạo tài khoản</span>
+                        <input id="input_username_re" class="content_input__username" type="text" placeholder="Tên đăng nhập">
+                        <input id="input_email_re" class="content_input__email" type="email" placeholder="Địa chỉ email">
+                        <input id="input_password_re" class="content_input__password" type="password" placeholder="Nhập mật khẩu">
+                        <input id="input_re-password_re" class="content_input__password" type="password" placeholder="Nhập lại mật khẩu">
+                        <span id="modal-submit_re" class="content_submit__btn">Tạo tài khoản</span>
                     </div>
                     <div class="modal-content-to_login">
                         <p>Bạn đã có tài khoản?
@@ -263,9 +263,7 @@
     <script src="./assets/js/main.js"></script>
     <script src="./assets/js/data.home.js"></script>
     <script>
-        // localStorage.clear();
-        console.log({ ...localStorage });
-        document.querySelector(".content_input__password").addEventListener("keypress", function(event) {
+        document.querySelector("#input_password_log").addEventListener("keypress", function(event) {
             if(event.key === "Enter") {
                 $("#modal-submit_login").click();
             }
@@ -273,8 +271,8 @@
         
         $("#modal-submit_login").click(function(){
         
-            var name = $('.content_input__email').val();
-            var password = $('.content_input__password').val();
+            var name = $('#input_email_log').val();
+            var password = $('#input_password_log').val();
 
             // console.log(name);
             // console.log(password);
