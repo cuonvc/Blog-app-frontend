@@ -73,7 +73,7 @@ function renderContent(data) {
                 <input type="file" id="img-background_file" name="img" accept="image/png, image/jpg">
             </div>
             <div class="body-content row">
-                <div class="body-profile_detail col l-4 m-12">
+                <div class="body-profile_detail col l-4 m-12 s-12">
                     <div class="body-profile_avt">
                         <img class="profile-avt_link" src="${data.avatarPhoto}" alt="avt">
                         <label class="select-file_avt" for="img-avt_file">
@@ -92,9 +92,9 @@ function renderContent(data) {
                         <a href="./setting.html" class="profile-edit_btn">Chỉnh sửa</a>
                     </div>
                 </div>
-                <div class="content_my-posts col l-8 m-12">
+                <div class="content_my-posts col l-8 m-12 s-12">
                     <div class="content_list-posts">
-                `
+                `;
 
                 fetch("http://localhost:8080/api/v1/posts?pageNo=0&pageSize=100&sortBy=id&sortDir=desc")
                 .then(response => {
@@ -106,7 +106,7 @@ function renderContent(data) {
                         if (post.userProfile.id === data.id) {
                             let postContent = `
                         <div class="row">
-                            <div class="l-12 col">
+                            <div class="l-12 col m-12 s-12">
                                 <div class="content_my-post row">
                                     <a href="./post.html#${post.id}" class="l-4 m-4 s-4">
                                         <div class="my-post_image" style="background-image: url(${post.thumbnails});">
@@ -229,7 +229,9 @@ function updateAvatar() {
 
         fetch(apiUpload, requestOptions)
         .then(response => response.text())
-        .then(result => console.log(result))
+        .then(result => {
+            location.reload();
+        })
         .catch(error => console.log("error", error));
     });
 }
@@ -266,7 +268,9 @@ function updateCover() {
 
         fetch(apiUpload, requestOptions)
         .then(response => response.text())
-        .then(result => console.log(result))
+        .then(result => {
+            location.reload();
+        })
         .catch(error => console.log("error", error));
     });
 }

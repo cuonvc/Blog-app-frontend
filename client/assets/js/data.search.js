@@ -74,7 +74,7 @@ function renderPostsBySearch() {
             let html =
                 `
                 <div class="row">
-                    <div class="l-9 col">
+                    <div class="l-9 m-12 s-12 col">
                         <div class="content-post_by-search row">
                             <a href="./post.html#${idPost}" class="l-4 m-4 s-4">
                                 <div class="post_by-search_image" style="background-image: url(${post.thumbnails});">

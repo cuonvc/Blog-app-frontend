@@ -729,9 +729,9 @@
     margin-bottom: 90px;
 }
 
-.content-post_by-search,
 .content_my-post,
 .content-post_by-category,
+.content-post_by-search,
 .content-post_pin {
     width: 100%;
     justify-content: flex-start;
