@@ -375,6 +375,7 @@
 .category_title {
     margin: 40px 0;
     padding: 20px 30px;
+    line-height: 1.5;
     font-size: 3rem;
     background-color: #caffff;
     position: relative;

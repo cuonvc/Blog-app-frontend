@@ -220,14 +220,32 @@ function fetchComment() {
 function searchPosts() {
     var keyword = document.querySelector(".navbar-search_type");
     var searchSubmit = document.querySelector(".search_icon");
-    keyword.addEventListener("keypress", function(event) {
-        if (event.key === "Enter") {
-            searchSubmit.click();
-        }
-    })
-    searchSubmit.addEventListener("click", function() {
-        window.location.href = `./posts-search.html?search=${keyword.value}`;
-    })
+    var iconToSearchMobile = document.querySelector(".search_icon_mobile");
+    if (getComputedStyle(iconToSearchMobile).display === "block") {
+        iconToSearchMobile.addEventListener("click", function() {
+            searchSubmit.style.display = "block";
+            iconToSearchMobile.style.display = "none";
+            console.log("test");
+            keyword.addEventListener("keypress", function(event) {
+                if (event.key === "Enter") {
+                    searchSubmit.click();
+                }
+            });
+            searchSubmit.addEventListener("click", function() {
+                window.location.href = `./posts-search.html?search=${keyword.value}`;
+            });
+        });
+    } else {
+        keyword.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                searchSubmit.click();
+            }
+        });
+        searchSubmit.addEventListener("click", function() {
+            window.location.href = `./posts-search.html?search=${keyword.value}`;
+        });
+    }
+
 }
 
 function clickToActionPost() {

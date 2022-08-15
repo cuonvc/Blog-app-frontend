@@ -1,6 +1,8 @@
 /* PC */
 @media(min-width: 1024px) {
-
+    .search_icon_mobile {
+        display: none;
+    }
 }
 
 /* Ipad pro */
@@ -38,6 +40,14 @@
 
     .body-profile_detail {
         top: -50px;
+    }
+
+    .search_icon_mobile {
+        display: block;
+    }
+
+    .search_icon {
+        display: none;
     }
 }
 
