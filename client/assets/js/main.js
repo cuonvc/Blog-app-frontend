@@ -48,21 +48,3 @@ modalOptionBtn.addEventListener("click", function() {
 modalCancelBtn.addEventListener("click", function() {
     document.querySelector("#modal-option").style.display = "none";
 });
-
-
-// display file image when click input file
-// link to backend
-// const imageInput = document.querySelector("#img-background_file");
-// var uploadImage = "";
-
-// imageInput.addEventListener("change", () => {
-//     console.log(imageInput.value);
-//     const fileReader = new FileReader();
-//     fileReader.addEventListener("load", () => {
-//         uploadImage = fileReader.result;
-//         document.querySelector("#image-background_display")
-//             .style.backgroundImage = `url(${uploadImage})`;
-//     });
-
-//     fileReader.readAsDataURL(this.files[0]);
-// });

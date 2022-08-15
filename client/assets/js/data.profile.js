@@ -24,8 +24,6 @@ function getProfile() {
         renderHeader(data);
         renderContent(data);
         // render header
-        
-
 
     });
 }
@@ -90,7 +88,7 @@ function renderContent(data) {
                         <p class="profile-about_text">${data.about}</p>
                     </div>
                     <div class="body-profile_edit">
-                        <a href="#" class="profile-edit_btn">Chỉnh sửa</a>
+                        <a href="./setting.html" class="profile-edit_btn">Chỉnh sửa</a>
                     </div>
                 </div>
                 <div class="content_my-posts col l-8 m-12">
@@ -144,7 +142,6 @@ function renderContent(data) {
                         }
 
                     })
-                    console.log(bodyPosts);
                 const divTail = `
                 </div>
                 </div>
@@ -153,8 +150,10 @@ function renderContent(data) {
                 `
                 const bodyContent = bodyInfo + bodyPosts + divTail;
                 document.querySelector("#app-body").innerHTML = bodyContent;
-                })
-                
+
+                updateAvatar();
+                updateCover();
+            });   
 }
 
 function logoutAccount(logoutBtn) {
@@ -180,3 +179,81 @@ function checkAuth(idBy, item) {
         }
     })
 }
+
+// display file image when click input file
+// link to backend
+
+function updateAvatar() {
+    var apiUpload = "http://localhost:8080/api/v1/profile/avatar";
+    var imageInput = document.querySelector("#img-avt_file");
+    var imageDisplay = document.querySelector(".profile-avt_link");
+    // uploadProfileImage(apiUpload, imageInput, imageDisplay);
+
+    var uploadImage = "";
+
+    imageInput.addEventListener("change", () => {
+        const fileReader = new FileReader();
+        fileReader.addEventListener("load", () => {
+            uploadImage = fileReader.result;
+            imageDisplay.style.backgroundImage = `url(${uploadImage})`;
+        });
+        // console.log(imageInput.files[0]);
+        // fileReader.readAsDataURL(imageInput.files[0]);
+        // console.log(fileReader);
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${localStorage.getItem("accessToken")}`);
+
+        var formdata = new FormData();
+        formdata.append("image", imageInput.files[0]);
+
+        var requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            body: formdata,
+            redirect: "follow"
+        };
+
+        fetch(apiUpload, requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log("error", error));
+    });
+}
+
+function updateCover() {
+    var apiUpload = "http://localhost:8080/api/v1/profile/coverPhoto";
+    var imageInput = document.querySelector("#img-background_file");
+    var imageDisplay = document.querySelector("#image-background_display");
+    // uploadProfileImage(apiUpload, imageInput, imageDisplay);
+
+    var uploadImage = "";
+
+    imageInput.addEventListener("change", () => {
+        const fileReader = new FileReader();
+        fileReader.addEventListener("load", () => {
+            uploadImage = fileReader.result;
+            imageDisplay.style.backgroundImage = `url(${uploadImage})`;
+        });
+        // console.log(imageInput.files[0]);
+        // fileReader.readAsDataURL(imageInput.files[0]);
+        // console.log(fileReader);
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${localStorage.getItem("accessToken")}`);
+
+        var formdata = new FormData();
+        formdata.append("image", imageInput.files[0]);
+
+        var requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            body: formdata,
+            redirect: "follow"
+        };
+
+        fetch(apiUpload, requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log("error", error));
+    });
+}
+
