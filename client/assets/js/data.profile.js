@@ -12,6 +12,7 @@ let idPost = idUrl.substring(1);
 const username = parseJwt(localStorage.getItem("accessToken")).sub;  //get username from token
 
 getProfile();
+searchPosts();
 
 function getProfile() {
     fetch(`http://localhost:8080/api/v1/profile/${username}`)
@@ -44,10 +45,10 @@ function renderHeader(data) {
         </div>
         <ul class="navbar-user_box">
             <li class="navbar-user_detail">
-                <a href="#" class="navbar-user_link">Thông tin tài khoản</a>
+                <a href="./setting.html" class="navbar-user_link">Thông tin tài khoản</a>
             </li>
             <li class="navbar-user_posts">
-                <a href="#" class="navbar-user_post-link">Bài viết của bạn</a>
+                <a href="./myposts.html" class="navbar-user_post-link">Bài viết của bạn</a>
             </li>
             <li class="navbar-logout logout_btn-post row no-gutters">
                 <span class="navbar-logo_btn">Đăng xuất</span>
@@ -177,6 +178,19 @@ function checkAuth(idBy, item) {
         if(user.id === idBy) {
             item.style.display = "block";
         }
+    })
+}
+
+function searchPosts() {
+    var keyword = document.querySelector(".navbar-search_type");
+    var searchSubmit = document.querySelector(".search_icon");
+    keyword.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            searchSubmit.click();
+        }
+    })
+    searchSubmit.addEventListener("click", function() {
+        window.location.href = `./posts-search.html?search=${keyword.value}`;
     })
 }
 
