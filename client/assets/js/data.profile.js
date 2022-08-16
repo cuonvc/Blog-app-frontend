@@ -172,14 +172,6 @@ function renderContent() {
                     const bodyContent = bodyInfo + bodyPosts + divTail;
                     document.querySelector("#app-body").innerHTML = bodyContent;
 
-                    validateAdmin(data, document.querySelector(".body-profile_detail")
-                        .querySelector(".icon_admin-name"));
-                    var confirmIcons = document.querySelector(".content_my-posts")
-                        .querySelectorAll(".icon_admin-name");
-                    for (var i = 0; i < allPosts.length; i++) {
-                        validateAdmin(allPosts[i].userProfile, confirmIcons[i]);
-                    }
-
                     var editCoverBtn = document.querySelector(".select-file_background");
                     var editAvtBtn = document.querySelector(".select-file_avt");
                     var editInfoBtn = document.querySelector(".body-profile_edit");
@@ -187,6 +179,13 @@ function renderContent() {
                     updateAvatar();
                     updateCover();
 
+                    validateAdmin(data, document.querySelector(".body-profile_detail")
+                        .querySelector(".icon_admin-name"));
+                    var confirmIcons = document.querySelector(".content_my-posts")
+                        .querySelectorAll(".icon_admin-name");
+                    for (var i = 0; i < allPosts.length; i++) {
+                        validateAdmin(allPosts[i].userProfile, confirmIcons[i]);
+                    }
 
                 });   
     });
