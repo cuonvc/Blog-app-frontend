@@ -46,7 +46,7 @@ function renderHeaderInfo() {
                     <a href="./setting.html" class="navbar-user_link">Thông tin tài khoản</a>
                 </li>
                 <li class="navbar-user_posts">
-                    <a href="./user.html" class="navbar-user_post-link">Bài viết của bạn</a>
+                    <a href="./user.html#${username}" class="navbar-user_post-link">Bài viết của bạn</a>
                 </li>
                 <li class="navbar-logout logout_btn-post row no-gutters">
                     <span class="navbar-logo_btn">Đăng xuất</span>

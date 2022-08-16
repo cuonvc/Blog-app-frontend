@@ -41,7 +41,7 @@ function renderHeaderInfo() {
                     <a href="./setting.html" class="navbar-user_link">Thông tin tài khoản</a>
                 </li>
                 <li class="navbar-user_posts">
-                    <a href="./user.html" class="navbar-user_post-link">Bài viết của bạn</a>
+                    <a href="./user.html#${usernameToken}" class="navbar-user_post-link">Bài viết của bạn</a>
                 </li>
                 <li class="navbar-logout logout_btn-home row no-gutters">
                     <span class="navbar-logo_btn">Đăng xuất</span>
@@ -126,7 +126,7 @@ function renderContent() {
                                                 <p>${post.description}</p>
                                             </div>
                                             <div class="my-post_info">
-                                                <a href="#" class="my-post_auth">
+                                                <a href="./user.html#${usernameProfile}" class="my-post_auth">
                                                     <img src="${post.userProfile.avatarPhoto}" alt="Avartar">
                                                     <span>${post.userProfile.firstName} ${post.userProfile.lastName}</span>
                                                 </a>
