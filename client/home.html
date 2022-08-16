@@ -205,7 +205,10 @@
                                     <div class="content-post_info">
                                         <a href="./user.html#${post.userProfile.usernameByUser}" class="content-post_auth">
                                             <img src="${post.userProfile.avatarPhoto}" alt="Avartar">
-                                            <span>${post.userProfile.firstName} ${post.userProfile.lastName}</span>
+                                            <span>
+                                                ${post.userProfile.firstName} ${post.userProfile.lastName}
+                                                <i style="display: none;" class="icon_admin-name fa-solid fa-circle-check"></i>
+                                            </span>
                                         </a>
                                         <div class="content-post_time">
                                             <i class="fa-solid fa-clock"></i>
@@ -217,10 +220,20 @@
                         </div>
                     `
                     htmls += html;
-                    document.querySelector(".content-posts").innerHTML = htmls;
                 });
-            })
+                document.querySelector(".content-posts").innerHTML = htmls;
+                var confirmIcons = document.querySelector(".content-posts")
+                    .querySelectorAll(".icon_admin-name");
+                    
+                for (let i = 0; i < arrPosts.length; i++) {
+                    if (arrPosts[i].userProfile.roles[0].name === "ROLE_ADMIN") {
+                        console.log(confirmIcons[i]);
+                        confirmIcons[i].style.display = "inline";
+                    }
+                }
+            });
         }
+
     </script>
 </body>
 </html>

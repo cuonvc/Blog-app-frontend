@@ -90,7 +90,12 @@ function renderPostContent() {
                         <a href="./user.html#${post.userProfile.usernameByUser}"><img src="${post.userProfile.avatarPhoto}" alt="avt"></a>
                     </div>
                     <div class="body-post_auth-name">
-                        <a href="./user.html#${post.userProfile.usernameByUser}">${post.userProfile.firstName} ${post.userProfile.lastName}</a>
+                        <a href="./user.html#${post.userProfile.usernameByUser}">
+                            <span>
+                                ${post.userProfile.firstName} ${post.userProfile.lastName}
+                                <i style="display: none;" class="icon_admin-name fa-solid fa-circle-check"></i>
+                            </span>
+                        </a>
                         <span>${formatDate(post.createdDate)}</span>
                     </div>
                 </div>
@@ -112,8 +117,11 @@ function renderPostContent() {
         
         const userByPost = post.userProfile;
         const item = document.querySelector(".action-post");
+        let confirmIcon = document.querySelector(".body-post_box")
+            .querySelector(".icon_admin-name");
         checkAuth(userByPost, item);
         clickToActionPost();
+        validateAdmin(post, confirmIcon);
     })
     .catch(() => {
         alert("bài viết không tồn tại!");
@@ -137,7 +145,12 @@ function renderPostComments() {
                             </a>
                         </div>
                         <div class="comment-item_info">
-                            <a href="./user.html#${result[i].userProfile.usernameByUser}">${result[i].userProfile.firstName} ${result[i].userProfile.lastName}</a>
+                            <a href="./user.html#${result[i].userProfile.usernameByUser}">
+                                <span>
+                                    ${result[i].userProfile.firstName} ${result[i].userProfile.lastName}
+                                    <i style="display: none;" class="icon_admin-name fa-solid fa-circle-check"></i>
+                                </span>
+                            </a>
                             <span class="row no-gutters">
                                 <p class="comment-item_info-create">${formatDate(result[i].createdDate)}</p>
                                 &nbsp;(Chỉnh sửa:&nbsp;<p class="comment-item_info-modify">${formatDate(result[i].modifiedDate)}</p>)
@@ -161,13 +174,22 @@ function renderPostComments() {
         }
 
         document.querySelector(".comment-list").innerHTML = commentList;
+        let confirmIcons = document.querySelector(".comment-list")
+            .querySelectorAll(".icon_admin-name");
 
         for (var i = 0; i < result.length; i++) {
             const item = document.querySelector(`#comment-${result[i].id}`);
             checkAuth(result[i].userProfile, item);
             clickToActionComment(result[i].id, result[i].content);
+            validateAdmin(result[i], confirmIcons[i]);
         }
     })
+}
+
+function validateAdmin(obj, icon) {
+    if (obj.userProfile.roles[0].name === "ROLE_ADMIN") {
+        icon.style.display = "inline";
+    }
 }
 
 function logoutAccount(logoutBtn) {

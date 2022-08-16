@@ -94,7 +94,12 @@ function renderContent() {
                             <input type="file" name="img" id="img-avt_file" accept="image/png, image/jpg">
                         </div>
                         <div class="body-profile_name">
-                            <h1 class="profile-name_text">${data.firstName} ${data.lastName}</h1>
+                            <h1 class="profile-name_text">
+                                <span>
+                                    ${data.firstName} ${data.lastName}
+                                    <i style="display: none;" class="icon_admin-name fa-solid fa-circle-check"></i>
+                                </span>
+                            </h1>
                         </div>
                         <div class="body-profile_about">
                             <p class="profile-about_text">${data.about}</p>
@@ -139,7 +144,10 @@ function renderContent() {
                                             <div class="my-post_info">
                                                 <a href="./user.html#${usernameProfile}" class="my-post_auth">
                                                     <img src="${post.userProfile.avatarPhoto}" alt="Avartar">
-                                                    <span>${post.userProfile.firstName} ${post.userProfile.lastName}</span>
+                                                    <span>
+                                                        ${post.userProfile.firstName} ${post.userProfile.lastName}
+                                                        <i style="display: none;" class="icon_admin-name fa-solid fa-circle-check"></i>
+                                                    </span>
                                                 </a>
                                                 <div class="my-post_time">
                                                     <i class="fa-solid fa-clock"></i>
@@ -153,7 +161,7 @@ function renderContent() {
                                 bodyPosts += postContent;
                             }
     
-                        })
+                        });
                     const divTail = `
                     </div>
                     </div>
@@ -163,14 +171,23 @@ function renderContent() {
                     const bodyContent = bodyInfo + bodyPosts + divTail;
                     document.querySelector("#app-body").innerHTML = bodyContent;
 
+                    validateAdmin(data, document.querySelector(".body-profile_detail")
+                        .querySelector(".icon_admin-name"));
+                    var confirmIcons = document.querySelector(".content_my-posts")
+                        .querySelectorAll(".icon_admin-name");
+                    for (var i = 0; i < allPosts.length; i++) {
+                        validateAdmin(allPosts[i].userProfile, confirmIcons[i]);
+                    }
+
                     var editCoverBtn = document.querySelector(".select-file_background");
                     var editAvtBtn = document.querySelector(".select-file_avt");
                     var editInfoBtn = document.querySelector(".body-profile_edit");
                     checkAuth(data.id, editCoverBtn, editAvtBtn, editInfoBtn);
                     updateAvatar();
                     updateCover();
-                });   
 
+
+                });   
     });
 }
 
@@ -179,6 +196,14 @@ function logoutAccount(logoutBtn) {
         localStorage.clear();
         window.location.href = "../guest/index.html";
     });
+}
+
+function validateAdmin(obj, icon) {
+    console.log(obj);
+    console.log(icon);
+    if (obj.roles[0].name === "ROLE_ADMIN") {
+        icon.style.display = "inline";
+    }
 }
 
 function checkRole(user, navBox, toAdminBtn) {

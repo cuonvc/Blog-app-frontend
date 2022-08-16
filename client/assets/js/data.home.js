@@ -132,7 +132,10 @@ function renderPostsPin() {
                                 <div class="post-pin_info">
                                     <a href="./user.html#${post.userProfile.usernameByUser}" class="post-pin_auth">
                                         <img src="${post.userProfile.avatarPhoto}" alt="Avartar">
-                                        <span>${post.userProfile.firstName} ${post.userProfile.lastName}</span>
+                                        <span>
+                                            ${post.userProfile.firstName} ${post.userProfile.lastName}
+                                            <i style="display: none;" class="icon_admin-name fa-solid fa-circle-check"></i>
+                                        </span>
                                     </a>
                                     <div class="post-pin_time">
                                         <i class="fa-solid fa-clock"></i>
@@ -150,6 +153,8 @@ function renderPostsPin() {
     
         let contentBox = document.querySelector(".content-posts_pin");
         contentBox.innerHTML = htmls;
+        let confirmIcons = contentBox.querySelectorAll(".icon_admin-name");
+        validateAdmin(arrPosts, confirmIcons);
     })
 }
 
@@ -163,6 +168,14 @@ function logoutAccount(logoutBtn) {
         localStorage.clear();
         window.location.href = "../guest/index.html";
     });
+}
+
+function validateAdmin(listPost, icons) {
+    for (let i = 0; i < listPost.length; i++) {
+        if (listPost[i].userProfile.roles[0].name === "ROLE_ADMIN") {
+            icons[i].style.display = "inline";
+        }
+    }
 }
 
 function checkRole(user, navBox, toAdminBtn) {
