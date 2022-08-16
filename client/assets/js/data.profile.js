@@ -109,6 +109,7 @@ function renderContent() {
                         </div>
                     </div>
                     <div class="content_my-posts col l-8 m-12 s-12">
+                        <p class="row my-posts_title">Những bài viết của ${data.firstName} ${data.lastName}</p>
                         <div class="content_list-posts">
                     `;
     

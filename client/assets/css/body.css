@@ -416,6 +416,12 @@
     padding: 10px 0;
 }
 
+.my-posts_title {
+    font-size: 2rem;
+    color: var(--text-color);
+    margin: 20px 0;
+}
+
 .post_title--text {
     font-size: 3.4rem;
     line-height: 1.6;
