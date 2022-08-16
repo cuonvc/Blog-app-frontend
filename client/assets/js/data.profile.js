@@ -1,3 +1,8 @@
+if (localStorage.getItem("accessToken") === null) {
+    alert("Bạn chưa đăng nhập, vui lòng đăng nhập để xem nội dung");
+    window.location.href = "../guest/index.html";
+}
+
 function parseJwt(token) {
     if (!token) { 
         return;
