@@ -50,6 +50,9 @@ function renderHeaderInfo() {
                 <li class="navbar-user_posts">
                     <a href="./user.html#${username}" class="navbar-user_post-link">Bài viết của bạn</a>
                 </li>
+                <li class="navbar-user_posts to-admin" style="display: none">
+                    <a href="../admin/home.html" class="navbar-user_admin-link">Đi tới trang Admin</a>
+                </li>
                 <li class="navbar-logout logout_btn-post row no-gutters">
                     <span class="navbar-logo_btn">Đăng xuất</span>
                     <i class="fa-solid fa-right-from-bracket"></i>
@@ -57,7 +60,11 @@ function renderHeaderInfo() {
             </ul>
         `
         userBox.innerHTML = userContent;
+        
+        var navBox = document.querySelector(".navbar-user_box");
+        var toAdminBtn = document.querySelector(".to-admin");
         logoutAccount(document.querySelector(".logout_btn-post"));
+        checkRole(data, navBox, toAdminBtn);
     });
 }
 
@@ -134,6 +141,13 @@ function logoutAccount(logoutBtn) {
         localStorage.clear();
         window.location.href = "../guest/index.html";
     });
+}
+
+function checkRole(user, navBox, toAdminBtn) {
+    if (user.roles[0].name === "ROLE_ADMIN") {
+        navBox.style.height = "150px";
+        toAdminBtn.style.display = "block";
+    }
 }
 
 function searchPosts() {
