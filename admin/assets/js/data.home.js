@@ -77,19 +77,50 @@ function renderPosts() {
             </tr>`;
             listPosts += itemPost;
         })
-        document.querySelector(".list-item_posts").innerHTML = headerTable + listPosts;
-
+        var listItemsBox = document.querySelector(".list-item_posts");
+        listItemsBox.innerHTML = headerTable + listPosts;
         deletePost();
-        pinPost();
+        pinPost(listItemsBox, arrPosts);
     })
 }
 
-function pinPost() {
+function pinPost(listPostHtml, listPost) {
     var listBtnPin = document.querySelectorAll(".pin-btn");
-    for (let i = 0; i < listBtnPin.length; i++) {
+    var listItem = listPostHtml.querySelectorAll(".item-post");
+    
+    for (let i = 0; i < listItem.length; i++) {
+        if (listPost[i].pinned === true) {
+            listBtnPin[i].classList.add("pin-btn_active");
+        }
+
         listBtnPin[i].addEventListener("click", function() {
+            var idPost = listPost[i].id;
             listBtnPin[i].classList.toggle("pin-btn_active");  //tạm thời để đó
-        })
+
+            var status;
+            var btn = listBtnPin[i];
+            if (btn.className === "pin-btn pin-btn_active") {
+                status = true;
+            } else {
+                status = false;
+            }
+            
+            var myHeaders = new Headers();
+            myHeaders.append("Authorization", `Bearer ${localStorage.getItem("accessToken")}`);
+            
+            var requestOptions = {
+                method: "POST",
+                headers: myHeaders,
+                redirect: "follow"
+            };
+            console.log(status);
+            fetch(`http://localhost:8080/api/v1/post/${idPost}/${status}`, requestOptions)
+            .then(response => response.text())
+            .then(result => {
+                alert(result);
+            })
+            .catch(error => alert("Đã xảy ra lỗi: " + error));
+        });
     }
 }
 
