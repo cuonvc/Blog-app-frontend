@@ -12,6 +12,10 @@
     display: block !important;
 }
 
+.icon_admin-name {
+    color: var(--primary-color);
+}
+
 .action {
     display: flex;
     align-items: center;
