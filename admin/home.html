@@ -25,7 +25,7 @@
                 <div class="header-navbar row no-gutters">
                     <div class="navbar_element row no-gutters">
                         <div class="navbar-logo">
-                            <a href="#" class="navbar-logo_link">
+                            <a href="../client/home.html" class="navbar-logo_link">
                                 <img src="../common/image/logo.png" alt="writing">
                             </a>
                         </div>
@@ -42,20 +42,9 @@
                         </div>
                     </div>
                     <div class="navbar_element row no-gutters">
-                        <div class="navbar-auth">
-                            <a href="#" class="navbar-auth_link row no-gutters">
-                                <div class="navbar-auth-avt">
-                                    <img class="navbar-auth-image" src="https://images.spiderum.com/sp-thumbnails/5706f1d007a311ed8078239924ab2385.png" alt="">
-                                </div>
-                                <div class="navbar-auth-name">
-                                    <span>Cuong Nguyen</span>
-                                </div> 
-                            </a>
-
-                            <div class="navbar-auth_logout hidden-element">
-                                <span class="navbar_logout-btn">Đăng xuất</span>
-                            </div>
-                        </div>
+                      <div class="navbar-user">
+                            
+                      </div>
                     </div>
                 </div>
             </div>
@@ -68,75 +57,8 @@
                         <span>Danh sách bài viết</span>
                     </div>
                     <div class="body-content_list row">
-                        <table>
-                            <tr>
-                              <th>ID</th>
-                              <th>Title</th>
-                              <th>Tác giả</th>
-                              <th>Thể loại</th>
-                              <th>Action</th>
-                            </tr>
-                            <tr>
-                              <td>1</td>
-                              <td>Tiêu đề bài viết</td>
-                              <td>Tên người viết</td>
-                              <td>Thể thao</td>
-                              <td>
-                                <span class="edit-btn">Chỉnh sửa</span>
-                                <span class="remove-btn">Xóa</span>
-                              </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Tiêu đề bài viết</td>
-                                <td>Tên người viết</td>
-                                <td>Thể thao</td>
-                                <td>
-                                  <span class="edit-btn">Chỉnh sửa</span>
-                                  <span class="remove-btn">Xóa</span>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>1</td>
-                                <td>Tiêu đề bài viết</td>
-                                <td>Tên người viết</td>
-                                <td>Thể thao</td>
-                                <td>
-                                  <span class="edit-btn">Chỉnh sửa</span>
-                                  <span class="remove-btn">Xóa</span>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>1</td>
-                                <td>Tiêu đề bài viết</td>
-                                <td>Tên người viết</td>
-                                <td>Thể thao</td>
-                                <td>
-                                  <span class="edit-btn">Chỉnh sửa</span>
-                                  <span class="remove-btn">Xóa</span>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>1</td>
-                                <td>Tiêu đề bài viết</td>
-                                <td>Tên người viết</td>
-                                <td>Thể thao</td>
-                                <td>
-                                  <span class="edit-btn">Chỉnh sửa</span>
-                                  <span class="remove-btn">Xóa</span>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>1</td>
-                                <td>Tiêu đề bài viết</td>
-                                <td>Tên người viết</td>
-                                <td>Thể thao</td>
-                                <td>
-                                  <span class="edit-btn">Chỉnh sửa</span>
-                                  <span class="remove-btn">Xóa</span>
-                                </td>
-                              </tr>
-                          </table>
+                        <table class="list-item_posts">
+                        </table>
                     </div>
                 </div>
                 <div id="categories" class="body-categories">
@@ -146,66 +68,14 @@
                     <div class="body-create_item">
                         <span class="body-create_btn" onclick="displayForm()">Thêm một thể loại</span>
                         <div class="body-create_form" style="display: none;">
-                            <input type="text" class="body-create_type create-admin" placeholder="Nhập tên thể loại">
-                            <button class="body-create_submit create-admin-submit">Thêm</button>
+                            <input type="text" class="body-create_type create-category" placeholder="Nhập tên thể loại">
+                            <button class="body-create_submit create-category-submit">Thêm</button>
                         </div>
                     </div>
                     <div class="body-content_list row">
-                        <table>
-                            <tr>
-                              <th>ID</th>
-                              <th>Tên thể loại</th>
-                              <th>Action</th>
-                            </tr>
-                            <tr>
-                              <td>1</td>
-                              <td>Tên của thể loại</td>
-                              <td>
-                                <span class="edit-btn">Chỉnh sửa</span>
-                                <span class="remove-btn">Xóa</span>
-                              </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Tên của thể loại</td>
-                                <td>
-                                  <span class="edit-btn">Chỉnh sửa</span>
-                                  <span class="remove-btn">Xóa</span>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>1</td>
-                                <td>Tên của thể loại</td>
-                                <td>
-                                  <span class="edit-btn">Chỉnh sửa</span>
-                                  <span class="remove-btn">Xóa</span>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>1</td>
-                                <td>Tên của thể loại</td>
-                                <td>
-                                  <span class="edit-btn">Chỉnh sửa</span>
-                                  <span class="remove-btn">Xóa</span>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>1</td>
-                                <td>Tên của thể loại</td>
-                                <td>
-                                  <span class="edit-btn">Chỉnh sửa</span>
-                                  <span class="remove-btn">Xóa</span>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>1</td>
-                                <td>Tên của thể loại</td>
-                                <td>
-                                  <span class="edit-btn">Chỉnh sửa</span>
-                                  <span class="remove-btn">Xóa</span>
-                                </td>
-                              </tr>
-                          </table>
+                      <table class="list-item_categories">
+                        
+                      </table>
                     </div>
                 </div>
                 <div id="users" class="body-users">
@@ -224,62 +94,10 @@
                         </div>
                     </div>
                     <div class="body-content_list row">
-                        <table>
-                            <tr>
-                              <th>ID</th>
-                              <th>Tên người dùng</th>
-                              <th>Role</th>
-                              <th>Action</th>
-                            </tr>
-                            <tr>
-                              <td>1</td>
-                              <td>Tên của người dùng</td>
-                              <td>user or admin</td>
-                              <td>
-                                <span class="remove-btn">Xóa</span>
-                              </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Tên của người dùng</td>
-                                <td>user or admin</td>
-                                <td>
-                                  <span class="remove-btn">Xóa</span>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>1</td>
-                                <td>Tên của người dùng</td>
-                                <td>user or admin</td>
-                                <td>
-                                  <span class="remove-btn">Xóa</span>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>1</td>
-                                <td>Tên của người dùng</td>
-                                <td>user or admin</td>
-                                <td>
-                                  <span class="remove-btn">Xóa</span>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>1</td>
-                                <td>Tên của người dùng</td>
-                                <td>user or admin</td>
-                                <td>
-                                  <span class="remove-btn">Xóa</span>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>1</td>
-                                <td>Tên của người dùng</td>
-                                <td>user or admin</td>
-                                <td>
-                                  <span class="remove-btn">Xóa</span>
-                                </td>
-                              </tr>
-                          </table>
+                        <table class="list-item_admin">
+                        </table>
+                        <table class="list-item_user">
+                        </table>
                     </div>
                 </div>
             </div>
@@ -306,6 +124,16 @@
         </div>
     </div>
 
+    <script src="./assets/js/data.home.js"></script>
     <script src="./assets/js/main.js"></script>
+
+    <script>
+      var createItemForms = document.querySelectorAll(".body-create_form");
+      function displayForm() {
+        for(var i = 0; i < createItemForms.length; i++) {
+            createItemForms[i].style.display = "block";
+        }
+      }
+    </script>
 </body>
 </html>
