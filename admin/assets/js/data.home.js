@@ -65,18 +65,19 @@ function renderPosts() {
         arrPosts.map(post => {
             var itemPost = 
             `<tr class="item-post">
-                <td>${post.id}</td>
+                <td class="post_id">${post.id}</td>
                 <td>${post.title}</td>
                 <td>${post.userProfile.firstName} ${post.userProfile.lastName}</td>
                 <td>${post.categories[0].name}</td>
                 <td>
-                    <span>Chỉnh sửa</span>
-                    <span>Xóa</span>
+                    <span class="remove-btn post_remove-btn">Xóa</span>
                 </td>
             </tr>`;
             listPosts += itemPost;
         })
         document.querySelector(".list-item_posts").innerHTML = headerTable + listPosts;
+
+        deletePost();
     })
 }
 
@@ -142,7 +143,7 @@ function renderUsers() {
                 <td>${item.emailByUser}</td>
                 <td>${item.roles[0].name}</td>
                 <td>
-                    <span class="remove-btn">Xóa</span>
+                    <span onclick="alertFunc()" class="remove-btn">?</span>
                 </td>
             </tr>`
             listItems += user;
@@ -179,7 +180,7 @@ function renderUsers() {
                 <td>${item.emailByUser}</td>
                 <td>${item.roles[0].name}</td>
                 <td>
-                    <span class="remove-btn">Xóa</span>
+                    <span onclick="alertFunc()" class="remove-btn">?</span>
                 </td>
             </tr>`
             listItems += user;
@@ -188,6 +189,10 @@ function renderUsers() {
         document.querySelector(".list-item_user").innerHTML = headerTable + listItems;
     });
 
+}
+
+function alertFunc() {
+    alert("Tính năng chưa khả dụng");
 }
 
 function logoutAdmin() {
@@ -203,6 +208,38 @@ function logoutAdmin() {
         localStorage.clear();
         window.location.href = "../guest/index.html";
     });
+}
+
+function deletePost() {
+    var deleteBtns = document.querySelectorAll(".post_remove-btn");
+    var idPostList = document.querySelectorAll(".post_id");
+
+    for (let i = 0; i < deleteBtns.length; i++) {
+        deleteBtns[i].addEventListener("click", function() {
+            var idPost = idPostList[i].innerText;
+
+            var myHeaders = new Headers();
+            myHeaders.append("Authorization", `Bearer ${localStorage.getItem("accessToken")}`);
+            myHeaders.append("Content-Type", "application/json");
+
+            var requestOptions = {
+                method: "DELETE",
+                headers: myHeaders,
+                redirect: "follow"
+            }
+
+            fetch(`http://localhost:8080/api/v1/post/${idPost}`, requestOptions)
+            .then(response => response.text())
+            .then(result => {
+                alert(result);
+                location.reload();
+            })
+            .catch(error => {
+                console.log(error);
+                alert("Đã có lỗi xảy ra, vui lòng fix ngay!");
+            });
+        });
+    }
 }
 
 function createCategory() {
@@ -297,7 +334,6 @@ function deleteCategory() {
     // console.log(idCategories[0].innerText);
 
     for (let i = 0; i < idCategories.length; i++) {
-        console.log(removeBtns[i]);
         removeBtns[i].addEventListener("click", function() {
             var idRemove = idCategories[i].innerText;
 
@@ -310,7 +346,6 @@ function deleteCategory() {
                 headers: myHeaders,
                 redirect: "follow"
             };
-            console.log(idRemove);
 
             fetch(`http://localhost:8080/api/v1/category/${idRemove}`, requestOptions)
             .then(response => response.text())
