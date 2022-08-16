@@ -72,6 +72,7 @@ function renderPosts() {
                 <td>${post.categories[0].name}</td>
                 <td>
                     <span class="remove-btn post_remove-btn">Xóa</span>
+                    <span class="pin-btn">Pin</span>
                 </td>
             </tr>`;
             listPosts += itemPost;
@@ -79,7 +80,17 @@ function renderPosts() {
         document.querySelector(".list-item_posts").innerHTML = headerTable + listPosts;
 
         deletePost();
+        pinPost();
     })
+}
+
+function pinPost() {
+    var listBtnPin = document.querySelectorAll(".pin-btn");
+    for (let i = 0; i < listBtnPin.length; i++) {
+        listBtnPin[i].addEventListener("click", function() {
+            listBtnPin[i].classList.toggle("pin-btn_active");  //tạm thời để đó
+        })
+    }
 }
 
 function renderCategories() {

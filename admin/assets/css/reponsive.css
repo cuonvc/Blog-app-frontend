@@ -1,0 +1,5 @@
+@media(max-width: 500px) {
+    td, th {
+        padding: 8px 0;
+    }
+}

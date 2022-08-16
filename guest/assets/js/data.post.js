@@ -34,12 +34,12 @@ function renderPostById(postById) {
     var postCreDate = formatDate(postById.createdDate);
     let postAuthHtml = `
         <div class="body-post_auth-avt">
-            <a href="#">
+            <a style="cursor: pointer;" class="sign_in-btn">
                 <img src="${postById.userProfile.avatarPhoto}" alt="avt">
             </a>
         </div>
         <div class="body-post_auth-name">
-            <a href="#">
+            <a style="cursor: pointer;" class="sign_in-btn">
                 ${postById.userProfile.firstName} ${postById.userProfile.lastName}
                 <i style="display: none;" class="icon_admin-name fa-solid fa-circle-check"></i>
             </a>
@@ -65,12 +65,12 @@ function renderPostById(postById) {
             <div class="comment-item">
                 <div class="comment-item_auth row no-gutters">
                     <div class="comment-item_avt">
-                        <a href="#">
+                        <a style="cursor: pointer;" class="sign_in-btn">
                             <img src="${postById.comments[i].userProfile.avatarPhoto}" alt="">
                         </a>
                     </div>
                     <div class="comment-item_info">
-                        <a href="#">
+                        <a style="cursor: pointer;" class="sign_in-btn">
                             ${postById.comments[i].userProfile.firstName} ${postById.comments[i].userProfile.lastName}
                             <i style="display: none;" class="icon_admin-name fa-solid fa-circle-check"></i>
                         </a>
