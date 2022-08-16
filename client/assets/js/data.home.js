@@ -95,7 +95,7 @@ function alertNoti() {
 }
 
 function renderPostsPin() {
-    fetch('http://localhost:8080/api/v1/posts?pageNo=0&pageSize=5&sortBy=id&sortDir=desc')
+    fetch('http://localhost:8080/api/v1/posts?pageNo=0&pageSize=100&sortBy=id&sortDir=desc')
     .then(function(response) {
         return response.json();
     })
@@ -103,8 +103,14 @@ function renderPostsPin() {
     
         let htmls = "";
         let arrPosts = posts.content;
+        let arrPostsPin = [];
+        arrPosts.map(post => {
+            if (post.pinned === true) {
+                arrPostsPin.push(post);
+            }
+        });
     
-        arrPosts.forEach(post => {
+        arrPostsPin.forEach(post => {
             var firstCategory = post.categories[0];
             var finalDate = formatDate(post.createdDate);
             let html =
@@ -154,7 +160,7 @@ function renderPostsPin() {
         let contentBox = document.querySelector(".content-posts_pin");
         contentBox.innerHTML = htmls;
         let confirmIcons = contentBox.querySelectorAll(".icon_admin-name");
-        validateAdmin(arrPosts, confirmIcons);
+        validateAdmin(arrPostsPin, confirmIcons);
     })
 }
 
