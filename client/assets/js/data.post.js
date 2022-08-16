@@ -46,7 +46,7 @@ function renderHeaderInfo() {
                     <a href="./setting.html" class="navbar-user_link">Thông tin tài khoản</a>
                 </li>
                 <li class="navbar-user_posts">
-                    <a href="./myposts.html" class="navbar-user_post-link">Bài viết của bạn</a>
+                    <a href="./user.html" class="navbar-user_post-link">Bài viết của bạn</a>
                 </li>
                 <li class="navbar-logout logout_btn-post row no-gutters">
                     <span class="navbar-logo_btn">Đăng xuất</span>
@@ -75,10 +75,10 @@ function renderPostContent() {
             <div class="row no-gutters" style="justify-content: space-between;">
                 <div class="body-post_auth row no-gutters">
                     <div class="body-post_auth-avt">
-                        <a href="#"><img src="${post.userProfile.avatarPhoto}" alt="avt"></a>
+                        <a href="./user.html#${post.userProfile.usernameByUser}"><img src="${post.userProfile.avatarPhoto}" alt="avt"></a>
                     </div>
                     <div class="body-post_auth-name">
-                        <a href="#">${post.userProfile.firstName} ${post.userProfile.lastName}</a>
+                        <a href="./user.html#${post.userProfile.usernameByUser}">${post.userProfile.firstName} ${post.userProfile.lastName}</a>
                         <span>${formatDate(post.createdDate)}</span>
                     </div>
                 </div>
@@ -98,9 +98,9 @@ function renderPostContent() {
         
         document.querySelector("#title-post_client").innerHTML = post.title;
         
-        const idUserByPost = post.userProfile.id;
+        const userByPost = post.userProfile;
         const item = document.querySelector(".action-post");
-        checkAuth(idUserByPost, item);
+        checkAuth(userByPost, item);
         clickToActionPost();
     })
     .catch(() => {
@@ -110,38 +110,38 @@ function renderPostContent() {
 }
 
 function renderPostComments() {
-    fetch(`http://localhost:8080/api/v1/post/${idPost}`)
+    fetch(`http://localhost:8080/api/v1/post/${idPost}/comments`)
     .then(response => response.json())
-    .then(post => {
+    .then(result => {
         let commentList = "";
-        for(var i = 0; i < post.comments.length; i++) {
+        for(var i = 0; i < result.length; i++) {
             let commentItem = `
-            <div class="comment-item-${post.comments[i].id}">
+            <div class="comment-item-${result[i].id}">
                 <div class="row no-gutters" style="justify-content: space-between;">
                     <div class="comment-item_auth row no-gutters">
                         <div class="comment-item_avt">
-                            <a href="#">
-                                <img src="${post.comments[i].userProfile.avatarPhoto}" alt="avt">
+                            <a href="./user.html#${result[i].userProfile.usernameByUser}">
+                                <img src="${result[i].userProfile.avatarPhoto}" alt="avt">
                             </a>
                         </div>
                         <div class="comment-item_info">
-                            <a href="#">${post.comments[i].userProfile.firstName} ${post.comments[i].userProfile.lastName}</a>
+                            <a href="./user.html#${result[i].userProfile.usernameByUser}">${result[i].userProfile.firstName} ${result[i].userProfile.lastName}</a>
                             <span class="row no-gutters">
-                                <p class="comment-item_info-create">${formatDate(post.comments[i].createdDate)}</p>
-                                &nbsp;(Chỉnh sửa:&nbsp;<p class="comment-item_info-modify">${formatDate(post.comments[i].modifiedDate)}</p>)
+                                <p class="comment-item_info-create">${formatDate(result[i].createdDate)}</p>
+                                &nbsp;(Chỉnh sửa:&nbsp;<p class="comment-item_info-modify">${formatDate(result[i].modifiedDate)}</p>)
                             </span>
                         </div>
                     </div>
-                    <div id="comment-${post.comments[i].id}" class="action action-comment-${post.comments[i].id}" style="display: none;">
+                    <div id="comment-${result[i].id}" class="action action-comment-${result[i].id}" style="display: none;">
                         <i class="action-icon fa-solid fa-ellipsis-vertical"></i>
-                        <div class="action-box action-box_comment-${post.comments[i].id}">
-                            <span class="action-item action-delete_comment-${post.comments[i].id}">Xóa</span>
-                            <span class="action-item action-edit_comment-${post.comments[i].id}">Chỉnh sửa</span>
+                        <div class="action-box action-box_comment-${result[i].id}">
+                            <span class="action-item action-delete_comment-${result[i].id}">Xóa</span>
+                            <span class="action-item action-edit_comment-${result[i].id}">Chỉnh sửa</span>
                         </div>
                     </div>
                 </div>
                 <div class="comment-item_content">
-                    <p>${post.comments[i].content}</p>
+                    <p>${result[i].content}</p>
                 </div>
             </div>
             `
@@ -150,11 +150,10 @@ function renderPostComments() {
 
         document.querySelector(".comment-list").innerHTML = commentList;
 
-        const commentArr = post.comments;
-        for (var i = 0; i < commentArr.length; i++) {
-            const item = document.querySelector(`#comment-${commentArr[i].id}`);
-            checkAuth(commentArr[i].userProfile.id, item);
-            clickToActionComment(commentArr[i].id, commentArr[i].content);
+        for (var i = 0; i < result.length; i++) {
+            const item = document.querySelector(`#comment-${result[i].id}`);
+            checkAuth(result[i].userProfile, item);
+            clickToActionComment(result[i].id, result[i].content);
         }
     })
 }
@@ -171,13 +170,13 @@ function formatDate(dateString) {
     return dateView.getDate() + " th" + (dateView.getMonth() + 1) + ", " + dateView.getFullYear();
 }
 
-function checkAuth(idBy, item) {
+function checkAuth(userBy, item) {
     fetch(`http://localhost:8080/api/v1/profile/${username}`)
     .then(response => {
         return response.json();
     })
-    .then(user => {
-        if(user.id === idBy) {
+    .then(userByToken => {
+        if(userByToken.id === userBy.id || userByToken.roles[0].name === "ROLE_ADMIN") {
             item.style.display = "block";
         }
     })
@@ -208,7 +207,7 @@ function fetchComment() {
     };
 
     fetch(`http://localhost:8080/api/v1/post/${idPost}/comment`, requestOptions)
-    .then(response => response.text())
+    .then(response => response.json())
     .then(result => console.log(result))
     .catch(error => console.log('error', error));
     //clear old content in textbox after submit
@@ -347,6 +346,7 @@ function modifyComment(idComment, oldContent) {
             fetch(`http://localhost:8080/api/v1/comment/${idComment}`, requestOptions)
             .then(response => response.text())
             .then(result => {
+                console.log(result);
                 location.reload();
             })
             .catch(error => console.log("error", error));
