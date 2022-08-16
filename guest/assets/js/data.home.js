@@ -140,7 +140,10 @@ function renderPostsPin(posts) {
                             <div class="post-pin_info">
                                 <a href="#" class="post-pin_auth">
                                     <img src="${post.userProfile.avatarPhoto}" alt="Avartar">
-                                    <span>${post.userProfile.firstName} ${post.userProfile.lastName}</span>
+                                    <span>
+                                        ${post.userProfile.firstName} ${post.userProfile.lastName}
+                                        <i style="display: none;" class="icon_admin-name fa-solid fa-circle-check"></i>
+                                    </span>
                                 </a>
                                 <div class="post-pin_time">
                                     <i class="fa-solid fa-clock"></i>
@@ -158,6 +161,9 @@ function renderPostsPin(posts) {
 
     let contentBox = document.querySelector(".content-posts_pin");
     contentBox.innerHTML = htmls;
+
+    let confirmIcons = contentBox.querySelectorAll(".icon_admin-name");
+    validateAdmin(arrPosts, confirmIcons);
 }
 
 function renderPostsNew(posts) {
@@ -188,7 +194,10 @@ function renderPostsNew(posts) {
                         <div class="content-post_info">
                             <a href="#" class="content-post_auth">
                                 <img src="${post.userProfile.avatarPhoto}" alt="Avartar">
-                                <span>${post.userProfile.firstName} ${post.userProfile.lastName}</span>
+                                <span>
+                                    ${post.userProfile.firstName} ${post.userProfile.lastName}
+                                    <i style="display: none;" class="icon_admin-name fa-solid fa-circle-check"></i>
+                                </span>
                             </a>
                             <div class="content-post_time">
                                 <i class="fa-solid fa-clock"></i>
@@ -204,11 +213,22 @@ function renderPostsNew(posts) {
 
     let contentBox = document.querySelector(".content-posts");
     contentBox.innerHTML = htmls;
+
+    let confirmIcons = contentBox.querySelectorAll(".icon_admin-name");
+    validateAdmin(arrPosts, confirmIcons);
 }
 
 function formatDate(dateString) {
     var dateView = new Date(dateString);
     return dateView.getDate() + " th" + (dateView.getMonth() + 1) + ", " + dateView.getFullYear();
+}
+
+function validateAdmin(listPost, icons) {
+    for (let i = 0; i < listPost.length; i++) {
+        if (listPost[i].userProfile.roles[0].name === "ROLE_ADMIN") {
+            icons[i].style.display = "inline";
+        }
+    }
 }
 
 function registerAccoutUser() {

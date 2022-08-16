@@ -39,14 +39,21 @@ function renderPostById(postById) {
             </a>
         </div>
         <div class="body-post_auth-name">
-            <a href="#">${postById.userProfile.firstName} ${postById.userProfile.lastName}</a>
+            <a href="#">
+                ${postById.userProfile.firstName} ${postById.userProfile.lastName}
+                <i style="display: none;" class="icon_admin-name fa-solid fa-circle-check"></i>
+            </a>
             <span>${postCreDate}</span>
         </div>
     `;
     postAuthBox.innerHTML = postAuthHtml;
+    
+    let confirmIcon = postAuthBox.querySelector(".icon_admin-name");
+    validateAdmin(postById, confirmIcon);
 
     let contentHtmls = `${postById.content}`;
     postContentBox.innerHTML = contentHtmls;
+
 
     let commentList = "";
     var length = postById.comments.length;
@@ -63,7 +70,10 @@ function renderPostById(postById) {
                         </a>
                     </div>
                     <div class="comment-item_info">
-                        <a href="#">${postById.comments[i].userProfile.firstName} ${postById.comments[i].userProfile.lastName}</a>
+                        <a href="#">
+                            ${postById.comments[i].userProfile.firstName} ${postById.comments[i].userProfile.lastName}
+                            <i style="display: none;" class="icon_admin-name fa-solid fa-circle-check"></i>
+                        </a>
                         <span class="row no-gutters">
                             <p class="comment-item_info-create">${commentCreDate}</p>
                             &nbsp;(Chỉnh sửa:&nbsp;<p class="comment-item_info-modify">${commentMofDate}</p>)
@@ -78,11 +88,23 @@ function renderPostById(postById) {
         commentList += commentItem;
     }
     commentListBox.innerHTML = commentList;
+
+    let confirmIcons = document.querySelector(".comment-list")
+        .querySelectorAll(".icon_admin-name");
+    for (let i = 0; i < postById.comments.length; i++) {
+        validateAdmin(postById.comments[i], confirmIcons[i]);
+    }
 }
 
 function formatDate(dateString) {
     var dateView = new Date(dateString);
     return dateView.getDate() + " th" + (dateView.getMonth() + 1) + ", " + dateView.getFullYear();
+}
+
+function validateAdmin(obj, icon) {
+    if (obj.userProfile.roles[0].name === "ROLE_ADMIN") {
+        icon.style.display = "inline";
+    }
 }
 
 function registerAccoutUser() {
