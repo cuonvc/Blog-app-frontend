@@ -301,7 +301,7 @@ function removePost() {
 
     removeBtn.addEventListener("click", function() {
         fetch(`http://localhost:8080/api/v1/post/${idPost}`, requestOptions)
-        .then(response => response.json())
+        .then(response => response.text())
         .then(result => {
             if (result.message === "Access is denied") {
                 alert("Phím xa gà chết!\nBạn không được quyền xóa comment này trừ khi bạn là Admin =))")

@@ -69,7 +69,7 @@
                         <span class="body-create_btn" onclick="displayForm()">Thêm một thể loại</span>
                         <div class="body-create_form" style="display: none;">
                             <input type="text" class="body-create_type create-category" placeholder="Nhập tên thể loại">
-                            <button class="body-create_submit create-category-submit">Thêm</button>
+                            <button type="submit" class="body-create_submit create-category-submit">Thêm</button>
                         </div>
                     </div>
                     <div class="body-content_list row">
@@ -85,12 +85,13 @@
                     <div class="body-create_item">
                         <span class="body-create_btn" onclick="displayForm()">Thêm một admin mới</span>
                         <div class="body-create_form" style="display: none;">
-                            <input type="text" class="body-create_type" placeholder="Nhập họ">
-                            <input type="text" class="body-create_type" placeholder="Nhập tên">
-                            <input type="text" class="body-create_type" placeholder="Nhập email">
-                            <input type="text" class="body-create_type" placeholder="Nhập password">
-                            <input type="text" class="body-create_type" placeholder="Nhập lại password">
-                            <button class="body-create_submit">Thêm</button>
+                            <input type="text" class="body-create_type type_last-name" placeholder="Nhập họ">
+                            <input type="text" class="body-create_type type_first-name" placeholder="Nhập tên">
+                            <input type="text" class="body-create_type type_username" placeholder="Nhập username">
+                            <input type="email" class="body-create_type type_email" placeholder="Nhập email">
+                            <input type="password" class="body-create_type type_password" placeholder="Nhập password">
+                            <input type="password" class="body-create_type type_re-password" placeholder="Nhập lại password">
+                            <button type="submit" class="body-create_submit create-admin_btn">Thêm</button>
                         </div>
                     </div>
                     <div class="body-content_list row">

@@ -23,6 +23,7 @@ fetch(`http://localhost:8080/api/v1/profile/${username}`)
 });
 
 createCategory();
+registerAdminAccout();
 
 
 function renderHeader(auth) {
@@ -359,4 +360,56 @@ function deleteCategory() {
             })
         });
     }
+}
+
+function registerAdminAccout() {
+    var submitBtn = document.querySelector(".create-admin_btn");
+
+    submitBtn.addEventListener("click", function() {
+        var lastName = document.querySelector(".type_last-name");
+        var firstName = document.querySelector(".type_first-name");
+        var username = document.querySelector(".type_username");
+        var email = document.querySelector(".type_email");
+        var password = document.querySelector(".type_password");
+        var rePassword = document.querySelector(".type_re-password");
+
+        console.log(lastName.value);
+        console.log(password.value);
+        console.log(rePassword.value);
+
+        if (password.value === rePassword.value) {
+            var myHeaders = new Headers();
+            myHeaders.append("Authorization", `Bearer ${localStorage.getItem("accessToken")}`);
+            myHeaders.append("Content-Type", "application/json");
+
+            var raw = JSON.stringify({
+                "firstName": firstName.value,
+                "lastName": lastName.value,
+                "username": username.value,
+                "email": email.value,
+                "password": password.value    
+            });
+
+            var requestOptions = {
+                method: "POST",
+                headers: myHeaders,
+                body: raw,
+                redirect: "follow"
+            };
+
+            fetch("http://localhost:8080/api/v1/auth/admin/signup", requestOptions)
+            .then(response => response.text())
+            .then(result => {
+                alert(result);
+                location.reload();
+            })
+            .catch(error => {
+                console.log(error);
+                alert(error);
+            });
+
+        } else {
+            alert("Password không trùng khớp!");
+        }
+    });
 }
