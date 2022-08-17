@@ -28,7 +28,7 @@ commentToPost();
 
 
 function renderHeaderInfo() {
-    fetch(`http://localhost:8080/api/v1/profile/${username}`)
+    fetch(`https://writting.herokuapp.com/api/v1/profile/${username}`)
     .then(function(response) {
         return response.json();
     })
@@ -72,7 +72,7 @@ function renderHeaderInfo() {
 }
 
 function renderPostContent() {
-    fetch(`http://localhost:8080/api/v1/post/${idPost}`)
+    fetch(`https://writting.herokuapp.com/api/v1/post/${idPost}`)
     .then(response => response.json())
     .then(post => {
         let postContent = `
@@ -130,7 +130,7 @@ function renderPostContent() {
 }
 
 function renderPostComments() {
-    fetch(`http://localhost:8080/api/v1/post/${idPost}/comments`)
+    fetch(`https://writting.herokuapp.com/api/v1/post/${idPost}/comments`)
     .then(response => response.json())
     .then(result => {
         let commentList = "";
@@ -212,7 +212,7 @@ function formatDate(dateString) {
 }
 
 function checkAuth(userBy, item) {
-    fetch(`http://localhost:8080/api/v1/profile/${username}`)
+    fetch(`https://writting.herokuapp.com/api/v1/profile/${username}`)
     .then(response => {
         return response.json();
     })
@@ -247,7 +247,7 @@ function fetchComment() {
         redirect: 'follow'
     };
 
-    fetch(`http://localhost:8080/api/v1/post/${idPost}/comment`, requestOptions)
+    fetch(`https://writting.herokuapp.com/api/v1/post/${idPost}/comment`, requestOptions)
     .then(response => response.json())
     .then(result => console.log(result))
     .catch(error => console.log('error', error));
@@ -322,7 +322,7 @@ function removePost() {
     };
 
     removeBtn.addEventListener("click", function() {
-        fetch(`http://localhost:8080/api/v1/post/${idPost}`, requestOptions)
+        fetch(`https://writting.herokuapp.com/api/v1/post/${idPost}`, requestOptions)
         .then(response => response.text())
         .then(result => {
             if (result.message === "Access is denied") {
@@ -384,7 +384,7 @@ function modifyComment(idComment, oldContent) {
             };
 
             console.log(raw);
-            fetch(`http://localhost:8080/api/v1/comment/${idComment}`, requestOptions)
+            fetch(`https://writting.herokuapp.com/api/v1/comment/${idComment}`, requestOptions)
             .then(response => response.text())
             .then(result => {
                 console.log(result);
@@ -414,7 +414,7 @@ function deleteComment(idComment) {
             redirect: "follow"
         };
 
-        fetch(`http://localhost:8080/api/v1/comment/${idComment}`, requestOptions)
+        fetch(`https://writting.herokuapp.com/api/v1/comment/${idComment}`, requestOptions)
         .then(response => response.json())
         .then(result => {
             console.log(result);

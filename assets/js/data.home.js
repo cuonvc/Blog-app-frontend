@@ -1,4 +1,4 @@
-var postsApi = 'http://localhost:8080/api/v1/posts?pageNo=0&pageSize=5&sortBy=id&sortDir=desc';
+var postsApi = 'https://writting.herokuapp.com/api/v1/posts?pageNo=0&pageSize=5&sortBy=id&sortDir=desc';
 // var postByIdApi = '';
 var postsList = document.querySelectorAll(".post_list");
 
@@ -110,7 +110,7 @@ function saveIdLocalStorage(id) {
 }
 
 function renderPostsPin() {
-    fetch("http://localhost:8080/api/v1/posts?pageNo=0&pageSize=100&sortBy=id&sortDir=desc")
+    fetch("https://writting.herokuapp.com/api/v1/posts?pageNo=0&pageSize=100&sortBy=id&sortDir=desc")
     .then(response => response.json())
     .then(posts => {
         let htmls = "";
@@ -274,7 +274,7 @@ function registerAccoutUser() {
                 redirect: "follow"
             };
     
-            fetch("http://localhost:8080/api/v1/auth/user/signup", requestOptions)
+            fetch("https://writting.herokuapp.com/api/v1/auth/user/signup", requestOptions)
             .then(response => response.text())
             .then(result => {
                 if (result === "User register successfully!") {

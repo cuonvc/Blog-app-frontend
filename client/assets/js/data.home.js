@@ -27,7 +27,7 @@ searchPosts();
 
 
 function renderHeaderInfo() {
-    fetch(`http://localhost:8080/api/v1/profile/${username}`)
+    fetch(`https://writting.herokuapp.com/api/v1/profile/${username}`)
     .then(function(response) {
         return response.json();
     })
@@ -71,7 +71,7 @@ function renderHeaderInfo() {
 }
 
 function renderCategories() {
-    fetch('http://localhost:8080/api/v1/categories')
+    fetch('https://writting.herokuapp.com/api/v1/categories')
     .then(function(response) {
         return response.json();
     })
@@ -95,7 +95,7 @@ function alertNoti() {
 }
 
 function renderPostsPin() {
-    fetch('http://localhost:8080/api/v1/posts?pageNo=0&pageSize=100&sortBy=id&sortDir=desc')
+    fetch('https://writting.herokuapp.com/api/v1/posts?pageNo=0&pageSize=100&sortBy=id&sortDir=desc')
     .then(function(response) {
         return response.json();
     })
