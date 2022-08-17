@@ -105,7 +105,7 @@ function getPosts(callback) {
 function saveIdLocalStorage(id) {
     localStorage.setItem("postID", id);
     setTimeout(() => {
-        location.href = `/guest/post.html?post=${id}`;
+        location.href = `./post.html?post=${id}`;
     }, 100);
 }
 
