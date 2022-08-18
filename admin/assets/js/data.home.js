@@ -249,7 +249,7 @@ function logoutAdmin() {
 
     logoutBtn.addEventListener("click", function() {
         localStorage.clear();
-        window.location.href = "../guest/index.html";
+        window.location.href = "../index.html";
     });
 }
 
