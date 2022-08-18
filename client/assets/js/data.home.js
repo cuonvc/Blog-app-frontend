@@ -2,7 +2,7 @@
 
 if (localStorage.getItem("accessToken") === null) {
     alert("Bạn chưa đăng nhập, vui lòng đăng nhập để xem nội dung");
-    window.location.href = "../index.html";
+    window.location.href = "../guest/index.html";
 }
 
 function parseJwt(token) {
@@ -27,7 +27,7 @@ searchPosts();
 
 
 function renderHeaderInfo() {
-    fetch(`https://writting.herokuapp.com/api/v1/profile/${username}`)
+    fetch(`https://nvc-rest-blog.herokuapp.com/api/v1/profile/${username}`)
     .then(function(response) {
         return response.json();
     })
@@ -71,7 +71,7 @@ function renderHeaderInfo() {
 }
 
 function renderCategories() {
-    fetch('https://writting.herokuapp.com/api/v1/categories')
+    fetch('https://nvc-rest-blog.herokuapp.com/api/v1/categories')
     .then(function(response) {
         return response.json();
     })
@@ -95,7 +95,7 @@ function alertNoti() {
 }
 
 function renderPostsPin() {
-    fetch('https://writting.herokuapp.com/api/v1/posts?pageNo=0&pageSize=100&sortBy=id&sortDir=desc')
+    fetch('https://nvc-rest-blog.herokuapp.com/api/v1/posts?pageNo=0&pageSize=100&sortBy=id&sortDir=desc')
     .then(function(response) {
         return response.json();
     })
@@ -172,7 +172,7 @@ function formatDate(dateString) {
 function logoutAccount(logoutBtn) {
     logoutBtn.addEventListener("click", function() {
         localStorage.clear();
-        window.location.href = "../index.html";
+        window.location.href = "../guest/index.html";
     });
 }
 

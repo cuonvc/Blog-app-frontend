@@ -23,7 +23,7 @@ searchPosts();
 // });
 
 function getUserProfile() {
-    fetch(`https://writting.herokuapp.com/api/v1/profile/${username}`)
+    fetch(`https://nvc-rest-blog.herokuapp.com/api/v1/profile/${username}`)
     .then(function(response) {
         return response.json();
     })
@@ -194,7 +194,7 @@ function saveInfo(data) {
         redirec: "follow"
     };
     
-    fetch("https://writting.herokuapp.com/api/v1/profile", requestOptions)
+    fetch("https://nvc-rest-blog.herokuapp.com/api/v1/profile", requestOptions)
     .then(response => response.json())
     .then(result => {
         if (result.message === "Email invalid") {

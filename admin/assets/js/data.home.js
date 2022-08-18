@@ -8,7 +8,7 @@ function parseJwt(token) {
 }
 
 const username = parseJwt(localStorage.getItem("accessToken")).sub;  //get username from token
-fetch(`https://writting.herokuapp.com/api/v1/profile/${username}`)
+fetch(`https://nvc-rest-blog.herokuapp.com/api/v1/profile/${username}`)
 .then(response => response.json())
 .then(auth => {
     if (auth.roles[0].name === "ROLE_ADMIN") {
@@ -48,7 +48,7 @@ function renderHeader(auth) {
 }
 
 function renderPosts() {
-    fetch("https://writting.herokuapp.com/api/v1/posts?pageNo=0&pageSize=100&sortBy=id&sortDir=desc")
+    fetch("https://nvc-rest-blog.herokuapp.com/api/v1/posts?pageNo=0&pageSize=100&sortBy=id&sortDir=desc")
     .then(response => response.json())
     .then(result => {
         
@@ -114,7 +114,7 @@ function pinPost(listPostHtml, listPost) {
                 redirect: "follow"
             };
             console.log(status);
-            fetch(`https://writting.herokuapp.com/api/v1/post/${idPost}/${status}`, requestOptions)
+            fetch(`https://nvc-rest-blog.herokuapp.com/api/v1/post/${idPost}/${status}`, requestOptions)
             .then(response => response.text())
             .then(result => {
                 alert(result);
@@ -125,7 +125,7 @@ function pinPost(listPostHtml, listPost) {
 }
 
 function renderCategories() {
-    fetch("https://writting.herokuapp.com/api/v1/categories")
+    fetch("https://nvc-rest-blog.herokuapp.com/api/v1/categories")
     .then(response => response.json())
     .then(result => {
         var headerTable = 
@@ -161,7 +161,7 @@ function renderUsers() {
     // render admin
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${localStorage.getItem("accessToken")}`);
-    fetch("https://writting.herokuapp.com/api/v1/profiles/role/1", {
+    fetch("https://nvc-rest-blog.herokuapp.com/api/v1/profiles/role/4", {
         headers: myHeaders
     })
     .then(response => response.json())
@@ -198,7 +198,7 @@ function renderUsers() {
     // render users
     var myHeadersUser = new Headers();
     myHeadersUser.append("Authorization", `Bearer ${localStorage.getItem("accessToken")}`);
-    fetch("https://writting.herokuapp.com/api/v1/profiles/role/2", {
+    fetch("https://nvc-rest-blog.herokuapp.com/api/v1/profiles/role/14", {
         headers: myHeadersUser
     })
     .then(response => response.json())
@@ -271,7 +271,7 @@ function deletePost() {
                 redirect: "follow"
             }
 
-            fetch(`https://writting.herokuapp.com/api/v1/post/${idPost}`, requestOptions)
+            fetch(`https://nvc-rest-blog.herokuapp.com/api/v1/post/${idPost}`, requestOptions)
             .then(response => response.text())
             .then(result => {
                 alert(result);
@@ -307,7 +307,7 @@ function createCategory() {
             redirect: "follow"
         }
     
-        fetch("https://writting.herokuapp.com/api/v1/category", requestOptions)
+        fetch("https://nvc-rest-blog.herokuapp.com/api/v1/category", requestOptions)
         .then(response => response.json())
         .then(result => {
             if (result.message === "Category already exists") {
@@ -350,7 +350,7 @@ function modifyCategory() {
                     redirect: "follow"
                 };
 
-                fetch(`https://writting.herokuapp.com/api/v1/category/${cateogryId}`, requestOptions)
+                fetch(`https://nvc-rest-blog.herokuapp.com/api/v1/category/${cateogryId}`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result);
@@ -390,7 +390,7 @@ function deleteCategory() {
                 redirect: "follow"
             };
 
-            fetch(`https://writting.herokuapp.com/api/v1/category/${idRemove}`, requestOptions)
+            fetch(`https://nvc-rest-blog.herokuapp.com/api/v1/category/${idRemove}`, requestOptions)
             .then(response => response.text())
             .then(result => {
                 alert(result);
@@ -439,7 +439,7 @@ function registerAdminAccout() {
                 redirect: "follow"
             };
 
-            fetch("https://writting.herokuapp.com/api/v1/auth/admin/signup", requestOptions)
+            fetch("https://nvc-rest-blog.herokuapp.com/api/v1/auth/admin/signup", requestOptions)
             .then(response => response.text())
             .then(result => {
                 alert(result);

@@ -23,7 +23,7 @@ searchPosts();
 
 
 function renderHeaderInfo() {
-    fetch(`https://writting.herokuapp.com/api/v1/profile/${usernameToken}`)
+    fetch(`https://nvc-rest-blog.herokuapp.com/api/v1/profile/${usernameToken}`)
     .then(function(response) {
         return response.json();
     })
@@ -68,7 +68,7 @@ function renderHeaderInfo() {
 
 // hàm này ghép nối không theo khối (div) do lúc cắt html không chú ý nên nhìn code có hơi sida :D
 function renderContent() {
-    fetch(`https://writting.herokuapp.com/api/v1/profile/${usernameProfile}`)
+    fetch(`https://nvc-rest-blog.herokuapp.com/api/v1/profile/${usernameProfile}`)
     .then(function(response) {
         return response.json();
     })
@@ -113,7 +113,7 @@ function renderContent() {
                         <div class="content_list-posts">
                     `;
     
-                    fetch("https://writting.herokuapp.com/api/v1/posts?pageNo=0&pageSize=100&sortBy=id&sortDir=desc")
+                    fetch("https://nvc-rest-blog.herokuapp.com/api/v1/posts?pageNo=0&pageSize=100&sortBy=id&sortDir=desc")
                     .then(response => {
                         return response.json();
                     }).then(posts => {
@@ -219,7 +219,7 @@ function formatDate(dateString) {
 }
 
 function checkAuth(idBy, item1, item2, item3) {
-    fetch(`https://writting.herokuapp.com/api/v1/profile/${usernameToken}`)
+    fetch(`https://nvc-rest-blog.herokuapp.com/api/v1/profile/${usernameToken}`)
     .then(response => {
         return response.json();
     })
@@ -267,7 +267,7 @@ function searchPosts() {
 // link to backend
 
 function updateAvatar() {
-    var apiUpload = "https://writting.herokuapp.com/api/v1/profile/avatar";
+    var apiUpload = "https://nvc-rest-blog.herokuapp.com/api/v1/profile/avatar";
     var imageInput = document.querySelector("#img-avt_file");
     var imageDisplay = document.querySelector(".profile-avt_link");
     // uploadProfileImage(apiUpload, imageInput, imageDisplay);
@@ -299,14 +299,15 @@ function updateAvatar() {
         fetch(apiUpload, requestOptions)
         .then(response => response.text())
         .then(result => {
-            location.reload();
+            console.log(result);
+            // location.reload();
         })
         .catch(error => console.log("error", error));
     });
 }
 
 function updateCover() {
-    var apiUpload = "https://writting.herokuapp.com/api/v1/profile/coverPhoto";
+    var apiUpload = "https://nvc-rest-blog.herokuapp.com/api/v1/profile/coverPhoto";
     var imageInput = document.querySelector("#img-background_file");
     var imageDisplay = document.querySelector("#image-background_display");
     // uploadProfileImage(apiUpload, imageInput, imageDisplay);

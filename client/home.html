@@ -174,7 +174,7 @@
         });
 
         function renderPostsNew(pageNo) {
-            fetch(`https://writting.herokuapp.com/api/v1/posts?pageNo=${pageNo - 1}&pageSize=5&sortBy=id&sortDir=desc`)
+            fetch(`https://nvc-rest-blog.herokuapp.com/api/v1/posts?pageNo=${pageNo - 1}&pageSize=5&sortBy=id&sortDir=desc`)
             .then(function(response) {
                 return response.json();
             })
