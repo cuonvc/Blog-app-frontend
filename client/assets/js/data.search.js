@@ -25,7 +25,7 @@ renderPostsBySearch();
 searchPosts();
 
 function renderHeaderInfo() {
-    fetch(`http://localhost:8080/api/v1/profile/${username}`)
+    fetch(`https://nvc-rest-blog.herokuapp.com/api/v1/profile/${username}`)
     .then(function(response) {
         return response.json();
     })
@@ -69,7 +69,7 @@ function renderHeaderInfo() {
 }
 
 function renderPostsBySearch() {
-    fetch(`http://localhost:8080/api/v1/posts/search?keyword=${keyword}`)
+    fetch(`https://nvc-rest-blog.herokuapp.com/api/v1/posts/search?keyword=${keyword}`)
     .then(function(response) {
         return response.json();
     })

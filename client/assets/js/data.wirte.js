@@ -31,7 +31,7 @@ if (idPost === undefined || idPost === null) {
 searchPosts();
 
 function renderHeaderInfo() {
-    fetch(`http://localhost:8080/api/v1/profile/${username}`)
+    fetch(`https://nvc-rest-blog.herokuapp.com/api/v1/profile/${username}`)
     .then(function(response) {
         return response.json();
     })
@@ -75,7 +75,7 @@ function renderHeaderInfo() {
 }
 
 // function renderCategories() {
-//     fetch('http://localhost:8080/api/v1/categories')
+//     fetch('https://nvc-rest-blog.herokuapp.com/api/v1/categories')
 //     .then(function(response) {
 //         return response.json();
 //     })
@@ -106,7 +106,7 @@ function checkRole(user, navBox, toAdminBtn) {
 
 function createPost() {
 
-    fetch('http://localhost:8080/api/v1/categories')
+    fetch('https://nvc-rest-blog.herokuapp.com/api/v1/categories')
         .then(function(response) {
             return response.json();
         })
@@ -179,10 +179,10 @@ function createPost() {
                 }
 
 
-                console.log(`http://localhost:8080/api/v1/category/${arrCategId.toString()}/post`);
+                console.log(`https://nvc-rest-blog.herokuapp.com/api/v1/category/${arrCategId.toString()}/post`);
                 var submitBtn = document.querySelector(".content-confirm_btn");
                 submitBtn.addEventListener("click", function() {
-                    fetch(`http://localhost:8080/api/v1/category/${arrCategId.toString()}/post`, requestOptions)
+                    fetch(`https://nvc-rest-blog.herokuapp.com/api/v1/category/${arrCategId.toString()}/post`, requestOptions)
                     .then(response => response.text())
                     .then(result => {
                         var idPost = JSON.parse(result).id;
@@ -216,8 +216,8 @@ function generateCategoriesId(categories) {
 }
 
 function selectCategories(callback) {
-    window.addEventListener("load", function() {
-        
+    // window.addEventListener("load", function() {
+        console.log("test");
         var categoryAvailableList = document.querySelectorAll(".option-category_item");
         
         var ulCategoriesAvailable = document.querySelector(".option-categories_available");
@@ -250,7 +250,7 @@ function selectCategories(callback) {
                 }
             });
         }
-    });
+    
 }
 
 function searchPosts() {
@@ -295,7 +295,7 @@ function getContentOldPost(id) {
         var description = document.querySelector(".modal-description_type");
         var categoriesSelect = document.querySelector(".option-categories_select");
         // console.log(content);
-        fetch(`http://localhost:8080/api/v1/post/${id}`)
+        fetch(`https://nvc-rest-blog.herokuapp.com/api/v1/post/${id}`)
         .then(response => {
             return response.json();
         })
@@ -386,7 +386,7 @@ function publishOldPost(title, description, content, id) {
     };
 
     document.querySelector(".content-confirm_btn").addEventListener("click", function() {
-        fetch(`http://localhost:8080/api/v1/post/${id}`, requestOptions)
+        fetch(`https://nvc-rest-blog.herokuapp.com/api/v1/post/${id}`, requestOptions)
         .then(response => response.text())
         .then(result => {
             window.location.href = `./post.html#${id}`;
