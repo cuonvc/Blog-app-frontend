@@ -6,7 +6,7 @@ getPostById(function (post) {
 });
 
 function getPostById(callback) {
-    fetch("https://writting.herokuapp.com/api/v1/post/" + idPost)
+    fetch("https://nvc-rest-blog.herokuapp.com/api/v1/post/" + idPost)
         .then(function (response) {
             return response.json();
         })
@@ -138,7 +138,7 @@ function registerAccoutUser() {
                 redirect: "follow"
             };
     
-            fetch("https://writting.herokuapp.com/api/v1/auth/user/signup", requestOptions)
+            fetch("https://nvc-rest-blog.herokuapp.com/api/v1/auth/user/signup", requestOptions)
             .then(response => response.text())
             .then(result => {
                 if (result === "User register successfully!") {
