@@ -157,10 +157,6 @@
             </div>
         </div>
     </div>
-    
-    <script>
-        alert("Server đang lỗi - Error 500");
-    </script>
 
     <script src="../common/js/base.js"></script>
     <script src="./assets/js/data.home.js"></script>
@@ -178,7 +174,7 @@
         });
 
         function renderPostsNew(pageNo) {
-            fetch(`https://nvc-rest-blog.herokuapp.com/api/v1/posts?pageNo=${pageNo - 1}&pageSize=5&sortBy=id&sortDir=desc`)
+            fetch(`http://localhost:8080/api/v1/posts?pageNo=${pageNo - 1}&pageSize=5&sortBy=id&sortDir=desc`)
             .then(function(response) {
                 return response.json();
             })

@@ -31,7 +31,7 @@ if (idPost === undefined || idPost === null) {
 searchPosts();
 
 function renderHeaderInfo() {
-    fetch(`https://nvc-rest-blog.herokuapp.com/api/v1/profile/${username}`)
+    fetch(`http://localhost:8080/api/v1/profile/${username}`)
     .then(function(response) {
         return response.json();
     })
@@ -75,7 +75,7 @@ function renderHeaderInfo() {
 }
 
 // function renderCategories() {
-//     fetch('https://nvc-rest-blog.herokuapp.com/api/v1/categories')
+//     fetch('http://localhost:8080/api/v1/categories')
 //     .then(function(response) {
 //         return response.json();
 //     })
@@ -106,7 +106,7 @@ function checkRole(user, navBox, toAdminBtn) {
 
 function createPost() {
 
-    fetch('https://nvc-rest-blog.herokuapp.com/api/v1/categories')
+    fetch('http://localhost:8080/api/v1/categories')
         .then(function(response) {
             return response.json();
         })
@@ -179,10 +179,10 @@ function createPost() {
                 }
 
 
-                console.log(`https://nvc-rest-blog.herokuapp.com/api/v1/category/${arrCategId.toString()}/post`);
+                console.log(`http://localhost:8080/api/v1/category/${arrCategId.toString()}/post`);
                 var submitBtn = document.querySelector(".content-confirm_btn");
                 submitBtn.addEventListener("click", function() {
-                    fetch(`https://nvc-rest-blog.herokuapp.com/api/v1/category/${arrCategId.toString()}/post`, requestOptions)
+                    fetch(`http://localhost:8080/api/v1/category/${arrCategId.toString()}/post`, requestOptions)
                     .then(response => response.text())
                     .then(result => {
                         var idPost = JSON.parse(result).id;
@@ -295,7 +295,7 @@ function getContentOldPost(id) {
         var description = document.querySelector(".modal-description_type");
         var categoriesSelect = document.querySelector(".option-categories_select");
         // console.log(content);
-        fetch(`https://nvc-rest-blog.herokuapp.com/api/v1/post/${id}`)
+        fetch(`http://localhost:8080/api/v1/post/${id}`)
         .then(response => {
             return response.json();
         })
@@ -386,7 +386,7 @@ function publishOldPost(title, description, content, id) {
     };
 
     document.querySelector(".content-confirm_btn").addEventListener("click", function() {
-        fetch(`https://nvc-rest-blog.herokuapp.com/api/v1/post/${id}`, requestOptions)
+        fetch(`http://localhost:8080/api/v1/post/${id}`, requestOptions)
         .then(response => response.text())
         .then(result => {
             window.location.href = `./post.html#${id}`;

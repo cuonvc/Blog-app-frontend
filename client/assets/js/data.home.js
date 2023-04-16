@@ -27,7 +27,7 @@ searchPosts();
 
 
 function renderHeaderInfo() {
-    fetch(`https://nvc-rest-blog.herokuapp.com/api/v1/profile/${username}`)
+    fetch(`http://localhost:8080/api/v1/profile/${username}`)
     .then(function(response) {
         return response.json();
     })
@@ -71,7 +71,7 @@ function renderHeaderInfo() {
 }
 
 function renderCategories() {
-    fetch('https://nvc-rest-blog.herokuapp.com/api/v1/categories')
+    fetch('http://localhost:8080/api/v1/categories')
     .then(function(response) {
         return response.json();
     })
@@ -95,7 +95,7 @@ function alertNoti() {
 }
 
 function renderPostsPin() {
-    fetch('https://nvc-rest-blog.herokuapp.com/api/v1/posts?pageNo=0&pageSize=100&sortBy=id&sortDir=desc')
+    fetch('http://localhost:8080/api/v1/posts?pageNo=0&pageSize=100&sortBy=id&sortDir=desc')
     .then(function(response) {
         return response.json();
     })
