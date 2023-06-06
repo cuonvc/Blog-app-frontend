@@ -14,13 +14,13 @@ function parseJwt(token) {
 
 const idUrl = window.location.hash;
 let idPost = idUrl.substring(1);
-const username = parseJwt(localStorage.getItem("accessToken")).sub;  //get username from token
+const email = parseJwt(localStorage.getItem("accessToken")).Email;  //get username from token
 
 start();
 function start() {
     renderHeaderInfo();
     renderPostContent();
-    renderPostComments();
+    // renderPostComments();
 }
 
 searchPosts();
@@ -28,11 +28,13 @@ commentToPost();
 
 
 function renderHeaderInfo() {
-    fetch(`http://localhost:8080/api/v1/profile/${username}`)
+    fetch(`https://localhost:44377/api/user/${email}`)
     .then(function(response) {
         return response.json();
     })
-    .then(function(data) {
+    .then(function(object) {
+        const data = object.data;
+        console.log(object);
         const userBox = document.querySelector(".navbar-user");
         const userContent = `
             <div class="navbar-user_btn row no-gutters">
@@ -51,7 +53,7 @@ function renderHeaderInfo() {
                     <a href="./setting.html" class="navbar-user_link">Thông tin tài khoản</a>
                 </li>
                 <li class="navbar-user_posts">
-                    <a href="./user.html#${username}" class="navbar-user_post-link">Bài viết của bạn</a>
+                    <a href="./user.html#${email}" class="navbar-user_post-link">Bài viết của bạn</a>
                 </li>
                 <li class="navbar-user_posts to-admin" style="display: none">
                     <a href="../admin/home.html" class="navbar-user_admin-link">Đi tới trang Admin</a>
@@ -72,9 +74,11 @@ function renderHeaderInfo() {
 }
 
 function renderPostContent() {
-    fetch(`http://localhost:8080/api/v1/post/${idPost}`)
+    fetch(`https://localhost:44377/api/post/${idPost}`)
     .then(response => response.json())
-    .then(post => {
+    .then(object => {
+        const post = object.data;
+        console.log(post);
         let postContent = `
             <div class="body-post_categories">
                 <ul class="body-post_category-list">
@@ -87,12 +91,12 @@ function renderPostContent() {
             <div class="row no-gutters" style="justify-content: space-between;">
                 <div class="body-post_auth row no-gutters">
                     <div class="body-post_auth-avt">
-                        <a href="./user.html#${post.userProfile.usernameByUser}"><img src="${post.userProfile.avatarPhoto}" alt="avt"></a>
+                        <a href="./user.html#${post.user.email}"><img src="${post.user.avatarPhoto}" alt="avt"></a>
                     </div>
                     <div class="body-post_auth-name">
-                        <a href="./user.html#${post.userProfile.usernameByUser}">
+                        <a href="./user.html#${post.user.email}">
                             <span>
-                                ${post.userProfile.firstName} ${post.userProfile.lastName}
+                                ${post.user.firstName} ${post.user.lastName}
                                 <i style="display: none;" class="icon_admin-name fa-solid fa-circle-check"></i>
                             </span>
                         </a>
@@ -123,71 +127,72 @@ function renderPostContent() {
         clickToActionPost();
         validateAdmin(post, confirmIcon);
     })
-    .catch(() => {
+    .catch((error) => {
+        alert(error);
         alert("bài viết không tồn tại!");
-        window.location.href = "./home.html";
+        // window.location.href = "./home.html";
     })
 }
 
-function renderPostComments() {
-    fetch(`http://localhost:8080/api/v1/post/${idPost}/comments`)
-    .then(response => response.json())
-    .then(result => {
-        let commentList = "";
-        for(var i = 0; i < result.length; i++) {
-            let commentItem = `
-            <div class="comment-item-${result[i].id}">
-                <div class="row no-gutters" style="justify-content: space-between;">
-                    <div class="comment-item_auth row no-gutters">
-                        <div class="comment-item_avt">
-                            <a href="./user.html#${result[i].userProfile.usernameByUser}">
-                                <img src="${result[i].userProfile.avatarPhoto}" alt="avt">
-                            </a>
-                        </div>
-                        <div class="comment-item_info">
-                            <a href="./user.html#${result[i].userProfile.usernameByUser}">
-                                <span>
-                                    ${result[i].userProfile.firstName} ${result[i].userProfile.lastName}
-                                    <i style="display: none;" class="icon_admin-name fa-solid fa-circle-check"></i>
-                                </span>
-                            </a>
-                            <span class="row no-gutters">
-                                <p class="comment-item_info-create">${formatDate(result[i].createdDate)}</p>
-                                &nbsp;(Chỉnh sửa:&nbsp;<p class="comment-item_info-modify">${formatDate(result[i].modifiedDate)}</p>)
-                            </span>
-                        </div>
-                    </div>
-                    <div id="comment-${result[i].id}" class="action action-comment-${result[i].id}" style="display: none;">
-                        <i class="action-icon fa-solid fa-ellipsis-vertical"></i>
-                        <div class="action-box action-box_comment-${result[i].id}">
-                            <span class="action-item action-delete_comment-${result[i].id}">Xóa</span>
-                            <span class="action-item action-edit_comment-${result[i].id}">Chỉnh sửa</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="comment-item_content">
-                    <p>${result[i].content}</p>
-                </div>
-            </div>
-            `
-            commentList += commentItem;
-        }
+// function renderPostComments() {
+//     fetch(`http://localhost:8080/api/v1/post/${idPost}/comments`)
+//     .then(response => response.json())
+//     .then(result => {
+//         let commentList = "";
+//         for(var i = 0; i < result.length; i++) {
+//             let commentItem = `
+//             <div class="comment-item-${result[i].id}">
+//                 <div class="row no-gutters" style="justify-content: space-between;">
+//                     <div class="comment-item_auth row no-gutters">
+//                         <div class="comment-item_avt">
+//                             <a href="./user.html#${result[i].userProfile.usernameByUser}">
+//                                 <img src="${result[i].userProfile.avatarPhoto}" alt="avt">
+//                             </a>
+//                         </div>
+//                         <div class="comment-item_info">
+//                             <a href="./user.html#${result[i].userProfile.usernameByUser}">
+//                                 <span>
+//                                     ${result[i].userProfile.firstName} ${result[i].userProfile.lastName}
+//                                     <i style="display: none;" class="icon_admin-name fa-solid fa-circle-check"></i>
+//                                 </span>
+//                             </a>
+//                             <span class="row no-gutters">
+//                                 <p class="comment-item_info-create">${formatDate(result[i].createdDate)}</p>
+//                                 &nbsp;(Chỉnh sửa:&nbsp;<p class="comment-item_info-modify">${formatDate(result[i].modifiedDate)}</p>)
+//                             </span>
+//                         </div>
+//                     </div>
+//                     <div id="comment-${result[i].id}" class="action action-comment-${result[i].id}" style="display: none;">
+//                         <i class="action-icon fa-solid fa-ellipsis-vertical"></i>
+//                         <div class="action-box action-box_comment-${result[i].id}">
+//                             <span class="action-item action-delete_comment-${result[i].id}">Xóa</span>
+//                             <span class="action-item action-edit_comment-${result[i].id}">Chỉnh sửa</span>
+//                         </div>
+//                     </div>
+//                 </div>
+//                 <div class="comment-item_content">
+//                     <p>${result[i].content}</p>
+//                 </div>
+//             </div>
+//             `
+//             commentList += commentItem;
+//         }
 
-        document.querySelector(".comment-list").innerHTML = commentList;
-        let confirmIcons = document.querySelector(".comment-list")
-            .querySelectorAll(".icon_admin-name");
+//         document.querySelector(".comment-list").innerHTML = commentList;
+//         let confirmIcons = document.querySelector(".comment-list")
+//             .querySelectorAll(".icon_admin-name");
 
-        for (var i = 0; i < result.length; i++) {
-            const item = document.querySelector(`#comment-${result[i].id}`);
-            checkAuth(result[i].userProfile, item);
-            clickToActionComment(result[i].id, result[i].content);
-            validateAdmin(result[i], confirmIcons[i]);
-        }
-    })
-}
+//         for (var i = 0; i < result.length; i++) {
+//             const item = document.querySelector(`#comment-${result[i].id}`);
+//             checkAuth(result[i].userProfile, item);
+//             clickToActionComment(result[i].id, result[i].content);
+//             validateAdmin(result[i], confirmIcons[i]);
+//         }
+//     })
+// }
 
 function validateAdmin(obj, icon) {
-    if (obj.userProfile.roles[0].name === "ROLE_ADMIN") {
+    if (obj.user.role === "ADMIN_ROLE" || obj.user.role === "MOD_ROLE") {
         icon.style.display = "inline";
     }
 }
@@ -200,7 +205,7 @@ function logoutAccount(logoutBtn) {
 }
 
 function checkRole(user, navBox, toAdminBtn) {
-    if (user.roles[0].name === "ROLE_ADMIN") {
+    if (user.role === "ADMIN_ROLE" || user.role === "MOD_ROLE") {
         navBox.style.height = "150px";
         toAdminBtn.style.display = "block";
     }
@@ -212,12 +217,13 @@ function formatDate(dateString) {
 }
 
 function checkAuth(userBy, item) {
-    fetch(`http://localhost:8080/api/v1/profile/${username}`)
+    fetch(`https://localhost:44377/api/user/${email}`)
     .then(response => {
         return response.json();
     })
-    .then(userByToken => {
-        if(userByToken.id === userBy.id || userByToken.roles[0].name === "ROLE_ADMIN") {
+    .then(object => {
+        const userByToken = object.data;
+        if(userByToken.id === userBy.id || userByToken.role === "ADMIN_ROLE" || userByToken.role === "MOD_ROLE") {
             item.style.display = "block";
         }
     })

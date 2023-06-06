@@ -14,8 +14,9 @@ function parseJwt(token) {
 
 const hashStr = window.location.hash;
 let usernameProfile = hashStr.substring(1);
+console.log(localStorage.getItem("accessToken"));
 
-const usernameToken = parseJwt(localStorage.getItem("accessToken")).sub;  //get username from token
+const email = parseJwt(localStorage.getItem("accessToken")).Email;  //get username from token
 
 renderHeaderInfo();
 renderContent();
@@ -23,11 +24,12 @@ searchPosts();
 
 
 function renderHeaderInfo() {
-    fetch(`http://localhost:8080/api/v1/profile/${usernameToken}`)
+    fetch(`https://localhost:44377/api/user/${email}`)
     .then(function(response) {
         return response.json();
     })
-    .then(function(data) {
+    .then(function(object) {
+        const data = object.data;
         const userBox = document.querySelector(".navbar-user");
         const userContent = `
             <div class="navbar-user_btn row no-gutters">
@@ -46,7 +48,7 @@ function renderHeaderInfo() {
                     <a href="./setting.html" class="navbar-user_link">Thông tin tài khoản</a>
                 </li>
                 <li class="navbar-user_posts">
-                    <a href="./user.html#${usernameToken}" class="navbar-user_post-link">Bài viết của bạn</a>
+                    <a href="./user.html#${email}" class="navbar-user_post-link">Bài viết của bạn</a>
                 </li>
                 <li class="navbar-user_posts to-admin" style="display: none">
                     <a href="../admin/home.html" class="navbar-user_admin-link">Đi tới trang Admin</a>
@@ -68,11 +70,12 @@ function renderHeaderInfo() {
 
 // hàm này ghép nối không theo khối (div) do lúc cắt html không chú ý nên nhìn code có hơi sida :D
 function renderContent() {
-    fetch(`http://localhost:8080/api/v1/profile/${usernameProfile}`)
+    fetch(`https://localhost:44377/api/user/${email}`)
     .then(function(response) {
         return response.json();
     })
-    .then(function(data) {
+    .then(function(object) {
+        const data = object.data;
         document.title = `${data.firstName} ${data.lastName}`;
         const bodyInfo = `
             <div class="grid wide col">
@@ -113,20 +116,20 @@ function renderContent() {
                         <div class="content_list-posts">
                     `;
     
-                    fetch("http://localhost:8080/api/v1/posts?pageNo=0&pageSize=100&sortBy=id&sortDir=desc")
+                    fetch("https://localhost:44377/api/post/all?pageNumber=1&pageSize=100")
                     .then(response => {
                         return response.json();
-                    }).then(posts => {
-                        var allPosts = posts.content;
+                    }).then(object => {
+                        var allPosts = object.data;
                         let bodyPosts = "";
                         allPosts.map(post => {
-                            if (post.userProfile.id === data.id) {
+                            if (post.user.id === data.id) {
                                 let postContent = `
                             <div class="row">
                                 <div class="l-12 col m-12 s-12">
                                     <div class="content_my-post row">
                                         <a href="./post.html#${post.id}" class="l-4 m-4 s-4">
-                                            <div class="my-post_image" style="background-image: url(${post.thumbnails});">
+                                            <div class="my-post_image" style="background-image: url(${post.thumbnail});">
                                             </div>
                                         </a>
     
@@ -144,9 +147,9 @@ function renderContent() {
                                             </div>
                                             <div class="my-post_info">
                                                 <a href="./user.html#${usernameProfile}" class="my-post_auth">
-                                                    <img src="${post.userProfile.avatarPhoto}" alt="Avartar">
+                                                    <img src="${post.user.avatarPhoto}" alt="Avartar">
                                                     <span>
-                                                        ${post.userProfile.firstName} ${post.userProfile.lastName}
+                                                        ${post.user.firstName} ${post.user.lastName}
                                                         <i style="display: none;" class="icon_admin-name fa-solid fa-circle-check"></i>
                                                     </span>
                                                 </a>
@@ -184,7 +187,7 @@ function renderContent() {
                     var confirmIcons = document.querySelector(".content_my-posts")
                         .querySelectorAll(".icon_admin-name");
                     for (var i = 0; i < allPosts.length; i++) {
-                        validateAdmin(allPosts[i].userProfile, confirmIcons[i]);
+                        validateAdmin(allPosts[i].user, confirmIcons[i]);
                     }
 
                 });   
@@ -199,15 +202,13 @@ function logoutAccount(logoutBtn) {
 }
 
 function validateAdmin(obj, icon) {
-    console.log(obj);
-    console.log(icon);
-    if (obj.roles[0].name === "ROLE_ADMIN") {
+    if (obj.role === "ADMIN_ROLE" || obj.role === "MOD_ROLE") {
         icon.style.display = "inline";
     }
 }
 
 function checkRole(user, navBox, toAdminBtn) {
-    if (user.roles[0].name === "ROLE_ADMIN") {
+    if (user.role === "ADMIN_ROLE" || user.role === "MOD_ROLE") {
         navBox.style.height = "150px";
         toAdminBtn.style.display = "block";
     }
@@ -218,16 +219,15 @@ function formatDate(dateString) {
     return dateView.getDate() + " th" + (dateView.getMonth() + 1) + ", " + dateView.getFullYear();
 }
 
-function checkAuth(idBy, item1, item2, item3) {
-    fetch(`http://localhost:8080/api/v1/profile/${usernameToken}`)
+function checkAuth(userBy, item) {
+    fetch(`https://localhost:44377/api/user/${email}`)
     .then(response => {
         return response.json();
     })
-    .then(user => {
-        if(user.id !== idBy) {
-            item1.style.display = "none";
-            item2.style.display = "none";
-            item3.style.display = "none";
+    .then(object => {
+        const userByToken = object.data;
+        if(userByToken.id === userBy.id || userByToken.role === "ADMIN_ROLE" || userByToken.role === "MOD_ROLE") {
+            item.style.display = "block";
         }
     })
 }
@@ -267,7 +267,7 @@ function searchPosts() {
 // link to backend
 
 function updateAvatar() {
-    var apiUpload = "http://localhost:8080/api/v1/profile/avatar";
+    var apiUpload = "https://localhost:44377/api/user/avatar";
     var imageInput = document.querySelector("#img-avt_file");
     var imageDisplay = document.querySelector(".profile-avt_link");
     // uploadProfileImage(apiUpload, imageInput, imageDisplay);
@@ -287,27 +287,27 @@ function updateAvatar() {
         myHeaders.append("Authorization", `Bearer ${localStorage.getItem("accessToken")}`);
 
         var formdata = new FormData();
-        formdata.append("image", imageInput.files[0]);
+        formdata.append("file", imageInput.files[0]);
 
         var requestOptions = {
-            method: "POST",
+            method: "PUT",
             headers: myHeaders,
             body: formdata,
             redirect: "follow"
         };
 
         fetch(apiUpload, requestOptions)
-        .then(response => response.text())
+        .then(response => console.log(response))
         .then(result => {
             console.log(result);
-            // location.reload();
+            location.reload();
         })
         .catch(error => console.log("error", error));
     });
 }
 
 function updateCover() {
-    var apiUpload = "http://localhost:8080/api/v1/profile/coverPhoto";
+    var apiUpload = "https://localhost:44377/api/user/cover";
     var imageInput = document.querySelector("#img-background_file");
     var imageDisplay = document.querySelector("#image-background_display");
     // uploadProfileImage(apiUpload, imageInput, imageDisplay);
@@ -327,10 +327,10 @@ function updateCover() {
         myHeaders.append("Authorization", `Bearer ${localStorage.getItem("accessToken")}`);
 
         var formdata = new FormData();
-        formdata.append("image", imageInput.files[0]);
+        formdata.append("file", imageInput.files[0]);
 
         var requestOptions = {
-            method: "POST",
+            method: "PUT",
             headers: myHeaders,
             body: formdata,
             redirect: "follow"

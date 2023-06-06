@@ -14,7 +14,7 @@ function parseJwt(token) {
     return JSON.parse(window.atob(base64));
 }
 
-const username = parseJwt(localStorage.getItem("accessToken")).sub;  //get username from token
+const username = parseJwt(localStorage.getItem("accessToken")).Email;  //get username from token
 
 // var urlString = window.location.href;
 // var urlObj = new URL(urlString);
@@ -27,11 +27,12 @@ searchPosts();
 
 
 function renderHeaderInfo() {
-    fetch(`http://localhost:8080/api/v1/profile/${username}`)
+    fetch(`https://localhost:44377/api/user/${username}`)
     .then(function(response) {
         return response.json();
     })
-    .then(function(data) {
+    .then(function(object) {
+        const data = object.data;
         const userBox = document.querySelector(".navbar-user");
         const userContent = `
             <div class="navbar-user_btn row no-gutters">
@@ -71,11 +72,12 @@ function renderHeaderInfo() {
 }
 
 function renderCategories() {
-    fetch('http://localhost:8080/api/v1/categories')
+    fetch('https://localhost:44377/api/category/all')
     .then(function(response) {
         return response.json();
     })
-    .then(function(categories) {
+    .then(function(object) {
+        const categories = object.data;
         let htmls = "";
         categories.map(category => {
             let html = `
@@ -95,17 +97,17 @@ function alertNoti() {
 }
 
 function renderPostsPin() {
-    fetch('http://localhost:8080/api/v1/posts?pageNo=0&pageSize=100&sortBy=id&sortDir=desc')
+    fetch('https://localhost:44377/api/post/all?pageNumber=1&pageSize=5')
     .then(function(response) {
         return response.json();
     })
-    .then(function(posts) {
-    
+    .then(function(object) {
+        const posts = object.data;
         let htmls = "";
-        let arrPosts = posts.content;
+        let arrPosts = posts;
         let arrPostsPin = [];
         arrPosts.map(post => {
-            if (post.pinned === true) {
+            if (post.pined === true) {
                 arrPostsPin.push(post);
             }
         });
@@ -119,7 +121,7 @@ function renderPostsPin() {
                     <div class="post-pin l-9 m-12 s-12 col">
                         <div class="content-post_pin row post" id="${post.id}">
                             <a style="cursor: pointer" href="./post.html#${post.id}" class="l-4 m-4 s-4">
-                                <div class="post-pin_image" style="background-image: url(${post.thumbnails});">
+                                <div class="post-pin_image" style="background-image: url(${post.thumbnail});">
                                 </div>
                             </a>
     
@@ -136,10 +138,10 @@ function renderPostsPin() {
                                     <p>${post.description}</p>
                                 </div>
                                 <div class="post-pin_info">
-                                    <a href="./user.html#${post.userProfile.usernameByUser}" class="post-pin_auth">
-                                        <img src="${post.userProfile.avatarPhoto}" alt="Avartar">
+                                    <a href="./user.html#${post.user.email}" class="post-pin_auth">
+                                        <img src="${post.user.avatarPhoto}" alt="Avartar">
                                         <span>
-                                            ${post.userProfile.firstName} ${post.userProfile.lastName}
+                                            ${post.user.firstName} ${post.user.lastName}
                                             <i style="display: none;" class="icon_admin-name fa-solid fa-circle-check"></i>
                                         </span>
                                     </a>
@@ -185,7 +187,7 @@ function validateAdmin(listPost, icons) {
 }
 
 function checkRole(user, navBox, toAdminBtn) {
-    if (user.roles[0].name === "ROLE_ADMIN") {
+    if (user.role === "ADMIN_ROLE" || user.role === "MOD_ROLE") {
         navBox.style.height = "150px";
         toAdminBtn.style.display = "block";
     }

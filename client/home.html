@@ -174,13 +174,13 @@
         });
 
         function renderPostsNew(pageNo) {
-            fetch(`http://localhost:8080/api/v1/posts?pageNo=${pageNo - 1}&pageSize=5&sortBy=id&sortDir=desc`)
+            fetch(`https://localhost:44377/api/post/all?pageNumber=${pageNo}&pageSize=5`)
             .then(function(response) {
                 return response.json();
             })
-            .then(function(posts) {
+            .then(function(object) {
                 let htmls = "";
-                let arrPosts = posts.content;
+                let arrPosts = object.data;
                 arrPosts.forEach(post => {
                     var firstCategory = post.categories[0];
                     var finalDate = formatDate(post.createdDate);
@@ -203,10 +203,10 @@
                                         <p>${post.description}</p>
                                     </div>
                                     <div class="content-post_info">
-                                        <a href="./user.html#${post.userProfile.usernameByUser}" class="content-post_auth">
-                                            <img src="${post.userProfile.avatarPhoto}" alt="Avartar">
+                                        <a href="./user.html#${post.user.email}" class="content-post_auth">
+                                            <img src="${post.user.avatarPhoto}" alt="Avartar">
                                             <span>
-                                                ${post.userProfile.firstName} ${post.userProfile.lastName}
+                                                ${post.user.firstName} ${post.user.lastName}
                                                 <i style="display: none;" class="icon_admin-name fa-solid fa-circle-check"></i>
                                             </span>
                                         </a>
@@ -226,7 +226,7 @@
                     .querySelectorAll(".icon_admin-name");
                     
                 for (let i = 0; i < arrPosts.length; i++) {
-                    if (arrPosts[i].userProfile.roles[0].name === "ROLE_ADMIN") {
+                    if (arrPosts[i].user.role === "ADMIN_ROLE" || arrPosts[i].user.role === "MOD_ROLE") {
                         console.log(confirmIcons[i]);
                         confirmIcons[i].style.display = "inline";
                     }

@@ -1,4 +1,4 @@
-var postsApi = 'http://localhost:8080/api/v1/posts?pageNo=0&pageSize=5&sortBy=id&sortDir=desc';
+var postsApi = 'https://localhost:44377/api/post/all?pageNumber=1&pageSize=100';
 // var postByIdApi = '';
 var postsList = document.querySelectorAll(".post_list");
 
@@ -19,7 +19,7 @@ function start() {
 
 // function getPostById(callback) {
 //     let idPost = localStorage.getItem("postID")
-//     fetch("http://localhost:8080/api/v1/post/" + idPost)
+//     fetch("https://localhost:44377/api/v1/post/" + idPost)
 //         .then(function (response) {
 //             return response.json();
 //         })
@@ -110,15 +110,15 @@ function saveIdLocalStorage(id) {
 }
 
 function renderPostsPin() {
-    fetch("http://localhost:8080/api/v1/posts?pageNo=0&pageSize=100&sortBy=id&sortDir=desc")
+    fetch("https://localhost:44377/api/post/all?pageNumber=1&pageSize=100")
     .then(response => response.json())
     .then(posts => {
         let htmls = "";
-        let arrPosts = posts.content;
+        let arrPosts = posts.data;
     
         let arrPostsPin = [];
         arrPosts.map(post => {
-            if (post.pinned === true) {
+            if (post.pined === true) {
                 arrPostsPin.push(post);
             }
         });
@@ -180,7 +180,7 @@ function renderPostsPin() {
 
 function renderPostsNew(posts) {
     let htmls = "";
-    let arrPosts = posts.content;
+    let arrPosts = posts.data;
 
     arrPosts.forEach(post => {
         var firstCategory = post.categories[0];
@@ -205,9 +205,9 @@ function renderPostsNew(posts) {
                         </div>
                         <div class="content-post_info">
                             <a href="#" class="content-post_auth">
-                                <img src="${post.userProfile.avatarPhoto}" alt="Avartar">
+                                <img src="${post.user.avatarPhoto}" alt="Avartar">
                                 <span>
-                                    ${post.userProfile.firstName} ${post.userProfile.lastName}
+                                    ${post.user.firstName} ${post.user.lastName}
                                     <i style="display: none;" class="icon_admin-name fa-solid fa-circle-check"></i>
                                 </span>
                             </a>
@@ -237,7 +237,7 @@ function formatDate(dateString) {
 
 function validateAdmin(listPost, icons) {
     for (let i = 0; i < listPost.length; i++) {
-        if (listPost[i].userProfile.roles[0].name === "ROLE_ADMIN") {
+        if (listPost[i].user.role === "ADMIN_ROLE" || listPost[i].user.role === "MOD_ROLE") {
             icons[i].style.display = "inline";
         }
     }
@@ -274,7 +274,7 @@ function registerAccoutUser() {
                 redirect: "follow"
             };
     
-            fetch("http://localhost:8080/api/v1/auth/user/signup", requestOptions)
+            fetch("https://localhost:44377/api/auth/signup", requestOptions)
             .then(response => response.text())
             .then(result => {
                 if (result === "User register successfully!") {

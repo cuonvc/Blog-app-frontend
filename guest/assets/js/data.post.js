@@ -2,11 +2,12 @@ const idUrl = window.location.hash;
 let idPost = idUrl.substring(1);
 
 getPostById(function (post) {
-    renderPostById(post);
+    console.log(post);
+    renderPostById(post.data);
 });
 
 function getPostById(callback) {
-    fetch("http://localhost:8080/api/v1/post/" + idPost)
+    fetch("https://localhost:44377/api/post/" + idPost)
         .then(function (response) {
             return response.json();
         })
@@ -35,12 +36,12 @@ function renderPostById(postById) {
     let postAuthHtml = `
         <div class="body-post_auth-avt">
             <a style="cursor: pointer;" class="sign_in-btn">
-                <img src="${postById.userProfile.avatarPhoto}" alt="avt">
+                <img src="${postById.user.avatarPhoto}" alt="avt">
             </a>
         </div>
         <div class="body-post_auth-name">
             <a style="cursor: pointer;" class="sign_in-btn">
-                ${postById.userProfile.firstName} ${postById.userProfile.lastName}
+                ${postById.user.firstName} ${postById.user.lastName}
                 <i style="display: none;" class="icon_admin-name fa-solid fa-circle-check"></i>
             </a>
             <span>${postCreDate}</span>
@@ -56,6 +57,7 @@ function renderPostById(postById) {
 
 
     let commentList = "";
+    console.log("Comment chua hoan thien");
     var length = postById.comments.length;
 
     for (var i = 0; i < length; i++) {
@@ -102,7 +104,7 @@ function formatDate(dateString) {
 }
 
 function validateAdmin(obj, icon) {
-    if (obj.userProfile.roles[0].name === "ROLE_ADMIN") {
+    if (obj.user.role === "ADMIN_ROLE" || obj.user.role === "MOD_ROLE") {
         icon.style.display = "inline";
     }
 }
@@ -138,7 +140,7 @@ function registerAccoutUser() {
                 redirect: "follow"
             };
     
-            fetch("http://localhost:8080/api/v1/auth/user/signup", requestOptions)
+            fetch("https://localhost:44377/api/auth/signup", requestOptions)
             .then(response => response.text())
             .then(result => {
                 if (result === "User register successfully!") {
