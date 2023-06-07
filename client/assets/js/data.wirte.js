@@ -12,7 +12,7 @@ function parseJwt(token) {
     return JSON.parse(window.atob(base64));
 }
 
-const username = parseJwt(localStorage.getItem("accessToken")).sub;  //get username from token
+const username = parseJwt(localStorage.getItem("accessToken")).Email;  //get username from token
 
 var urlString = window.location.href;
 var urlObj = new URL(urlString);
@@ -31,11 +31,12 @@ if (idPost === undefined || idPost === null) {
 searchPosts();
 
 function renderHeaderInfo() {
-    fetch(`http://localhost:8080/api/v1/profile/${username}`)
+    fetch(`https://localhost:44377/api/user/${username}`)
     .then(function(response) {
         return response.json();
     })
-    .then(function(data) {
+    .then(function(object) {
+        const data = object.data;
         const userBox = document.querySelector(".navbar-user");
         const userContent = `
             <div class="navbar-user_btn row no-gutters">
@@ -98,7 +99,7 @@ function logoutAccount(logoutBtn) {
 }
 
 function checkRole(user, navBox, toAdminBtn) {
-    if (user.roles[0].name === "ROLE_ADMIN") {
+    if (user.role === "ADMIN_ROLE" || user.role === "MOD_ROLE") {
         navBox.style.height = "150px";
         toAdminBtn.style.display = "block";
     }
@@ -106,7 +107,7 @@ function checkRole(user, navBox, toAdminBtn) {
 
 function createPost() {
 
-    fetch('http://localhost:8080/api/v1/categories')
+    fetch('https://localhost:44377/api/post/submit')
         .then(function(response) {
             return response.json();
         })

@@ -190,9 +190,9 @@
 
                     try {
                         var data = new FormData()
-                        data.append('image', file)
+                        data.append('file', file)
 
-                        const image = await fetch('http://localhost:8080/api/v1/post/image', {
+                        const image = await fetch('https://localhost:44377/api/post/pre-thumb', {
                             method: "POST",
                             headers: {
                                 "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,

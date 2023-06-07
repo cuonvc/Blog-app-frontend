@@ -18,14 +18,14 @@ var keyword = urlObj.searchParams.get("search");  //get keyword from param
 
 const idUrl = window.location.hash;
 let idPost = idUrl.substring(1);
-const username = parseJwt(localStorage.getItem("accessToken")).sub;  //get username from token
+const username = parseJwt(localStorage.getItem("accessToken")).Email;  //get username from token
 
 renderHeaderInfo();
 renderPostsBySearch();
 searchPosts();
 
 function renderHeaderInfo() {
-    fetch(`http://localhost:8080/api/v1/profile/${username}`)
+    fetch(`https://localhost:44377/api/user/${username}`)
     .then(function(response) {
         return response.json();
     })
@@ -69,7 +69,7 @@ function renderHeaderInfo() {
 }
 
 function renderPostsBySearch() {
-    fetch(`http://localhost:8080/api/v1/posts/search?keyword=${keyword}`)
+    fetch(`https://localhost:44377/api/post/list?name=${keyword}&pageNumber=1&pageSize=100`)
     .then(function(response) {
         return response.json();
     })
@@ -79,7 +79,7 @@ function renderPostsBySearch() {
             = `<h1 class="search_title">Kết quả tìm kiếm cho "${keyword}"</h1>`;
     
         let htmls = "";
-        let arrPosts = posts.content;
+        let arrPosts = posts.data;
     
         arrPosts.forEach(post => {
             var firstCategory = post.categories[0].name;
@@ -90,7 +90,7 @@ function renderPostsBySearch() {
                     <div class="l-9 m-12 s-12 col">
                         <div class="content-post_by-search row">
                             <a href="./post.html#${idPost}" class="l-4 m-4 s-4">
-                                <div class="post_by-search_image" style="background-image: url(${post.thumbnails});">
+                                <div class="post_by-search_image" style="background-image: url(${post.thumbnail});">
                                 </div>
                             </a>
 
@@ -108,9 +108,9 @@ function renderPostsBySearch() {
                                 </div>
                                 <div class="post_by-search_info">
                                     <a href="#" class="post_by-search_auth">
-                                        <img src="${post.userProfile.avatarPhoto}" alt="Avartar">
+                                        <img src="${post.user.avatarPhoto}" alt="Avartar">
                                         <span>
-                                            ${post.userProfile.firstName} ${post.userProfile.lastName}
+                                            ${post.user.firstName} ${post.user.lastName}
                                             <i style="display: none;" class="icon_admin-name fa-solid fa-circle-check"></i>
                                         </span>
                                     </a>
@@ -143,7 +143,7 @@ function formatDate(dateString) {
 
 function validateAdmin(listPost, icons) {
     for (let i = 0; i < listPost.length; i++) {
-        if (listPost[i].userProfile.roles[0].name === "ROLE_ADMIN") {
+        if (listPost[i].user.role === "ADMIN_ROLE" || listPost[i].user.role === "MOD_ROLE") {
             icons[i].style.display = "inline";
         }
     }
@@ -158,7 +158,7 @@ function logoutAccount(logoutBtn) {
 }
 
 function checkRole(user, navBox, toAdminBtn) {
-    if (user.roles[0].name === "ROLE_ADMIN") {
+    if (user.roles === "ADMIN_ROLE" || user.roles === "MOD_ROLE") {
         navBox.style.height = "150px";
         toAdminBtn.style.display = "block";
     }

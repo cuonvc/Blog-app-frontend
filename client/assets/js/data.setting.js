@@ -14,7 +14,7 @@ function parseJwt(token) {
 
 const idUrl = window.location.hash;
 let idPost = idUrl.substring(1);
-const username = parseJwt(localStorage.getItem("accessToken")).sub;  //get username from token
+const username = parseJwt(localStorage.getItem("accessToken")).Email;  //get username from token
 
 getUserProfile();
 searchPosts();
@@ -23,13 +23,13 @@ searchPosts();
 // });
 
 function getUserProfile() {
-    fetch(`http://localhost:8080/api/v1/profile/${username}`)
+    fetch(`https://localhost:44377/api/user/${username}`)
     .then(function(response) {
         return response.json();
     })
-    .then(function(data) {
-        renderHeaderInfo(data);
-        renderContent(data);
+    .then(function(object) {
+        renderHeaderInfo(object.data);
+        renderContent(object.data);
         
     });
 }
@@ -96,7 +96,7 @@ function renderContent(data) {
                     <span>Chỉnh sửa email</span>
                 </div>
                 <div class="setting_content">
-                    <input class="setting_input setting_email-input" type="email" placeholder="${data.emailByUser}">
+                    <input class="setting_input setting_email-input" type="email" placeholder="${data.email}">
                 </div>
             </div>
         </div>
@@ -179,10 +179,10 @@ function saveInfo(data) {
     myHeaders.append("Content-type", "application/json");
 
     var raw = JSON.stringify({
-        "emailByUser": emailContent,
+        "email": emailContent,
         "firstName": firstNameContent,
         "lastName": lastNameContent,
-        "gender": gender,
+        "gender": gender.toUpperCase(),
         "dateOfBirth": dobContent,
         "about": descriptionContent
     });
@@ -218,7 +218,7 @@ function logoutAccount(logoutBtn) {
 }
 
 function checkRole(user, navBox, toAdminBtn) {
-    if (user.roles[0].name === "ROLE_ADMIN") {
+    if (user.role === "ADMIN_ROLE" || user.role === "MOD_ROLE") {
         navBox.style.height = "150px";
         toAdminBtn.style.display = "block";
     }
