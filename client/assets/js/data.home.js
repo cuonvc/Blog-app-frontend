@@ -15,6 +15,12 @@ function parseJwt(token) {
 }
 
 const username = parseJwt(localStorage.getItem("accessToken")).Email;  //get username from token
+const isActive = parseJwt(localStorage.getItem("accessToken")).IsActive;
+
+if (isActive == "False") {
+    alert("Bạn chưa kích hoạt tài khoản, kiểm tra Email spam để lấy mã kích hoạt");
+    window.location.href = "active-account.html";
+}
 
 // var urlString = window.location.href;
 // var urlObj = new URL(urlString);
@@ -97,12 +103,13 @@ function alertNoti() {
 }
 
 function renderPostsPin() {
-    fetch('https://localhost:44377/api/post/all?pageNumber=1&pageSize=5')
+    fetch('https://localhost:44377/api/post/all?pageNumber=1&pageSize=100')
     .then(function(response) {
         return response.json();
     })
     .then(function(object) {
         const posts = object.data;
+        console.log(posts);
         let htmls = "";
         let arrPosts = posts;
         let arrPostsPin = [];
@@ -113,6 +120,7 @@ function renderPostsPin() {
         });
     
         arrPostsPin.forEach(post => {
+            console.log(post);
             var firstCategory = post.categories[0];
             var finalDate = formatDate(post.createdDate);
             let html =
@@ -126,8 +134,9 @@ function renderPostsPin() {
                             </a>
     
                             <div class="post-pin_text l-8 m-8 s-8">
-                                <div class="post-pin_categories">
-                                    <a href="#" class="post-pin_category">${firstCategory.name}</a>
+                                <div class="content-post_categories" style="display: flex; justify-content: space-between;">
+                                    <a href="#" class="content-post_category">${firstCategory.name}</a>
+                                    <span>${post.view} <i class="fa-sharp fa-regular fa-eye"></i></span>
                                 </div>
                                 <div class="post-pin_title">
                                     <a style="cursor: pointer" href="./post.html#${post.id}" class="post-pin_link">
@@ -180,7 +189,7 @@ function logoutAccount(logoutBtn) {
 
 function validateAdmin(listPost, icons) {
     for (let i = 0; i < listPost.length; i++) {
-        if (listPost[i].userProfile.roles[0].name === "ROLE_ADMIN") {
+        if (listPost[i].user.role === "ADMIN_ROLE" || listPost[i].user.role === "MOD_ROLE") {
             icons[i].style.display = "inline";
         }
     }

@@ -7,11 +7,12 @@ function parseJwt(token) {
     return JSON.parse(window.atob(base64));
 }
 
-const username = parseJwt(localStorage.getItem("accessToken")).sub;  //get username from token
-fetch(`http://localhost:8080/api/v1/profile/${username}`)
+const username = parseJwt(localStorage.getItem("accessToken")).Email;  //get username from token
+fetch(`https://localhost:44377/api/user/${username}`)
 .then(response => response.json())
-.then(auth => {
-    if (auth.roles[0].name === "ROLE_ADMIN") {
+.then(result => {
+    const auth = result.data;
+    if (auth.role === "ADMIN_ROLE" || auth.role === "MOD_ROLE") {
         renderHeader(auth);
         renderPosts();
         renderCategories();
@@ -23,7 +24,6 @@ fetch(`http://localhost:8080/api/v1/profile/${username}`)
 });
 
 createCategory();
-registerAdminAccout();
 
 
 function renderHeader(auth) {
@@ -48,10 +48,9 @@ function renderHeader(auth) {
 }
 
 function renderPosts() {
-    fetch("http://localhost:8080/api/v1/posts?pageNo=0&pageSize=100&sortBy=id&sortDir=desc")
+    fetch("https://localhost:44377/api/post/all?pageNumber=1&pageSize=100")
     .then(response => response.json())
     .then(result => {
-        
         var headerTable = 
         `<tr>
             <th>ID</th>
@@ -61,14 +60,14 @@ function renderPosts() {
             <th>Action</th>
         </tr>`
         
-        var arrPosts = result.content;
+        var arrPosts = result.data;
         var listPosts = "";
         arrPosts.map(post => {
             var itemPost = 
             `<tr class="item-post">
                 <td class="post_id">${post.id}</td>
                 <td>${post.title}</td>
-                <td>${post.userProfile.firstName} ${post.userProfile.lastName}</td>
+                <td>${post.user.firstName} ${post.user.lastName}</td>
                 <td>${post.categories[0].name}</td>
                 <td>
                     <span class="remove-btn post_remove-btn">Xóa</span>
@@ -89,12 +88,13 @@ function pinPost(listPostHtml, listPost) {
     var listItem = listPostHtml.querySelectorAll(".item-post");
     
     for (let i = 0; i < listItem.length; i++) {
-        if (listPost[i].pinned === true) {
+        if (listPost[i].pined === true) {
             listBtnPin[i].classList.add("pin-btn_active");
         }
+        console.log(listPost[i].id)
 
         listBtnPin[i].addEventListener("click", function() {
-            var idPost = listPost[i].id;
+            const idPost = listPost[i].id;
             listBtnPin[i].classList.toggle("pin-btn_active");  //tạm thời để đó
 
             var status;
@@ -109,15 +109,15 @@ function pinPost(listPostHtml, listPost) {
             myHeaders.append("Authorization", `Bearer ${localStorage.getItem("accessToken")}`);
             
             var requestOptions = {
-                method: "POST",
+                method: "PUT",
                 headers: myHeaders,
                 redirect: "follow"
             };
             console.log(status);
-            fetch(`http://localhost:8080/api/v1/post/${idPost}/${status}`, requestOptions)
-            .then(response => response.text())
+            fetch(`https://localhost:44377/api/post/pin?postId=${idPost}`, requestOptions)
+            .then(response => response.json())
             .then(result => {
-                alert(result);
+                alert(result.message);
             })
             .catch(error => alert("Đã xảy ra lỗi: " + error));
         });
@@ -125,9 +125,10 @@ function pinPost(listPostHtml, listPost) {
 }
 
 function renderCategories() {
-    fetch("http://localhost:8080/api/v1/categories")
+    fetch("https://localhost:44377/api/category/all?pageNum=1&pageSize=100")
     .then(response => response.json())
-    .then(result => {
+    .then(object => {
+        const result = object.data;
         var headerTable = 
         `<tr>
             <th>ID</th>
@@ -161,32 +162,31 @@ function renderUsers() {
     // render admin
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${localStorage.getItem("accessToken")}`);
-    fetch("http://localhost:8080/api/v1/profiles/role/4", {
+    fetch("https://localhost:44377/api/user/all?pageNo=1&pageSize=100", {
         headers: myHeaders
     })
     .then(response => response.json())
-    .then(result => {
+    .then(object => {
+        const result = object.data;
         var headerTable = 
         `<tr>
             <th>ID</th>
-            <th>Tên người dùng (Admin)</th>
-            <th>Username</th>
+            <th>Tên người dùng</th>
             <th>Email</th>
             <th>Role</th>
             <th>Action</th>
         </tr>`
 
         var listItems = "";
-        result.content.map(item => {
+        result.map(item => {
             var user = 
             `<tr>
                 <td>${item.id}</td>
                 <td>${item.firstName} ${item.lastName}</td>
-                <td>${item.usernameByUser}</td>
-                <td>${item.emailByUser}</td>
-                <td>${item.roles[0].name}</td>
+                <td>${item.email}</td>
+                <td>${item.role}</td>
                 <td>
-                    <span onclick="alertFunc()" class="remove-btn">?</span>
+                    <span class="remove-btn" onclick=assignRole(${item.id})>Gán/gỡ quyền</span>
                 </td>
             </tr>`
             listItems += user;
@@ -195,47 +195,6 @@ function renderUsers() {
         document.querySelector(".list-item_admin").innerHTML = headerTable + listItems;
     });
 
-    // render users
-    var myHeadersUser = new Headers();
-    myHeadersUser.append("Authorization", `Bearer ${localStorage.getItem("accessToken")}`);
-    fetch("http://localhost:8080/api/v1/profiles/role/14", {
-        headers: myHeadersUser
-    })
-    .then(response => response.json())
-    .then(result => {
-        var headerTable = 
-        `<tr>
-            <th>ID</th>
-            <th>Tên người dùng (User)</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Action</th>
-        </tr>`
-
-        var listItems = "";
-        result.content.map(item => {
-            var user = 
-            `<tr>
-                <td>${item.id}</td>
-                <td>${item.firstName} ${item.lastName}</td>
-                <td>${item.usernameByUser}</td>
-                <td>${item.emailByUser}</td>
-                <td>${item.roles[0].name}</td>
-                <td>
-                    <span onclick="alertFunc()" class="remove-btn">?</span>
-                </td>
-            </tr>`
-            listItems += user;
-        });
-
-        document.querySelector(".list-item_user").innerHTML = headerTable + listItems;
-    });
-
-}
-
-function alertFunc() {
-    alert("Tính năng chưa khả dụng");
 }
 
 function logoutAdmin() {
@@ -271,10 +230,10 @@ function deletePost() {
                 redirect: "follow"
             }
 
-            fetch(`http://localhost:8080/api/v1/post/${idPost}`, requestOptions)
-            .then(response => response.text())
+            fetch(`https://localhost:44377/api/post/${idPost}`, requestOptions)
+            .then(response => response.json())
             .then(result => {
-                alert(result);
+                alert(result.message);
                 location.reload();
             })
             .catch(error => {
@@ -307,15 +266,11 @@ function createCategory() {
             redirect: "follow"
         }
     
-        fetch("http://localhost:8080/api/v1/category", requestOptions)
+        fetch("https://localhost:44377/api/category", requestOptions)
         .then(response => response.json())
         .then(result => {
-            if (result.message === "Category already exists") {
-                alert("Category này đã tồn tại");
-            } else {
-                alert("Thêm thành công: " + result.name);
-                location.reload();
-            }
+            alert(result.message);
+            window.location.reload();
         })
         .catch(error => {
             console.log(error);
@@ -350,14 +305,14 @@ function modifyCategory() {
                     redirect: "follow"
                 };
 
-                fetch(`http://localhost:8080/api/v1/category/${cateogryId}`, requestOptions)
+                fetch(`https://localhost:44377/api/category/${cateogryId}`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result);
-                    if (result.message === "Category already exists") {
-                        alert("Category vẫn chưa được chỉnh sửa!");
+                    if (result.code == 400) {
+                        alert(result.message);
                     } else {
-                        alert("Chỉnh sửa thành công: " + result.name);
+                        alert("Chỉnh sửa thành công: " + result.data.name);
                         location.reload();
                     }
                 })
@@ -390,10 +345,10 @@ function deleteCategory() {
                 redirect: "follow"
             };
 
-            fetch(`http://localhost:8080/api/v1/category/${idRemove}`, requestOptions)
-            .then(response => response.text())
+            fetch(`https://localhost:44377/api/category/${idRemove}`, requestOptions)
+            .then(response => response.json())
             .then(result => {
-                alert(result);
+                console.log(result);
                 location.reload();
             })
             .catch(error => {
@@ -404,54 +359,23 @@ function deleteCategory() {
     }
 }
 
-function registerAdminAccout() {
-    var submitBtn = document.querySelector(".create-admin_btn");
+function assignRole(userId) {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${localStorage.getItem("accessToken")}`);
+    myHeaders.append("Content-Type", "application/json");
 
-    submitBtn.addEventListener("click", function() {
-        var lastName = document.querySelector(".type_last-name");
-        var firstName = document.querySelector(".type_first-name");
-        var username = document.querySelector(".type_username");
-        var email = document.querySelector(".type_email");
-        var password = document.querySelector(".type_password");
-        var rePassword = document.querySelector(".type_re-password");
+    var requestOptions = {
+        method: "PUT",
+        headers: myHeaders,
+        redirect: "follow"
+    }
 
-        console.log(lastName.value);
-        console.log(password.value);
-        console.log(rePassword.value);
-
-        if (password.value === rePassword.value) {
-            var myHeaders = new Headers();
-            myHeaders.append("Authorization", `Bearer ${localStorage.getItem("accessToken")}`);
-            myHeaders.append("Content-Type", "application/json");
-
-            var raw = JSON.stringify({
-                "firstName": firstName.value,
-                "lastName": lastName.value,
-                "username": username.value,
-                "email": email.value,
-                "password": password.value    
-            });
-
-            var requestOptions = {
-                method: "POST",
-                headers: myHeaders,
-                body: raw,
-                redirect: "follow"
-            };
-
-            fetch("http://localhost:8080/api/v1/auth/admin/signup", requestOptions)
-            .then(response => response.text())
-            .then(result => {
-                alert(result);
-                location.reload();
-            })
-            .catch(error => {
-                console.log(error);
-                alert(error);
-            });
-
-        } else {
-            alert("Password không trùng khớp!");
-        }
-    });
+    fetch(`https://localhost:44377/api/user/assign/${userId}`, requestOptions)
+    .then(response => response.json())
+    .then(result => {
+        console.log(result);
+        alert(`${result.message}: ${result.data}`);
+        window.location.reload();
+    })
+    .catch(error => alert("Đã có lỗi API: " + error));
 }

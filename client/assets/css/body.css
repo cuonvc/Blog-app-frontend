@@ -232,6 +232,10 @@
     margin: 40px 0;
 }
 
+.voted-post {
+    color: var(--primary-color);
+}
+
 .body-content_editor {
     outline: none;
     border: none;

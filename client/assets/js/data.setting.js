@@ -88,7 +88,7 @@ function renderContent(data) {
                 <div class="setting_content">
                     <textarea rows="3" name="" 
                         class="setting_about-me_text row no-gutters" 
-                        spellcheck="false" placeholder="${about}" ></textarea>
+                        spellcheck="false" placeholder="" >${about}</textarea>
                 </div>
             </div>
             <div class="setting_email col l-6 m-6 s-12">
@@ -96,7 +96,7 @@ function renderContent(data) {
                     <span>Chỉnh sửa email</span>
                 </div>
                 <div class="setting_content">
-                    <input class="setting_input setting_email-input" type="email" placeholder="${data.email}">
+                    <input class="setting_input setting_email-input" type="email" value="" placeholder="${data.email} - Tạm thời không thể update email">
                 </div>
             </div>
         </div>
@@ -106,7 +106,7 @@ function renderContent(data) {
                     <span>Chỉnh sửa tên</span>
                 </div>
                 <div class="setting_content">
-                    <input type="text" class="setting_input setting_name_input" placeholder="${data.firstName}">
+                    <input type="text" class="setting_input setting_name_input" value="${data.firstName}" placeholder="">
                 </div>
             </div>
             <div class="setting_last-name col l-6 m-6 s-12">
@@ -114,7 +114,7 @@ function renderContent(data) {
                     <span>Chỉnh sửa họ</span>
                 </div>
                 <div class="setting_content">
-                    <input type="text" class="setting_input setting_name_input" placeholder="${data.lastName}">
+                    <input type="text" class="setting_input setting_name_input" value="${data.lastName}" placeholder="">
                 </div>
             </div>
         </div>
@@ -133,8 +133,9 @@ function renderContent(data) {
                 </div>
                 <div class="setting_content">
                     <select class="setting_gender_select" name="gender" id="gender">
-                        <option value="Nam">Nam</option>
-                        <option value="Nữ">Nữ</option>
+                        <option value="${data.gender}" selected disable hidden>${data.gender}</option>
+                        <option value="MALE">Nam</option>
+                        <option value="FEMALE">Nữ</option>
                     </select>
                 </div>
             </div>
@@ -194,18 +195,27 @@ function saveInfo(data) {
         redirec: "follow"
     };
     
-    fetch("http://localhost:8080/api/v1/profile", requestOptions)
+    fetch("https://localhost:44377/api/user/update", requestOptions)
     .then(response => response.json())
-    .then(result => {
-        if (result.message === "Email invalid") {
-            alert("Email không đúng định dạng!");
-        } else if (result.message === "Email was created by difference user") {
-            alert("Email này đã được đăng ký một tài khoản!");
-        } else if (result.emailByUser !== undefined) {
-            alert("Cập nhật thành công");
+    .then(object => {
+        const result = object.data;
+        console.log(object);
+        if (object.code == 200) {
+            alert("Đã cập nhật thông tin cá nhân");
+            window.location.reload();
         } else {
-            alert("Đã xảy ra lỗi!");
+            alert(`Đã xảy ra lỗi!\n$({object}`);
         }
+        // if (result.message === "Email invalid") {
+        //     alert("Email không đúng định dạng!");
+        // } else if (result.message === "Email was created by difference user") {
+        //     alert("Email này đã được đăng ký một tài khoản!");
+        // } else if (result.emailByUser !== undefined) {
+        //     alert("Cập nhật thành công");
+        // } else {
+        //     alert("Đã xảy ra lỗi!");
+        // }
+
     })
     .catch(error => alert(error));
 }
@@ -226,7 +236,20 @@ function checkRole(user, navBox, toAdminBtn) {
 
 function formatDate(dateString) {
     var dateView = new Date(dateString);
-    return dateView.getFullYear() + "-" + (dateView.getMonth() + 1) + "-" + dateView.getDate();
+
+    let yearValue = dateView.getFullYear().toString();
+    let monthValue = (dateView.getMonth() + 1).toString();
+    if (monthValue.length == 1) {
+        monthValue = `0${monthValue}`;
+    }
+
+    let dayValue = dateView.getDate().toString();
+    if (dayValue.length == 1) {
+        dayValue = "0" + dayValue;
+    }
+
+    const output = yearValue + "-" + monthValue + "-" + dayValue;
+    return output;
 }
 
 function searchPosts() {

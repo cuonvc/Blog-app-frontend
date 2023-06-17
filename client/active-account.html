@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../common/image/logo.png" type="image/x-icon">
+    <title>Wrtin - active</title>
+</head>
+<body style="text-align: center; padding-top: 100px;">
+    <span>Nhập mã kích hoạt</span>
+    <input class="active-code" type="text">
+    <button class="submit-btn">Kích hoạt tài khoản</button>
+    <button class="logout">Đăng xuất</button>
+</body>
+
+    <script>
+        const element = document.querySelector(".active-code");
+
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${localStorage.getItem("accessToken")}`);
+        myHeaders.append("Content-Type", "application/json");
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+
+        document.querySelector(".submit-btn").addEventListener("click", () => {
+            fetch(`https://localhost:44377/api/user/active?activeCode=${element.value}`, requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                if (result.code === 200) {
+                    alert(result.data);
+                    alert("Đăng nhập lại để tương tác");
+                    localStorage.clear();
+                    window.location.href = "../guest/index.html";
+                } else if (result.code === 400) {
+                    alert(result.message);
+                }
+            })
+            .catch(error => console.log(error));
+        });
+
+
+        document.querySelector(".logout").addEventListener("click", function() {
+            localStorage.clear();
+            window.location.href = "../guest/index.html";
+        });
+
+
+        function parseJwt(token) {
+            if (!token) { 
+                return;
+            }
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace('-', '+').replace('_', '/');
+            return JSON.parse(window.atob(base64));
+        }
+    </script>
+
+</html>

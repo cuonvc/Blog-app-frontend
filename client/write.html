@@ -199,9 +199,10 @@
                             },
                             body: data
                         })
-                        .then(response => response.text())
+                        .then(response => response.json())
                         .then(urlImage => {
-                            resolve({ default: urlImage });
+                            console.log(urlImage.data);
+                            resolve({ default: urlImage.data });
                         })
 
                     } catch (error) {

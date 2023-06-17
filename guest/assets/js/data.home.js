@@ -1,4 +1,4 @@
-var postsApi = 'https://localhost:44377/api/post/all?pageNumber=1&pageSize=100';
+var postsApi = 'https://localhost:44377/api/post/all?pageNumber=1&pageSize=5';
 // var postByIdApi = '';
 var postsList = document.querySelectorAll(".post_list");
 
@@ -6,7 +6,7 @@ start();
 
 function start() {
     getPosts(function (posts) {
-        renderPostsNew(posts);
+        renderPostsNew(posts.data);
     });
 
     renderPostsPin();
@@ -132,7 +132,7 @@ function renderPostsPin() {
                     <div class="post-pin l-9 m-12 s-12 col">
                         <div class="content-post_pin row post" id="${post.id}">
                             <a style="cursor: pointer" href="./post.html#${post.id}" class="l-4 m-4 s-4">
-                                <div class="post-pin_image" style="background-image: url(${post.thumbnails});">
+                                <div class="post-pin_image" style="background-image: url(${post.thumbnail});">
                                 </div>
                             </a>
     
@@ -150,9 +150,9 @@ function renderPostsPin() {
                                 </div>
                                 <div class="post-pin_info">
                                     <a href="#" class="post-pin_auth">
-                                        <img src="${post.userProfile.avatarPhoto}" alt="Avartar">
+                                        <img src="${post.user.avatarPhoto}" alt="Avartar">
                                         <span>
-                                            ${post.userProfile.firstName} ${post.userProfile.lastName}
+                                            ${post.user.firstName} ${post.user.lastName}
                                             <i style="display: none;" class="icon_admin-name fa-solid fa-circle-check"></i>
                                         </span>
                                     </a>
@@ -180,7 +180,7 @@ function renderPostsPin() {
 
 function renderPostsNew(posts) {
     let htmls = "";
-    let arrPosts = posts.data;
+    let arrPosts = posts;
 
     arrPosts.forEach(post => {
         var firstCategory = post.categories[0];
@@ -189,7 +189,7 @@ function renderPostsNew(posts) {
             <div class="col l-3 m-4 s-12">
                 <div class="content-post_new">
                     <a style="cursor: pointer" href="./post.html#${post.id}" class="post-link content-post_link">
-                        <div class="content-post_image" style="background-image: url(${post.thumbnails});">
+                        <div class="content-post_image" style="background-image: url(${post.thumbnail});">
                         </div>
                     </a>
                     
@@ -250,7 +250,6 @@ function registerAccoutUser() {
 
         var lastName = document.querySelector("#input_last-name_re");
         var firstName = document.querySelector("#input_first-name-re");
-        var username = document.querySelector("#input_username_re");
         var email = document.querySelector("#input_email_re");
         var password = document.querySelector("#input_password_re");
         var rePassword = document.querySelector("#input_re-password_re");
@@ -262,7 +261,6 @@ function registerAccoutUser() {
             var raw = JSON.stringify({
                 "firstName": firstName.value,
                 "lastName": lastName.value,
-                "username": username.value,
                 "email": email.value,
                 "password": password.value
             });
@@ -275,11 +273,14 @@ function registerAccoutUser() {
             };
     
             fetch("https://localhost:44377/api/auth/signup", requestOptions)
-            .then(response => response.text())
+            .then(response => response.json())
             .then(result => {
-                if (result === "User register successfully!") {
+                console.log(result);
+                if (result.code === 200) {
                     alert("Đăng ký thành công, hãy quay lại đăng nhập!");
                     document.querySelector(".modal").style.display = "none";
+                } else if (result.code === 400) {
+                    alert("Email đã được đăng ký trước đó");
                 } else {
                     alert("Nhiều case quá nên bạn thấy lỗi ở đâu thì điền lại đó nhé :v\n \n" + result);
                 }

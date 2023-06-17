@@ -174,13 +174,14 @@
         });
 
         function renderPostsNew(pageNo) {
-            fetch(`https://localhost:44377/api/post/all?pageNumber=${pageNo}&pageSize=5`)
+            fetch(`https://localhost:44377/api/post/all?pageNumber=${pageNo}&pageSize=8`)
             .then(function(response) {
                 return response.json();
             })
             .then(function(object) {
                 let htmls = "";
                 let arrPosts = object.data;
+                // console.log(arrPosts)
                 arrPosts.forEach(post => {
                     var firstCategory = post.categories[0];
                     var finalDate = formatDate(post.createdDate);
@@ -188,13 +189,14 @@
                         <div class="col l-3 m-4 s-12">
                             <div class="content-post_new">
                                 <a style="cursor: pointer" href="./post.html#${post.id}" class="post-link content-post_link">
-                                    <div class="content-post_image" style="background-image: url(${post.thumbnails});">
+                                    <div class="content-post_image" style="background-image: url(${post.thumbnail});">
                                     </div>
                                 </a>
                                 
                                 <div class="content-post_text">
-                                    <div class="content-post_categories">
+                                    <div class="content-post_categories" style="display: flex; justify-content: space-between;">
                                         <a href="#" class="content-post_category">${firstCategory.name}</a>
+                                        <span>${post.view} <i class="fa-sharp fa-regular fa-eye"></i></span>
                                     </div>
                                     <div class="content-post_title">
                                         <a style="cursor: pointer" href="./post.html#${post.id}" class="post-link content-post_link">${post.title}</a>
@@ -227,7 +229,7 @@
                     
                 for (let i = 0; i < arrPosts.length; i++) {
                     if (arrPosts[i].user.role === "ADMIN_ROLE" || arrPosts[i].user.role === "MOD_ROLE") {
-                        console.log(confirmIcons[i]);
+                        // console.log(confirmIcons[i]);
                         confirmIcons[i].style.display = "inline";
                     }
                 }

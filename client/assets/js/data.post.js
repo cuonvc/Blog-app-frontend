@@ -20,7 +20,7 @@ start();
 function start() {
     renderHeaderInfo();
     renderPostContent();
-    // renderPostComments();
+    renderPostComments();
 }
 
 searchPosts();
@@ -34,7 +34,7 @@ function renderHeaderInfo() {
     })
     .then(function(object) {
         const data = object.data;
-        console.log(object);
+        // console.log(object);
         const userBox = document.querySelector(".navbar-user");
         const userContent = `
             <div class="navbar-user_btn row no-gutters">
@@ -78,7 +78,7 @@ function renderPostContent() {
     .then(response => response.json())
     .then(object => {
         const post = object.data;
-        console.log(post);
+        // console.log(post);
         let postContent = `
             <div class="body-post_categories">
                 <ul class="body-post_category-list">
@@ -102,6 +102,9 @@ function renderPostContent() {
                         </a>
                         <span>${formatDate(post.createdDate)}</span>
                     </div>
+                    <div class="" style="padding: 0 16px 16px 16px; font-size: 11px; color: #999">
+                        <span>${post.view} lượt xem <i class="fa-sharp fa-regular fa-eye"></i></span>
+                    </div>
                 </div>
                 <div class="action action-post" style="display: none;">
                     <i class="action-icon fa-solid fa-ellipsis-vertical"></i>
@@ -111,6 +114,11 @@ function renderPostContent() {
                     </div>
                 </div>
             </div>
+            <div class="vote-box" style="display: flex; flex-direction: column; font-size: 16px; color: #999">
+                <i style="font-size: 20px;" class="fa-sharp fa-solid fa-caret-up vote-up-btn"></i>
+                <span class="vote-count">${post.vote}</span>
+                <i style="font-size: 20px" class="fa-sharp fa-solid fa-caret-down vote-down-btn"></i>
+            </div>
             <div class="body-post_content">${post.content}</div>
             </div>
         `;
@@ -118,14 +126,18 @@ function renderPostContent() {
         document.querySelector(".body-post_box").innerHTML = postContent;
         
         document.querySelector("#title-post_client").innerHTML = post.title;
+
+        const upvoteBtn = document.querySelector(".vote-up-btn");
+        const downvoteBtn = document.querySelector(".vote-down-btn");
         
-        const userByPost = post.userProfile;
+        const userByPost = post.user;
         const item = document.querySelector(".action-post");
         let confirmIcon = document.querySelector(".body-post_box")
             .querySelector(".icon_admin-name");
         checkAuth(userByPost, item);
-        clickToActionPost();
+        clickToActionPost(post);
         validateAdmin(post, confirmIcon);
+        voteToPost(upvoteBtn, downvoteBtn);
     })
     .catch((error) => {
         alert(error);
@@ -134,62 +146,100 @@ function renderPostContent() {
     })
 }
 
-// function renderPostComments() {
-//     fetch(`http://localhost:8080/api/v1/post/${idPost}/comments`)
-//     .then(response => response.json())
-//     .then(result => {
-//         let commentList = "";
-//         for(var i = 0; i < result.length; i++) {
-//             let commentItem = `
-//             <div class="comment-item-${result[i].id}">
-//                 <div class="row no-gutters" style="justify-content: space-between;">
-//                     <div class="comment-item_auth row no-gutters">
-//                         <div class="comment-item_avt">
-//                             <a href="./user.html#${result[i].userProfile.usernameByUser}">
-//                                 <img src="${result[i].userProfile.avatarPhoto}" alt="avt">
-//                             </a>
-//                         </div>
-//                         <div class="comment-item_info">
-//                             <a href="./user.html#${result[i].userProfile.usernameByUser}">
-//                                 <span>
-//                                     ${result[i].userProfile.firstName} ${result[i].userProfile.lastName}
-//                                     <i style="display: none;" class="icon_admin-name fa-solid fa-circle-check"></i>
-//                                 </span>
-//                             </a>
-//                             <span class="row no-gutters">
-//                                 <p class="comment-item_info-create">${formatDate(result[i].createdDate)}</p>
-//                                 &nbsp;(Chỉnh sửa:&nbsp;<p class="comment-item_info-modify">${formatDate(result[i].modifiedDate)}</p>)
-//                             </span>
-//                         </div>
-//                     </div>
-//                     <div id="comment-${result[i].id}" class="action action-comment-${result[i].id}" style="display: none;">
-//                         <i class="action-icon fa-solid fa-ellipsis-vertical"></i>
-//                         <div class="action-box action-box_comment-${result[i].id}">
-//                             <span class="action-item action-delete_comment-${result[i].id}">Xóa</span>
-//                             <span class="action-item action-edit_comment-${result[i].id}">Chỉnh sửa</span>
-//                         </div>
-//                     </div>
-//                 </div>
-//                 <div class="comment-item_content">
-//                     <p>${result[i].content}</p>
-//                 </div>
-//             </div>
-//             `
-//             commentList += commentItem;
-//         }
+function voteToPost(upvoteBtn, downvoteBtn) {
 
-//         document.querySelector(".comment-list").innerHTML = commentList;
-//         let confirmIcons = document.querySelector(".comment-list")
-//             .querySelectorAll(".icon_admin-name");
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${localStorage.getItem("accessToken")}`);
+    myHeaders.append("Content-Type", "application/json");
 
-//         for (var i = 0; i < result.length; i++) {
-//             const item = document.querySelector(`#comment-${result[i].id}`);
-//             checkAuth(result[i].userProfile, item);
-//             clickToActionComment(result[i].id, result[i].content);
-//             validateAdmin(result[i], confirmIcons[i]);
-//         }
-//     })
-// }
+    var requestOptions = {
+        headers: myHeaders,
+        method: "POST",
+        redirect: "follow"
+    }
+
+    upvoteBtn.addEventListener('click', () => {
+        fetch(`https://localhost:44377/api/post/vote?postId=${idPost}&voteType=UP`, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            console.log(result)
+            if (result.code == 400) {
+                alert("Bạn đã upvoted trước đó!");
+            }
+            window.location.reload();
+        })
+    });
+
+    downvoteBtn.addEventListener('click', () => {
+        fetch(`https://localhost:44377/api/post/vote?postId=${idPost}&voteType=DOWN`, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            if (result.code == 400) {
+                alert("Bạn đã downvoted trước đó!");
+            }
+            window.location.reload();
+        })
+    })
+}
+
+function renderPostComments() {
+    fetch(`https://localhost:44377/api/comment?postId=${idPost}`)
+    .then(response => response.json())
+    .then(object => {
+        const result = object.data;
+        let commentList = "";
+        for(var i = 0; i < result.length; i++) {
+            let commentItem = `
+            <div class="comment-item-${result[i].id}">
+                <div class="row no-gutters" style="justify-content: space-between;">
+                    <div class="comment-item_auth row no-gutters">
+                        <div class="comment-item_avt">
+                            <a href="./user.html#${result[i].user.email}">
+                                <img src="${result[i].user.avatarPhoto}" alt="avt">
+                            </a>
+                        </div>
+                        <div class="comment-item_info">
+                            <a href="./user.html#${result[i].user.email}">
+                                <span>
+                                    ${result[i].user.firstName} ${result[i].user.lastName}
+                                    <i style="display: none;" class="icon_admin-name fa-solid fa-circle-check"></i>
+                                </span>
+                            </a>
+                            <span class="row no-gutters">
+                                <p class="comment-item_info-create">${formatDate(result[i].createdDate)}</p>
+                                &nbsp;(Chỉnh sửa:&nbsp;<p class="comment-item_info-modify">${formatDate(result[i].modifiedDate)}</p>)
+                            </span>
+                        </div>
+                    </div>
+                    <div id="comment-${result[i].id}" class="action action-comment-${result[i].id}" style="display: none;">
+                        <i class="action-icon fa-solid fa-ellipsis-vertical"></i>
+                        <div class="action-box action-box_comment-${result[i].id}">
+                            <span class="action-item action-delete_comment-${result[i].id}">Xóa</span>
+                            <span class="action-item action-edit_comment-${result[i].id}">Chỉnh sửa</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment-item_content">
+                    <p>${result[i].content}</p>
+                </div>
+            </div>
+            `
+            commentList += commentItem;
+        }
+
+        document.querySelector(".comment-list").innerHTML = commentList;
+        let confirmIcons = document.querySelector(".comment-list")
+            .querySelectorAll(".icon_admin-name");
+
+        for (var i = 0; i < result.length; i++) {
+            const item = document.querySelector(`#comment-${result[i].id}`);
+            // console.log(result[i].user);
+            checkAuth(result[i].user, item);
+            clickToActionComment(result[i].id, result[i].content);
+            validateAdmin(result[i], confirmIcons[i]);
+        }
+    })
+}
 
 function validateAdmin(obj, icon) {
     if (obj.user.role === "ADMIN_ROLE" || obj.user.role === "MOD_ROLE") {
@@ -217,16 +267,11 @@ function formatDate(dateString) {
 }
 
 function checkAuth(userBy, item) {
-    fetch(`https://localhost:44377/api/user/${email}`)
-    .then(response => {
-        return response.json();
-    })
-    .then(object => {
-        const userByToken = object.data;
-        if(userByToken.id === userBy.id || userByToken.role === "ADMIN_ROLE" || userByToken.role === "MOD_ROLE") {
-            item.style.display = "block";
-        }
-    })
+    const userIdByToken = parseJwt(localStorage.getItem("accessToken")).Id;
+    const userRoleByToken = parseJwt(localStorage.getItem("accessToken")).Role;
+    if(userIdByToken == userBy.id || userRoleByToken === "ADMIN_ROLE" || userRoleByToken === "MOD_ROLE") {
+        item.style.display = "block";
+    }
 }
 
 function commentToPost() {
@@ -242,9 +287,7 @@ function fetchComment() {
 
     var content = document.querySelector(".comment-form-type").value;
 
-    var raw = JSON.stringify({
-        "content": content
-    });
+    var raw = JSON.stringify(content);
 
     var requestOptions = {
         method: 'POST',
@@ -253,7 +296,10 @@ function fetchComment() {
         redirect: 'follow'
     };
 
-    fetch(`http://localhost:8080/api/v1/post/${idPost}/comment`, requestOptions)
+    console.log(raw);
+    console.log(idPost);
+
+    fetch(`https://localhost:44377/api/comment?postId=${idPost}`, requestOptions)
     .then(response => response.json())
     .then(result => console.log(result))
     .catch(error => console.log('error', error));
@@ -296,16 +342,28 @@ function searchPosts() {
 
 }
 
-function clickToActionPost() {
+function clickToActionPost(post) {
     var actionPost = document.querySelector(".action-post");
     actionPost.addEventListener("click", function() {
         document.querySelector(".action-box_post").classList.toggle("show-element");
-        modifyPost();
+        modifyPost(post);
         removePost();
     });
 }
 
-function modifyPost() {
+function modifyPost(post) {
+    console.log(post);
+    localStorage.setItem("title", post.title);
+    localStorage.setItem("content", post.content);
+    localStorage.setItem("description", post.description);
+    const categoryIds = [];
+    const categoryNames = [];
+    post.categories.forEach(category => {
+        categoryIds.push(category.id);
+        categoryNames.push(category.name);
+    });
+    localStorage.setItem("categoryIds", categoryIds);
+    localStorage.setItem("categoryNames", categoryNames);
 
     var editBtn = document.querySelector(".action-edit_post");
     editBtn.addEventListener("click", function() {
@@ -330,11 +388,11 @@ function removePost() {
     };
 
     removeBtn.addEventListener("click", function() {
-        fetch(`http://localhost:8080/api/v1/post/${idPost}`, requestOptions)
-        .then(response => response.text())
+        fetch(`https://localhost:44377/api/post/${idPost}`, requestOptions)
+        .then(response => response)
         .then(result => {
-            if (result.message === "Access is denied") {
-                alert("Phím xa gà chết!\nBạn không được quyền xóa comment này trừ khi bạn là Admin =))")
+            if (result.status == 403) {
+                alert("Phím xa gà chết!\nBạn không được quyền xóa comment này trừ khi bạn là Admin hoặc Moderator =))")
             } else {
                 alert("Đã xóa bài viết!");
                 window.location.href = "./home.html";
@@ -380,9 +438,7 @@ function modifyComment(idComment, oldContent) {
             myHeaders.append("Authorization", `Bearer ${localStorage.getItem("accessToken")}`);
             myHeaders.append("Content-type", "application/json");
 
-            var raw = JSON.stringify({
-                "content": document.querySelector(".comment-form-type").value
-            });
+            var raw = JSON.stringify(document.querySelector(".comment-form-type").value);
 
             var requestOptions = {
                 method: "PUT",
@@ -392,7 +448,7 @@ function modifyComment(idComment, oldContent) {
             };
 
             console.log(raw);
-            fetch(`http://localhost:8080/api/v1/comment/${idComment}`, requestOptions)
+            fetch(`https://localhost:44377/api/comment/${idComment}`, requestOptions)
             .then(response => response.text())
             .then(result => {
                 console.log(result);
@@ -422,12 +478,11 @@ function deleteComment(idComment) {
             redirect: "follow"
         };
 
-        fetch(`http://localhost:8080/api/v1/comment/${idComment}`, requestOptions)
-        .then(response => response.json())
+        fetch(`https://localhost:44377/api/comment/${idComment}`, requestOptions)
+        .then(response => response)
         .then(result => {
-            console.log(result);
-            if (result.message === "Access is denied") {
-                alert("Phím xa gà chết!\nBạn không được quyền xóa comment trừ khi bạn là Admin =))");
+            if (result.status == 403) {
+                alert("Phím xa gà chết!\nBạn không được quyền xóa comment trừ khi bạn là Admin hoặc Moderator =))");
             } else {
                 currentComment.style.display = "none";
             }

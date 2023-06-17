@@ -14,7 +14,6 @@ function parseJwt(token) {
 
 const hashStr = window.location.hash;
 let usernameProfile = hashStr.substring(1);
-console.log(localStorage.getItem("accessToken"));
 
 const email = parseJwt(localStorage.getItem("accessToken")).Email;  //get username from token
 
@@ -70,7 +69,7 @@ function renderHeaderInfo() {
 
 // hàm này ghép nối không theo khối (div) do lúc cắt html không chú ý nên nhìn code có hơi sida :D
 function renderContent() {
-    fetch(`https://localhost:44377/api/user/${email}`)
+    fetch(`https://localhost:44377/api/user/${usernameProfile}`)
     .then(function(response) {
         return response.json();
     })
@@ -110,11 +109,23 @@ function renderContent() {
                         <div class="body-profile_edit">
                             <a href="./setting.html" class="profile-edit_btn">Chỉnh sửa</a>
                         </div>
+                        <a href="#" class="follow-btn" style="font-size: 14px; text-decoration: none;">
+                            <span class="notFollow">
+                                <i class="fa-solid fa-user-plus"></i> 
+                                Theo dõi
+                            </span>
+                            <span class="following">
+                                <i class="fa-solid fa-check"></i>
+                                Đang theo dõi
+                            </span>
+                        </a>
                     </div>
                     <div class="content_my-posts col l-8 m-12 s-12">
                         <p class="row my-posts_title">Những bài viết của ${data.firstName} ${data.lastName}</p>
                         <div class="content_list-posts">
                     `;
+
+                    followAction(data.id);
     
                     fetch("https://localhost:44377/api/post/all?pageNumber=1&pageSize=100")
                     .then(response => {
@@ -178,6 +189,7 @@ function renderContent() {
                     var editCoverBtn = document.querySelector(".select-file_background");
                     var editAvtBtn = document.querySelector(".select-file_avt");
                     var editInfoBtn = document.querySelector(".body-profile_edit");
+                    // const followBtn = document.querySelector(".follow-btn");
                     checkAuth(data.id, editCoverBtn, editAvtBtn, editInfoBtn);
                     updateAvatar();
                     updateCover();
@@ -186,12 +198,50 @@ function renderContent() {
                         .querySelector(".icon_admin-name"));
                     var confirmIcons = document.querySelector(".content_my-posts")
                         .querySelectorAll(".icon_admin-name");
-                    for (var i = 0; i < allPosts.length; i++) {
+                    for (var i = 0; i < confirmIcons.length; i++) {
                         validateAdmin(allPosts[i].user, confirmIcons[i]);
                     }
 
                 });   
     });
+}
+
+function followAction(userId) {
+    let action = "";
+    // console.log(userId);
+    // const actionElement = document.querySelector(".follow-btn").querySelector('[style="display:none"]');
+    // const remainElement = document.querySelector(".follow-btn").querySelector('[style="display:block"]');
+    // console.log(actionElement);
+    // console.log(remainElement)
+    // console.log(actionElement.className);
+    // if (actionElement.className === "following") {
+    //     action = "FOLLOW";
+    // } else if (actionElement.className === "notFollow") {
+    //     action = "UNFOLLOW"
+    // }
+
+    // var myHeaders = new Headers();
+    // myHeaders.append("Authorization", `Bearer ${localStorage.getItem("accessToken")}`);
+    // myHeaders.append("Content-type", "application/json");
+
+    // var requestOptions = {
+    //     method: "POST",
+    //     headers: myHeaders,
+    //     redirec: "follow"
+    // };
+
+    // console.log(`https://localhost:44377/api/user/follow/${userId}?action=${action}`);
+    // fetch(`https://localhost:44377/api/user/follow/${userId}?action=${action}`, requestOptions)
+    // .then(response => response.json())
+    // .then(result => {
+    //     if (result.code == 200) {
+    //         actionElement.style.display = "block";
+    //         remainElement.style.display = "none";
+    //     }
+    //     // if(userByToken.id === userBy.id || userByToken.role === "ADMIN_ROLE" || userByToken.role === "MOD_ROLE") {
+    //     //     item.style.display = "block";
+    //     // }
+    // })
 }
 
 function logoutAccount(logoutBtn) {
