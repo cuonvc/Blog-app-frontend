@@ -13,7 +13,8 @@ function parseJwt(token) {
 }
 
 const idUrl = window.location.hash;
-let idPost = idUrl.substring(1);
+let idPost = idUrl.substring(1).split("/")[0];
+console.log(idUrl);
 const email = parseJwt(localStorage.getItem("accessToken")).Email;  //get username from token
 
 start();

@@ -128,7 +128,7 @@ function renderPostsPin() {
                 <div class="row">
                     <div class="post-pin l-9 m-12 s-12 col">
                         <div class="content-post_pin row post" id="${post.id}">
-                            <a style="cursor: pointer" href="./post.html#${post.id}" class="l-4 m-4 s-4">
+                            <a style="cursor: pointer" href="./post.html#${post.id}/${post.title}" class="l-4 m-4 s-4">
                                 <div class="post-pin_image" style="background-image: url(${post.thumbnail});">
                                 </div>
                             </a>
