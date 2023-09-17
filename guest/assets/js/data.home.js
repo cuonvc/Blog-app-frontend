@@ -12,6 +12,7 @@ function start() {
     renderPostsPin();
 
     registerAccoutUser();
+    loginWithGoogle();
 }
 
 
@@ -293,5 +294,16 @@ function registerAccoutUser() {
             alert("Password không trùng khớp!");
         }
 
+    })
+}
+
+function loginWithGoogle() {
+    let btn = document.querySelector(".oauth-google_btn").addEventListener("click", () => {
+        const clientId = '723628015267-pbpd2m5br737v69gajc8n1d4geqhpeo7.apps.googleusercontent.com';
+        const redirectUri = 'http://127.0.0.1:5500/client/home.html';
+        const scope = 'email profile';
+
+        const authUrl = `https://accounts.google.com/o/oauth2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=token`;
+        window.location.href = authUrl;
     })
 }

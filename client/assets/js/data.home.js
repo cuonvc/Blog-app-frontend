@@ -1,8 +1,32 @@
 // console.log(localStorage.getItem("accessToken"));
+oauthRedirect();
+function oauthRedirect() {
+    // const urlParams = new URLSearchParams(window.location.search);
+    const hashParams = new URLSearchParams(window.location.hash.substring(1));
+    const accessToken = hashParams.get('access_token');
 
-if (localStorage.getItem("accessToken") === null) {
-    alert("Bạn chưa đăng nhập, vui lòng đăng nhập để xem nội dung");
-    window.location.href = "../guest/index.html";
+    console.log(accessToken);
+
+    //send to client
+
+    var requestOptions = {
+        method: 'POST',
+        redirect: 'follow'
+    };
+
+    fetch(`https://localhost:44377/api/oauth?provider=google&token=${accessToken}`, requestOptions)
+    .then(response => response.json())
+    .then(result => {
+        console.log(result.data.accessToken);
+        // alert("trigger")
+        localStorage.setItem("accessToken", result.data.accessToken);
+
+        if (localStorage.getItem("accessToken") === null) {
+            alert("Bạn chưa đăng nhập, vui lòng đăng nhập để xem nội dung");
+            window.location.href = "../guest/index.html";
+        }
+    })
+    .catch(error => console.log('error', error));
 }
 
 function parseJwt(token) {

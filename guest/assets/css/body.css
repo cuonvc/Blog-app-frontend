@@ -519,3 +519,18 @@
     font-size: 1.2rem;
     color: var(--primary-color);
 }
+
+.modal-content_oauth {
+    display: flex;
+    justify-content: center;
+}
+
+.oauth_icon {
+    font-size: 26px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.oauth_icon > i {
+    cursor: pointer;
+}
