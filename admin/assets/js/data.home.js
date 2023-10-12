@@ -167,6 +167,7 @@ function renderUsers() {
     })
     .then(response => response.json())
     .then(object => {
+        console.log(object);
         const result = object.data;
         var headerTable = 
         `<tr>

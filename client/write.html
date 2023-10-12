@@ -189,21 +189,25 @@
                     const file = await this.loader.file;
 
                     try {
-                        var data = new FormData()
-                        data.append('file', file)
+                        if (file.name.endsWith('.png') || file.name.endsWith('.jpg')) {
+                            var data = new FormData()
+                            data.append('file', file)
 
-                        const image = await fetch('https://localhost:44377/api/post/pre-thumb', {
-                            method: "POST",
-                            headers: {
-                                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
-                            },
-                            body: data
-                        })
-                        .then(response => response.json())
-                        .then(urlImage => {
-                            console.log(urlImage.data);
-                            resolve({ default: urlImage.data });
-                        })
+                            const image = await fetch('https://localhost:44377/api/post/pre-thumb', {
+                                method: "POST",
+                                headers: {
+                                    "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+                                },
+                                body: data
+                            })
+                            .then(response => response.json())
+                            .then(urlImage => {
+                                console.log(urlImage.data);
+                                resolve({ default: urlImage.data });
+                            })
+                        } else {
+                            alert("Hệ thống chỉ nhận file .png hoặc .jpg");
+                        }
 
                     } catch (error) {
                         console.log('error:',error);
